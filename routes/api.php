@@ -35,7 +35,7 @@ Route::middleware('auth:api')->group(function(){
 
     });
     Route::group(['prefix' => 'customer'], function () {
-        Route::get('/cancel-reason', 'Api\Customer\CancelController@reason');
+        Route::get('/cancel-reason', 'Api\Customer\CancellationController@reason');
     });
 
     Route::group(['prefix' => 'cart'], function () {
