@@ -22,7 +22,7 @@ class CartController extends Controller
     {
         //
         $user_id = auth('api')->user()->id;
-        $cart = Cart::select('id','product_id','product_package_id','quantity','user_id','price')->with('product:id,name,details,category_id,small_picture','product.productPackage:id,product_id,package_masters_id,market_price,offer_price,offer_percentage,is_offer','product.productPackage.packageMaster:id,name')->where('user_id',auth('api')->user()->id)->get();
+        $cart = Cart::select('id','product_id','product_package_id','quantity','user_id','price')->with('product:id,name,details,category_id,small_picture','productPackage:id,product_id,package_masters_id,market_price,offer_price,offer_percentage,is_offer','productPackage.packageMaster:id,name')->where('user_id',auth('api')->user()->id)->get();
         $totalProduct = Cart::where('user_id',$user_id)->count();
         if(!$cart->isEmpty()){
             return response()->json(['success'=>true,'count'=>$totalProduct,'cart_items'=>$cart]);
@@ -90,7 +90,7 @@ class CartController extends Controller
             $data['price'] = floatval($total_price);
             Cart::updateOrCreate($where,$data);
             $totalProduct = Cart::where('user_id',$user_id)->count();
-            $cart_items = Cart::select('id','product_id','product_package_id','quantity','user_id','price')->with('product:id,name,details,category_id,small_picture','product.productPackage:id,product_id,package_masters_id,market_price,offer_price,offer_percentage,is_offer','product.productPackage.packageMaster:id,name')->where('user_id',$user_id)->get();
+            $cart_items = Cart::select('id','product_id','product_package_id','quantity','user_id','price')->with('product:id,name,details,category_id,small_picture','productPackage:id,product_id,package_masters_id,market_price,offer_price,offer_percentage,is_offer','productPackage.packageMaster:id,name')->where('user_id',$user_id)->get();
             return response()->json(['success'=>true,'count'=>$totalProduct,'cart_items'=>$cart_items]);
 
         }

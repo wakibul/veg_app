@@ -30,7 +30,7 @@ class TimeSlotController extends Controller
 		       		else
 		       			$date = date('Y-m-d', strtotime($date. ' + 1 days'));
 		       		
-		       		$timeslot = TimeSlot::select('id','from','to','slot')->where('status',1)->where('id',1)->first();
+		       		$timeslot = TimeSlot::select('id','from','to','slot')->where('status',1)->where('id',1)->get();
 		       		return response()->json(['success'=>true,'timeslot'=>$timeslot,'date'=>$date]);
 		       		
 		       	}

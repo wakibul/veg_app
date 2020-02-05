@@ -22,7 +22,7 @@ class OrderController extends Controller
     {
         //
         $user_id = auth('api')->user()->id;
-        $orders = Order::select('id','order_confirm_id','otp','total_price_with_tax','time_slot_id','created_at','status')->with('timeSlot:id,slot','orderTransaction:id,order_id,quantity,product_id,product_package_id','orderTransaction.product:id,name','orderTransaction.productPackage:id,product_id,package_masters_id,market_price,offer_price,offer_percentage,is_offer','orderTransaction.productPackage.packageMaster:id,name')->where('user_id',$user_id)->paginate(10);
+        $orders = Order::select('id','order_confirm_id','otp','total_price_with_tax','time_slot_id','created_at','status')->with('timeSlot:id,slot','orderTransaction:id,order_id,quantity,product_id,product_package_id','orderTransaction.product:id,name','orderTransaction.productPackage:id,product_id,package_masters_id,market_price,offer_price,offer_percentage,is_offer','orderTransaction.productPackage.packageMaster:id,name')->where('user_id',$user_id)->orderBy('id','desc')->paginate(10);
         if(!$orders->isEmpty())
             return response()->json(['success'=>true,'orders'=>$orders]);
         else
