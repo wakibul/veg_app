@@ -21,7 +21,7 @@ class CancellationController extends Controller
     public function reason()
     {
         //
-        $reason = CancellationReason::select('id,reason')->where('status',1)->get();
+        $reason = CancellationReason::select('id','reason')->where('status',1)->get();
         if(!$reason->isEmpty()){
             return response()->json(['success'=>true,'reason'=>$reason]);
         }
