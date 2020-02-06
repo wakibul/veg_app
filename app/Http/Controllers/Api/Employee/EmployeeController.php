@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api\Employee;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Employee;
+use App\Models\Order;
 use JWTFactory;
 use JWTAuth,JWTException;
 use Validator,DB,Str;
@@ -66,9 +67,14 @@ class EmployeeController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function currentOrders(Request $request)
     {
         //
+        $orders = Order::select('id','order_confirm_id','recipient_no','latitude','longitude','address','time_slot_id','delivery_date')->with('order.timeSlot:id,slot')->where('employee_id',auth('api')->user()->id)->where('status',1)->get();
+        if(!$orders->isEmpty())
+            return response()->json(['success'=>true,'orders'=>$orders]);
+        else
+            return response()->json(['success'=>false,'message'=>'No current order issued']);
     }
 
     /**
