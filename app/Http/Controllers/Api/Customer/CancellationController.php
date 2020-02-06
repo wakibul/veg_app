@@ -53,14 +53,14 @@ class CancellationController extends Controller
         //
         $validator = Validator::make($request->all(),[
             'order_id' => 'required|numeric',
-            'reason' => 'required'
+            'cancellation_reason' => 'required'
         ]);
         if($validator->fails())
             return response()->json(['success'=>false,'error'=>$validator->errors()]);
-        $reason = $request->reason;
+        $cancellation_reason = $request->cancellation_reason;
         DB::beginTransaction();
         try{
-            $order = Order::findOrFail($request->order_id)->update(['status'=>'3','reason'=>$reason]);
+            $order = Order::findOrFail($request->order_id)->update(['status'=>'3','cancellation_reason'=>$cancellation_reason]);
             $order->orderTransaction()->update(['status'=>'3']);
         }
         catch(\Exeception $e){
