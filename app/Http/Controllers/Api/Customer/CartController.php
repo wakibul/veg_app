@@ -72,7 +72,7 @@ class CartController extends Controller
                 return response()->json(['success'=>false,'error'=>'Product is not available']);
             }
 
-            $package_master = PackageMaster::where([['id',$product_package_id],['status',1]])->first();
+            $package_master = ProductPackage::where([['id',$product_package_id],['status',1]])->first();
             if($package_master == null){
                 return response()->json(['success'=>false,'error'=>'Package is not available']);
             }
