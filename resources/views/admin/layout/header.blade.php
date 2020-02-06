@@ -78,7 +78,7 @@
                       <a href="{{route('admin.employee.index')}}" class="dropdown-item ">Add/Manage</a>
                     </div>
                   </li>
-                  <li class="nav-item dropdown">
+                  <!---<li class="nav-item dropdown">
                     <a href="javascript:void(0)" class="nav-link" data-toggle="dropdown"><i class="fe fe-file"></i> Doctor</a>
                     <div class="dropdown-menu dropdown-menu-arrow">
                       <a href="#" class="dropdown-item ">Add</a>
@@ -99,9 +99,11 @@
                         <a href="#" class="dropdown-item ">By Doctor</a>
                     </div>
                   </li>
+                -->
 
                 </ul>
               </div>
             </div>
           </div>
         </div>
+

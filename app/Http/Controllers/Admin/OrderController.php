@@ -15,7 +15,7 @@ class OrderController extends Controller
      */
     public function index()
     {
-        $orders = Order::paginate(10);
+        $orders = Order::where('status','!=',3)->paginate(10);
 
         return view('admin.order.index', compact('orders'));
     }
@@ -119,7 +119,7 @@ class OrderController extends Controller
 
         foreach ($request->order_checks as $key => $order) {
             $order = Order::find($order);
-            $data = ['delivery_boy_id' => $request->employee_id,
+            $data = ['employee_id' => $request->employee_id,
 
             ];
             $order->update($data);

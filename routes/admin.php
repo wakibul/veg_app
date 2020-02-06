@@ -7,7 +7,7 @@ Route::get('/home', function () {
     $users[] = Auth::user();
     $users[] = Auth::guard()->user();
     $users[] = Auth::guard('admin')->user();
-    $orders = Order::paginate(10);
+    $orders = Order::with("orderTransactions.product")->where('status','!=',3)->paginate(10);
     $employees=Employee::get();
     //dd($users);
 
