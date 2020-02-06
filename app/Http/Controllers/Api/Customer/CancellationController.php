@@ -57,12 +57,10 @@ class CancellationController extends Controller
         ]);
         if($validator->fails())
             return response()->json(['success'=>false,'error'=>$validator->errors()]);
-
-        $order_id = $request->order_id;
         $reason = $request->reason;
         DB::beginTransaction();
         try{
-            $order = Order::where('id',$order_id)->update(['status'=>'3']);
+            $order = Order::findOrFail($request->order_id)->update(['status'=>'3','reason'=>$reason]);
             $order->orderTransaction()->update(['status'=>'3']);
         }
         catch(\Exeception $e){
