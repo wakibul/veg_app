@@ -1,4 +1,7 @@
 <?php
+
+use App\Models\Order;
+
 function sendNewSMS($mobilenumbers, $message) {
     $user 		= 'oneindia';
     $password	= '0a9bc4a70aXX';
@@ -17,3 +20,14 @@ function sendNewSMS($mobilenumbers, $message) {
 
 }
 
+function getCurrentDate($format = "Y-m-d H:i:s")
+{
+    return date($format);
+}
+function getOrderConfirmId()
+{
+    $order_count = Order::count() + 1;
+    $order_no = 'SOR/ORD/' . $order_count;
+    return $order_no;
+
+}
