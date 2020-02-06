@@ -5,6 +5,9 @@ namespace App\Http\Controllers\Api\Customer;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\CancellationReason;
+use App\Models\Order;
+use App\Models\OrderTransaction;
+use Validator,DB;
 class CancellationController extends Controller
 {
     /**
@@ -48,6 +51,27 @@ class CancellationController extends Controller
     public function store(Request $request)
     {
         //
+        $validator = Validator::make($request->all(),[
+            'order_id' => 'required|numeric',
+            'reason' => 'required'
+        ]);
+        if($validator->fails())
+            return response()->json(['success'=>false,'error'=>$validator->errors()]);
+
+        $order_id = $request->order_id;
+        $reason = $request->reason;
+        DB::beginTransaction();
+        try{
+            $order = Order::where('id',$order_id)->update(['status'=>'3']);
+            $order->orderTransaction()->update(['status'=>'3']);
+        }
+        catch(\Exeception $e){
+            DB::rollback();
+            return response()->json(['success'=>false,'error'=>$e->getMessage()]);
+        }
+        DB::commit();
+        return response()->json(['success'=>true,'message'=>'Order Cancelled successfully']);
+
     }
 
     /**
