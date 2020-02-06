@@ -61,7 +61,7 @@ class CancellationController extends Controller
         DB::beginTransaction();
         try{
             $order = Order::findOrFail($request->order_id)->update(['status'=>'3','cancellation_reason'=>$cancellation_reason]);
-            $order->orderTransaction()->update(['status'=>'3']);
+            OrderTransaction::where('order_id',$request->order_id)->update(['status'=>'3']);
         }
         catch(\Exeception $e){
             DB::rollback();
