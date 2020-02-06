@@ -65,17 +65,17 @@
                     </div>
                   </li>
                   <li class="nav-item dropdown">
-                    <a href="javascript:void(0)" class="nav-link" data-toggle="dropdown"><i class="fe fe-calendar"></i> Clinic</a>
+                    <a href="javascript:void(0)" class="nav-link" data-toggle="dropdown"><i class="fe fe-calendar"></i> Unit</a>
                     <div class="dropdown-menu dropdown-menu-arrow">
-                      <a href="#" class="dropdown-item ">Add</a>
+                      <a href="{{route('admin.unit.index')}}" class="dropdown-item ">Add</a>
 
                     </div>
                   </li>
                   <li class="nav-item dropdown">
-                    <a href="javascript:void(0)" class="nav-link" data-toggle="dropdown"><i class="fe fe-file"></i> Department</a>
+                    <a href="javascript:void(0)" class="nav-link" data-toggle="dropdown"><i class="fe fe-file"></i> Employee</a>
                     <div class="dropdown-menu dropdown-menu-arrow">
 
-                      <a href="#" class="dropdown-item ">Manage Ordering</a>
+                      <a href="{{route('admin.employee.index')}}" class="dropdown-item ">Add/Manage</a>
                     </div>
                   </li>
                   <li class="nav-item dropdown">

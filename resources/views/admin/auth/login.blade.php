@@ -59,7 +59,7 @@
                     @endif
                   </div>
                   <div class="form-group">
-                    
+
                     <input id="password" type="password" class="form-control" name="password">
                      @if ($errors->has('password'))
                                     <span class="help-block">
@@ -78,7 +78,7 @@
                   </div>
                 </div>
               </form>
-              
+
             </div>
           </div>
         </div>
