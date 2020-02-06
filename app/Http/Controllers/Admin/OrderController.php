@@ -119,7 +119,7 @@ class OrderController extends Controller
 
         foreach ($request->order_checks as $key => $order) {
             $order = Order::find($order);
-            $data = ['delivery_boy_id' => $request->employee_id,
+            $data = ['employee_id' => $request->employee_id,
 
             ];
             $order->update($data);
