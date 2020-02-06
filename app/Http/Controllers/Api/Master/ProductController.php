@@ -36,7 +36,7 @@ class ProductController extends Controller
     public function latest()
     {
         //
-        $products = Product::select('id','name','details','large_picture','small_picture','is_available','default_package')->with('productPackage:id,product_id,package_masters_id,market_price,offer_price,is_offer,offer_percentage','productPackage.packageMaster:id,name')->where([['status',1],['is_product',1]])->latest()->take(5)->get();
+        $products = Product::select('id','name','details','large_picture','small_picture','is_available','default_package')->with('productPackage:id,product_id,package_masters_id,market_price,offer_price,is_offer,offer_percentage','productPackage.packageMaster:id,name')->where([['status',1],['is_product',1]])->latest()->paginate(10);
         if(!$products->isEmpty())
             $status = true;
         else
