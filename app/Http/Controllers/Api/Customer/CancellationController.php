@@ -60,7 +60,8 @@ class CancellationController extends Controller
         $cancellation_reason = $request->cancellation_reason;
         DB::beginTransaction();
         try{
-            $order = Order::findOrFail($request->order_id)->update(['status'=>'3','cancellation_reason'=>$cancellation_reason]);
+            $cancel_time = date('Y-m-d H:i:s');
+            $order = Order::findOrFail($request->order_id)->update(['status'=>'3','cancellation_reason'=>$cancellation_reason,'cancelled_by'=>'user','cancellation_time'=>$cancel_time]);
             OrderTransaction::where('order_id',$request->order_id)->update(['status'=>'3']);
         }
         catch(\Exeception $e){
