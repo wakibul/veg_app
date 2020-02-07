@@ -106,7 +106,7 @@ class EmployeeController extends Controller
                 $confirm = Order::where('id',$order->id)->update(['status'=>2,'delivered_time'=>date('Y-m-d H:i:s')]);
                 $employee_balance = auth('employee')->user()->updated_balance;
                 $new_balance = floatval($employee_balance)+floatval($order->total_price_with_tax);
-                $employee = Employee::findOrFail(auth('employee')->user()->id)->update(['updated_balance'=>$new_balance]);
+                $employee = Employee::where('id',auth('employee')->user()->id)->update(['updated_balance'=>$new_balance]);
                 $data['order_id'] = $order->id;
                 $data['employee_id'] = auth('employee')->user()->id;
                 $data['amount'] = $order->total_price_with_tax;
