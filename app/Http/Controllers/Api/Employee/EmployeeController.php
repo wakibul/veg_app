@@ -66,15 +66,16 @@ class EmployeeController extends Controller
     {
         //
         $validator = Validator::make($request->all(),[
-            'order_id'=>'required'
+            'order_id'=>'required',
         ]);
         if($validator->fails())
         return response()->json(['success'=>false,'error'=>$validator->errors()]);
         DB::beginTransaction();
         try{
         $otp = mt_rand(100000, 999999);
-        $otp_order = Order::findOrFail($request->order_id)->update(['otp'=>$otp]);
-		sendNewSMS($request->recipient_no,"Your otp verification code is ".$otp);
+        $order = Order::findOrFail($request->order_id)->first();
+        $otp_order = Order::findOrFail($order->id)->update(['otp'=>$otp]);
+		sendNewSMS($order->recipient_no,"Your otp verification code is ".$otp);
         }
         catch(\Exception $e){
             DB::rollback();
