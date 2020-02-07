@@ -74,6 +74,7 @@ class EmployeeController extends Controller
         try{
         $otp = mt_rand(100000, 999999);
         $order = Order::findOrFail($request->order_id)->first();
+        dd($order->id);
         $otp_order = Order::where('id',$order->id)->update(['otp'=>$otp]);
 		sendNewSMS($order->recipient_no,"Your otp verification code is ".$otp);
         }
