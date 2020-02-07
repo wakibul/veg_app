@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Employee;
 use App\Models\Order;
+use App\Models\EmployeeTransaction;
 use Dotenv\Validator as DotenvValidator;
 use JWTFactory;
 use JWTAuth,JWTException;
@@ -66,7 +67,7 @@ class EmployeeController extends Controller
     {
         //
         $validator = Validator::make($request->all(),[
-            'order_id'=>'required'
+            'order_id'=>'required|numeric'
         ]);
         if($validator->fails())
         return response()->json(['success'=>false,'error'=>$validator->errors()]);
@@ -83,6 +84,47 @@ class EmployeeController extends Controller
         }
         DB::commit();
         return response()->json(['success'=>true,'message'=>'Otp sent successfully']);
+    }
+
+    public function close(Request $request)
+    {
+        //
+        $validator = Validator::make($request->all(),[
+            'order_id'=>'required|numeric',
+            'otp'=>'required|numeric'
+        ]);
+        if($validator->fails())
+        return response()->json(['success'=>false,'error'=>$validator->errors()]);
+        DB::beginTransaction();
+        try{
+            $order = Order::where([['id',$request->order_id],['status',1],['otp',$request->otp]])->first();
+            if($order == null){
+                return response()->json(['success'=>false,'message'=>'OTP mismatched']);
+            }
+            else{
+                try{
+                $confirm = Order::where('id',$order->id)->update(['status'=>2,'delivered_time'=>date('Y-m-d H:i:s')]);
+                $employee_balance = auth('employee')->user()->updated_balance;
+                $new_balance = floatval($employee_balance)+floatval($order->total_price_with_tax);
+                $employee = Employee::findOrFail(auth('employee')->user()->id)->update(['updated_balance'=>$new_balance]);
+                $data['order_id'] = $order->id;
+                $data['employee_id'] = auth('employee')->user()->id;
+                $data['amount'] = $order->total_price_with_tax;
+                EmployeeTransaction::create($data);
+                }
+                catch(\Exception $e){
+                    return response()->json(['success'=>false,'message'=>'something went wrong']);
+                }
+
+            }
+
+        }
+        catch(\Exception $e){
+            DB::rollback();
+            return response()->json(['success'=>false,'message'=>'Something went wrong']);
+        }
+        DB::commit();
+        return response()->json(['success'=>true,'message'=>'Order closed successfully']);
     }
 
     /**
