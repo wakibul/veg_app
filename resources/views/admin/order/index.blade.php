@@ -31,12 +31,12 @@
                                 $lbl_class = "danger";
                                 }
                                 elseif($order->status == 1){
-                                $tr_color_class = "yellow";
+                                $tr_color_class = "#FFFFCC";
                                 $lbl_class = "warning";
                                 }
 
                                 elseif($order->status == 2){
-                                $tr_color_class = "#37E895";
+                                $tr_color_class = "#CCFFCC";
                                 $lbl_class = "success";
                                 }
                                 elseif($order->status == 3){
@@ -45,7 +45,7 @@
                                 }
                                 @endphp
                                 <tr bgcolor="{{ $tr_color_class }}">
-                                    @if(($order->status==1) && !($order->delivery_boy_id))
+                                    @if(($order->status==1) && !($order->employee_id))
                                     <td>
                                         <!-- Material unchecked -->
                                         <div class="custom-control custom-checkbox mb-3">

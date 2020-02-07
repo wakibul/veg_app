@@ -15,27 +15,7 @@
             <div class="card-body">
                 <div class="row">
                     <div class="col-md-6">
-                        @if ($errors->any())
-                        <div class="alert alert-danger">
-                            @foreach ($errors->all() as $error)
-                            <div>{{ $error }}</div>
-                            @endforeach
-                        </div>
-                        @endif
-
-                        @if(session()->has('error'))
-                        <div class="alert alert-danger">
-                            @foreach ($errors->all() as $error)
-                            <div>{{ $error }}</div>
-                            @endforeach
-                        </div>
-                        @endif
-
-                        @if(Session::has('success'))
-                        <div class="alert alert-success">
-                            {!! session('success') !!}
-                        </div>
-                        @endif
+                        @include('admin.layout.alert')
                         <form name="city" action="{{route('admin.employee.update',Crypt::encrypt($employee->id))}}"
                             method="POST" enctype="multipart/form-data">
 

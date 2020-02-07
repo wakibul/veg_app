@@ -102,7 +102,7 @@ class OrderController extends Controller
         $order = Order::find($orderId);
         $order->update(['status' => 3]);
         $order->save();
-        return redirect()->back();
+        return redirect()->back()->with('error', 'Order Cancel');
 
     }
     public function closeOrder($order_id)
@@ -111,7 +111,7 @@ class OrderController extends Controller
         $order = Order::find($orderId);
         $order->update(['status' => 2]);
         $order->save();
-        return redirect()->back();
+        return redirect()->back()->with('success', 'Order Completed Successfully');;
 
     }
     public function assignEmployee(Request $request)
@@ -126,7 +126,7 @@ class OrderController extends Controller
             $order->save();
 
         }
-        return redirect()->back();
+        return redirect()->back()->with('success', 'Delivery Boy assign successfully');
 
     }
 }

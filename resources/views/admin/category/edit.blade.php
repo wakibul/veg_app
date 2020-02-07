@@ -14,19 +14,7 @@
             <div class="card-body">
                     <div class="row">
                           <div class="col-md-6 col-lg-7">
-                             @if(session()->has('error'))
-                                <div class="alert alert-danger">
-                                @foreach ($errors->all() as $error)
-                                    <div>{{ $error }}</div>
-                                @endforeach
-                                </div>
-                              @endif
-
-                              @if(Session::has('success'))
-                                        <div class="alert alert-success">
-                                        {!! session('success') !!}
-                                        </div>
-                              @endif
+                            @include('admin.layout.alert')
                               <form name="city" action="{{route('admin.category.store')}}" method="POST" enctype="multipart/form-data">
                                 @csrf
                                 <div class="form-group">
