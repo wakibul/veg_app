@@ -73,13 +73,35 @@
 
 </div>
 @endsection
+@section("css")
+    <style>
+        tbody tr{
+            border-bottom: 2px solid #9DB2A2;
+        }
+    </style>
+@endsection
 @section('js')
+<script src="https://js.pusher.com/5.0/pusher.min.js"></script>
 <script>
     $(document).ready(function(){
-    $('#employee').on('show.bs.collapse', function () {
-        return check();
-    })
-});
+        $('#employee').on('show.bs.collapse', function () {
+            return check();
+        })
+        var pusher = new Pusher('f4fc0e863f372de00405', {
+            cluster: 'ap2',
+            forceTLS: true
+        });
+
+    var channel = pusher.subscribe('dashboard-update');
+        channel.bind('order-created', function(data) {
+            console.log(data);
+            alert(JSON.stringify(data));
+        });
+        channel.bind('order-cancelled', function(data) {
+            console.log(data);
+            alert(JSON.stringify(data));
+        });
+    });
     showItems = function(obj){
         console.log('showItems loadings');
         var $this = $(obj);
@@ -91,6 +113,8 @@
             table_items +="<tr>";
             table_items +="<td>"+(index+1)+"</td>";
             table_items +="<td>"+element.product.name+"</td>";
+            table_items +="<td>"+element.quantity+"</td>";
+            table_items +="<td>"+element.price+"</td>";
             table_items +="</tr>";
         })
         $modal.find("table tbody").html(table_items);

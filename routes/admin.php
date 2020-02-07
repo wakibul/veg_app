@@ -2,17 +2,12 @@
 
 use App\Models\Employee;
 use App\Models\Order;
+Route::get('/home', [
+    'as' => 'home',
+    'uses' => 'Admin\DashboardController@index',
+]);
 
-Route::get('/home', function () {
-    $users[] = Auth::user();
-    $users[] = Auth::guard()->user();
-    $users[] = Auth::guard('admin')->user();
-    $orders = Order::with("orderTransactions.product")->where('status','!=',3)->paginate(10);
-    $employees=Employee::get();
-    //dd($users);
 
-    return view('admin.home', compact('orders','employees'));
-})->name('home');
 
 Route::group(['prefix' => 'category'], function () {
     Route::get('/index', [
@@ -109,7 +104,6 @@ Route::group(['prefix' => 'employee'], function () {
 
 });
 
-
 Route::group(['prefix' => 'order'], function () {
     Route::get('/order/{order_id}', [
         'as' => 'dashboard.order.accept',
@@ -127,10 +121,9 @@ Route::group(['prefix' => 'order'], function () {
         'uses' => 'Admin\OrderController@closeOrder',
     ]);
     Route::post('/assign_employee', [
-    'as' => 'assign_employee.store',
-    'middleware' => ['admin'],
-    'uses' => 'Admin\OrderController@assignEmployee',
-]);
-
+        'as' => 'assign_employee.store',
+        'middleware' => ['admin'],
+        'uses' => 'Admin\OrderController@assignEmployee',
+    ]);
 
 });

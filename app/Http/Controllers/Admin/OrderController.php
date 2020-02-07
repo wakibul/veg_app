@@ -100,7 +100,7 @@ class OrderController extends Controller
     {
         $orderId = decrypt($order_id);
         $order = Order::find($orderId);
-        $order->update(['status' => 3]);
+        $order->update(['status' => 4]);
         $order->save();
         return redirect()->back()->with('error', 'Order Cancel');
 
@@ -120,6 +120,7 @@ class OrderController extends Controller
         foreach ($request->order_checks as $key => $order) {
             $order = Order::find($order);
             $data = ['employee_id' => $request->employee_id,
+                      'status'=>3
 
             ];
             $order->update($data);

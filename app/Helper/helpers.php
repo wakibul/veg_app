@@ -1,5 +1,6 @@
 <?php
 
+use App\Events\OrderPusherEvent;
 use App\Models\Order;
 
 function sendNewSMS($mobilenumbers, $message) {
@@ -30,5 +31,9 @@ function getOrderConfirmId()
     $order_no = 'SOR/ORD/' . $order_count;
     return $order_no;
 
+}
+function testPusher(){
+    $order = Order::first();
+    return event(new OrderPusherEvent($order));
 }
 
