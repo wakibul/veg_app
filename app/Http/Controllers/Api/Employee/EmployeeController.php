@@ -143,6 +143,16 @@ class EmployeeController extends Controller
             return response()->json(['success'=>false,'message'=>'No current order issued']);
     }
 
+    public function myOrders(Request $request)
+    {
+        //
+        $orders = Order::select('id','order_confirm_id','recipient_no','latitude','longitude','address','time_slot_id','delivery_date','total_price_with_tax','status','delivered_time')->with('timeSlot:id,slot')->where('employee_id',auth('employee')->user()->id)->where('status',2)->get();
+        if(!$orders->isEmpty())
+            return response()->json(['success'=>true,'orders'=>$orders]);
+        else
+            return response()->json(['success'=>false,'message'=>'No current order issued']);
+    }
+
     /**
      * Display the specified resource.
      *

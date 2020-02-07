@@ -58,6 +58,7 @@ Route::middleware('auth:employee')->group(function(){
         Route::get('/current_orders', 'Api\Employee\EmployeeController@currentOrders');
         Route::post('/otp', 'Api\Employee\EmployeeController@otp');
         Route::post('/close', 'Api\Employee\EmployeeController@close');
+        Route::get('/my_orders', 'Api\Employee\EmployeeController@myOrders');
     });
 });
 
