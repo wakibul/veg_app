@@ -73,7 +73,7 @@ class EmployeeController extends Controller
         DB::beginTransaction();
         try{
         $otp = mt_rand(100000, 999999);
-        $order = Order::where([['id',$request->id],['status',1]])->first();
+        $order = Order::where([['id',$request->order_id],['status',1]])->first();
         dd($order->id);
         $otp_order = Order::where('id',$order->id)->update(['otp'=>$otp]);
 		sendNewSMS($order->recipient_no,"Your otp verification code is ".$otp);
