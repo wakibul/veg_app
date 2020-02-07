@@ -32,7 +32,7 @@ Route::middleware('auth:api')->group(function(){
         Route::get('/latest-product', 'Api\Master\ProductController@latest');
         Route::get('/banner', 'Api\Master\BannerController@index');
         Route::post('/time-slot', 'Api\Master\TimeSlotController@index');
-
+        Route::post('/pincode', 'Api\Master\PincodeController@index');
     });
     Route::group(['prefix' => 'customer'], function () {
         Route::get('/cancel-reason', 'Api\Customer\CancellationController@reason');
