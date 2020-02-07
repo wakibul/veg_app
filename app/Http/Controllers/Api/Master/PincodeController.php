@@ -15,6 +15,12 @@ class PincodeController extends Controller
     public function index(Request $request)
     {
         //
+        $validator = Validator::make($request->all(), [
+            'pincode'=> 'required|numeric'
+        ]);
+        if ($validator->fails()) {
+            return response()->json(['success'=>false,'error'=>$validator->errors()]);
+        }
         $pincode = Pincode::where([['pincode',$request->pincode],['status',1],['city_id','1']])->first();
         if($pincode != null)
             return response()->json(['success'=>true,'pincode'=>$pincode->pincode]);
