@@ -82,7 +82,7 @@ class EmployeeController extends Controller
             return response()->json(['success'=>false,'message'=>'Something went wrong']);
         }
         DB::commit();
-        return response()->json(['success'=>true,'Otp sent successfully']);
+        return response()->json(['success'=>true,'message'=>'Otp sent successfully']);
     }
 
     /**
