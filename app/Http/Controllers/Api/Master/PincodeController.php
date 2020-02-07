@@ -26,7 +26,7 @@ class PincodeController extends Controller
         if($pincode != null)
             return response()->json(['success'=>true,'pincode'=>$pincode->pincode]);
         else
-        return response()->json(['success'=>false,'message'=>'Oops! could not deliver at thi pincode']);
+        return response()->json(['success'=>false,'message'=>'Oops! could not deliver at this pincode']);
     }
 
     /**
