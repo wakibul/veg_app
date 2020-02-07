@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Employee;
 use App\Models\Order;
+use Dotenv\Validator as DotenvValidator;
 use JWTFactory;
 use JWTAuth,JWTException;
 use Validator,DB,Str;
@@ -58,7 +59,29 @@ class EmployeeController extends Controller
     {
         //
         $employee = Employee::findOrFail(auth('employee')->user()->id)->first();
-        return response()->json($employee);
+        return response()->json(['success'=>true,'employee_details'=>$employee]);
+    }
+
+    public function otp(Request $request)
+    {
+        //
+        $validator = Validator::make($request->all(),[
+            'order_id'=>'required'
+        ]);
+        if($validator->fails())
+        return response()->json(['success'=>false,'error'=>$validator->errors()]);
+        DB::beginTransaction();
+        try{
+        $otp = mt_rand(100000, 999999);
+        $otp_order = Order::findOrFail($request->order_id)->update(['otp'=>$otp]);
+		sendNewSMS($request->recipient_no,"Your otp verification code is ".$otp);
+        }
+        catch(\Exception $e){
+            DB::rollback();
+            return response()->json(['success'=>false,'message'=>'Something went wrong']);
+        }
+        DB::commit();
+        return response()->json(['success'=>true,'Otp sent successfully']);
     }
 
     /**

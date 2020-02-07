@@ -56,6 +56,7 @@ Route::middleware('auth:employee')->group(function(){
     Route::group(['prefix' => 'employee'], function () {
         Route::get('/user', 'Api\Employee\EmployeeController@user');
         Route::get('/current_orders', 'Api\Employee\EmployeeController@currentOrders');
+        Route::post('/otp', 'Api\Employee\EmployeeController@otp');
     });
 });
 
