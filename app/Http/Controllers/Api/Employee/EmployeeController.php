@@ -146,7 +146,7 @@ class EmployeeController extends Controller
     public function myOrders(Request $request)
     {
         //
-        $orders = Order::select('id','order_confirm_id','recipient_no','latitude','longitude','address','time_slot_id','delivery_date','total_price_with_tax','status','delivered_time')->with('timeSlot:id,slot')->where('employee_id',auth('employee')->user()->id)->where('status',2)->orderBy('id','desc')->paginate(1);
+        $orders = Order::select('id','order_confirm_id','recipient_no','latitude','longitude','address','time_slot_id','delivery_date','total_price_with_tax','status','delivered_time')->with('timeSlot:id,slot')->where('employee_id',auth('employee')->user()->id)->where('status',2)->orderBy('id','desc')->paginate(3);
         if(!$orders->isEmpty())
             return response()->json(['success'=>true,'orders'=>$orders]);
         else
