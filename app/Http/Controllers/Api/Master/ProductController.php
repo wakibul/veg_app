@@ -42,7 +42,7 @@ class ProductController extends Controller
         else
             $status = false;
 
-        return response()->json(['success'=>$status,'product_details'=>['data'=>$products]]);
+        return response()->json(['success'=>$status,'product_details'=>$products]);
     }
 
     public function popular()
@@ -54,7 +54,7 @@ class ProductController extends Controller
         else
             $status = false;
 
-        return response()->json(['success'=>$status,'product_details'=>['data'=>$products]]);
+        return response()->json(['success'=>$status,'product_details'=>$products]);
     }
 
 
