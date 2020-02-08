@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api\Customer;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Customer;
+use App\Models\MiscellaneousMaster;
 use JWTFactory;
 use JWTAuth,JWTException;
 use Validator,DB,Str;
@@ -28,7 +29,16 @@ class RegisterController extends Controller
 		if ($validator->fails()) {
 			return response()->json(['success'=>false,'error'=>$validator->errors()]);
 		}
-		$otp = mt_rand(100000, 999999);
+        $otp = mt_rand(100000, 999999);
+
+        $cust = Customer::where([['device_id',$request->device_id],['status',1]])->first();
+		if($cust){
+			$free_offer = 0;
+		}
+		else
+		    $free_offer = $reg_offers->total_no;
+
+		$offer_vaild_to = date('Y-m-d', strtotime('+1 months'));
 		DB::beginTransaction();
 		try {
 			$customerPhoneExist = Customer::where([['mobile',$request->mobile],['otp_verified','!=',null],['status',1]])->first();
