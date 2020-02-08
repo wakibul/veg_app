@@ -31,14 +31,16 @@ class RegisterController extends Controller
 		}
         $otp = mt_rand(100000, 999999);
 
+        $first_offer = MiscellaneousMaster::where([['status',1],['type','first_offer']])->first();
+        $offer_months = MiscellaneousMaster::where([['status',1],['type','offer_months']])->first();
         $cust = Customer::where([['device_id',$request->device_id],['status',1]])->first();
 		if($cust){
 			$free_offer = 0;
 		}
 		else
-		    $free_offer = $reg_offers->total_no;
-
-		$offer_vaild_to = date('Y-m-d', strtotime('+1 months'));
+		    $free_offer = $first_offer->first_offer;
+        $offer_month = '+'.$offer_months->offer_months.' months';
+		$offer_vaild_to = date('Y-m-d', strtotime($offer_month));
 		DB::beginTransaction();
 		try {
 			$customerPhoneExist = Customer::where([['mobile',$request->mobile],['otp_verified','!=',null],['status',1]])->first();
@@ -53,7 +55,9 @@ class RegisterController extends Controller
 					'password' => bcrypt($request->password),
 					'mobile' => $request->mobile,
 					'device_id' => $request->device_id,
-					'otp' => $otp
+                    'otp' => $otp,
+                    'free_offer'=>$free_offer,
+                    'free_offer_valid_to'=>$offer_vaild_to
 				]);
 				DB::commit();
 				sendNewSMS($request->mobile,"Your otp verification code is ".$otp);
