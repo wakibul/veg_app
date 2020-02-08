@@ -49,7 +49,7 @@ Dashboard UI
 
 html {
   font-family: sans-serif;
-  line-height: 1.15;
+  line-height: 3;
   -webkit-text-size-adjust: 100%;
   -ms-text-size-adjust: 100%;
   -ms-overflow-style: scrollbar;
@@ -67,7 +67,7 @@ article, aside, dialog, figcaption, figure, footer, header, hgroup, main, nav, s
 body {
   margin: 0;
   font-family: "Source Sans Pro", -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", Arial, sans-serif;
-  font-size: 0.9375rem;
+  font-size: 0.600rem;
   font-weight: 400;
   line-height: 1.5;
   color: #495057;
@@ -9839,7 +9839,7 @@ a.text-dark:hover, a.text-dark:focus {
   .table, .text-wrap table {
     border-collapse: collapse !important;
   }
-  
+
   .table td,
   .text-wrap table td, .table th, .text-wrap table th {
     background-color: #fff !important;

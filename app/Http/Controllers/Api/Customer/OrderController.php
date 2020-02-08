@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api\Customer;
 
+use App\Events\OrderPusherEvent;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Order;
@@ -107,6 +108,7 @@ class OrderController extends Controller
             $data['fcm_token'] = $request->fcm_token;
 
             if($order = Order::create($data)){
+                event(new OrderPusherEvent($order));
                 foreach($carts as $key=>$cart){
                     $orderTrans['order_id'] = $order->id;
                     $orderTrans['product_id'] = $cart->product_id;

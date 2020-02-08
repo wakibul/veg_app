@@ -3,7 +3,10 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Employee;
+use App\Models\Order;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class DashboardController extends Controller
 {
@@ -14,7 +17,19 @@ class DashboardController extends Controller
      */
     public function index()
     {
-        //
+        $users[] = Auth::user();
+        $users[] = Auth::guard()->user();
+        $users[] = Auth::guard('admin')->user();
+        $orders = Order::query();
+        $orders->when(request("slot_id"), function ($query) {
+            return $query->where("time_slot_id", request("slot_id"));
+        });
+        $orders = $orders->with("orderTransactions.product")->where('status', '!=', 4)->orderBy('id', 'DESC')->paginate(10);
+        $employees = Employee::get();
+//dd($users);
+
+        return view('admin.home', compact('orders', 'employees'));
+
     }
 
     /**
