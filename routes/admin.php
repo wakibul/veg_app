@@ -1,13 +1,9 @@
 <?php
 
-use App\Models\Employee;
-use App\Models\Order;
 Route::get('/home', [
     'as' => 'home',
     'uses' => 'Admin\DashboardController@index',
 ]);
-
-
 
 Route::group(['prefix' => 'category'], function () {
     Route::get('/index', [
@@ -126,4 +122,40 @@ Route::group(['prefix' => 'order'], function () {
         'uses' => 'Admin\OrderController@assignEmployee',
     ]);
 
+});
+Route::group(['prefix' => 'product'], function () {
+    Route::get('/index', [
+        'as' => 'product.index',
+        'middleware' => ['admin'],
+        'uses' => 'Admin\ProductController@index',
+    ]);
+    Route::get('/create', [
+        'as' => 'product.create',
+        'middleware' => ['admin'],
+        'uses' => 'Admin\ProductController@create',
+    ]);
+
+    Route::post('/store', [
+        'as' => 'product.store',
+        'middleware' => ['admin'],
+        'uses' => 'Admin\ProductController@store',
+    ]);
+
+    Route::get('/edit/{id}', [
+        'as' => 'product.edit',
+        'middleware' => ['admin'],
+        'uses' => 'Admin\ProductController@edit',
+    ]);
+
+    Route::post('/update/{id}', [
+        'as' => 'product.update',
+        'middleware' => ['admin'],
+        'uses' => 'Admin\ProductController@update',
+    ]);
+
+    Route::get('/delete/{id}', [
+        'as' => 'product.delete',
+        'middleware' => ['admin'],
+        'uses' => 'Admin\ProductController@destroy',
+    ]);
 });

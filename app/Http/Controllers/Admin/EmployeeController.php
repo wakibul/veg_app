@@ -59,11 +59,11 @@ class EmployeeController extends Controller
                 'address' => $request->address,
                 'pincode' => $request->pin,
                 'mobile' => $request->mobile,
-                'password' => bcrypt(Employee::$default_password),
+                'password' => bcrypt($request->pass),
 
             ];
             Employee::create($data);
-            return Redirect::route('admin.employee.index')->with('success', 'Unit added successfully');
+            return Redirect::route('admin.employee.index')->with('success', 'Delivery boy added successfully');
 
         } catch (Exception $e) {
             DB::rollback();
@@ -133,7 +133,7 @@ class EmployeeController extends Controller
             ];
             $employee->update($data);
             $employee->save();
-            return Redirect::route('admin.employee.index')->with('success', 'Employee updated successfully');
+            return Redirect::route('admin.employee.index')->with('success', 'Delivery Boy updated successfully');
 
         } catch (Exception $e) {
             DB::rollback();
@@ -156,7 +156,7 @@ class EmployeeController extends Controller
         $id = Crypt::decrypt($id);
         Employee::findOrFail($id)->delete();
 
-        return back()->with('error', 'Employeee Deleted Successfully');
+        return back()->with('error', 'Delivery Boy details Deleted Successfully');
 
     }
 }
