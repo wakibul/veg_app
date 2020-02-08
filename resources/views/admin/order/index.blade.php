@@ -27,8 +27,8 @@
                             @php
                             $tr_color_class = "";
                             if($order->status == 0){
-                            $tr_color_class = "red";
-                            $lbl_class = "danger";
+                            $tr_color_class = "";
+                            $lbl_class = "";
                             }
                             elseif($order->status == 1){
                             $tr_color_class = "yellow";
