@@ -14,7 +14,7 @@ class Customer extends Authenticatable implements JWTSubject
     use Notifiable;
 
     protected $fillable = [
-        'uuid','name', 'email', 'password','mobile','otp','latitude','longitude','device_id'
+        'uuid','name', 'email', 'password','mobile','otp','latitude','longitude','device_id','free_offer','free_offer_valid_to'
     ];
 
     protected $hidden = [
