@@ -38,8 +38,8 @@ class RegisterController extends Controller
 			$free_offer = 0;
 		}
 		else
-		    $free_offer = $first_offer->first_offer;
-        $offer_month = '+'.$offer_months->offer_months.' months';
+		$free_offer = $first_offer->master_value;
+        $offer_month = '+'.$offer_months->master_value.' months';
 		$offer_vaild_to = date('Y-m-d', strtotime($offer_month));
 		DB::beginTransaction();
 		try {
