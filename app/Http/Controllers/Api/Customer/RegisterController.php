@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api\Customer;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Customer;
+use App\Models\MiscellaneousMaster;
 use JWTFactory;
 use JWTAuth,JWTException;
 use Validator,DB,Str;
@@ -28,7 +29,18 @@ class RegisterController extends Controller
 		if ($validator->fails()) {
 			return response()->json(['success'=>false,'error'=>$validator->errors()]);
 		}
-		$otp = mt_rand(100000, 999999);
+        $otp = mt_rand(100000, 999999);
+
+        $first_offer = MiscellaneousMaster::where([['status',1],['type','first_offer']])->first();
+        $offer_months = MiscellaneousMaster::where([['status',1],['type','offer_months']])->first();
+        $cust = Customer::where([['device_id',$request->device_id],['status',1]])->first();
+		if($cust){
+			$free_offer = 0;
+		}
+		else
+		$free_offer = $first_offer->master_value;
+        $offer_month = '+'.$offer_months->master_value.' months';
+		$offer_vaild_to = date('Y-m-d', strtotime($offer_month));
 		DB::beginTransaction();
 		try {
 			$customerPhoneExist = Customer::where([['mobile',$request->mobile],['otp_verified','!=',null],['status',1]])->first();
@@ -43,7 +55,9 @@ class RegisterController extends Controller
 					'password' => bcrypt($request->password),
 					'mobile' => $request->mobile,
 					'device_id' => $request->device_id,
-					'otp' => $otp
+                    'otp' => $otp,
+                    'free_offer'=>$free_offer,
+                    'free_offer_valid_to'=>$offer_vaild_to
 				]);
 				DB::commit();
 				sendNewSMS($request->mobile,"Your otp verification code is ".$otp);
