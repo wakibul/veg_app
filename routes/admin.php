@@ -159,3 +159,40 @@ Route::group(['prefix' => 'product'], function () {
         'uses' => 'Admin\ProductController@destroy',
     ]);
 });
+Route::group(['prefix' => 'coupon'], function () {
+    Route::get('/index', [
+        'as' => 'coupon.index',
+        'middleware' => ['admin'],
+        'uses' => 'Admin\couponController@index',
+    ]);
+    Route::get('/create', [
+        'as' => 'coupon.create',
+        'middleware' => ['admin'],
+        'uses' => 'Admin\CouponController@create',
+    ]);
+
+    Route::post('/store', [
+        'as' => 'coupon.store',
+        'middleware' => ['admin'],
+        'uses' => 'Admin\CouponController@store',
+    ]);
+
+    Route::get('/edit/{id}', [
+        'as' => 'coupon.edit',
+        'middleware' => ['admin'],
+        'uses' => 'Admin\CouponController@edit',
+    ]);
+
+    Route::post('/update/{id}', [
+        'as' => 'coupon.update',
+        'middleware' => ['admin'],
+        'uses' => 'Admin\CouponController@update',
+    ]);
+
+    Route::get('/delete/{id}', [
+        'as' => 'coupon.delete',
+        'middleware' => ['admin'],
+        'uses' => 'Admin\CouponController@destroy',
+    ]);
+});
+

@@ -75,6 +75,13 @@
                         </div>
                     </li>
                     <li class="nav-item dropdown">
+                        <a href="javascript:void(0)" class="nav-link" data-toggle="dropdown"><i class="fe fe-calendar"></i>Coupon</a>
+                        <div class="dropdown-menu dropdown-menu-arrow">
+                            <a href="{{route('admin.coupon.index')}}" class="dropdown-item ">Add/Manage</a>
+
+                        </div>
+                    </li>
+                    <li class="nav-item dropdown">
                         <a href="javascript:void(0)" class="nav-link" data-toggle="dropdown"><i
                                 class="fe fe-calendar"></i> Unit</a>
                         <div class="dropdown-menu dropdown-menu-arrow">

@@ -8,7 +8,7 @@
             <div class="page-header">
                 <h1 class="page-title">
                     Product List
-                    <a href="{{route("admin.product.create")}}" class="text-right btn btn-sm btn-danger"><span> Add Product</span></a>
+                    <a href="{{route("admin.product.create")}}" class="text-right btn btn-sm btn-success"><span><i class="fa fa-plus"></i>Add Product</span></a>
                 </h1>
             </div>
             <div class="row">
@@ -34,7 +34,10 @@
 
                             <tr>
                                 <td class="sl">{{$key+1}}</td>
-                                <td>{{$product->image ?? "NA"}}</td>
+
+                                <td>@if(!empty($product->small_picture))
+                                <b><img src="{{asset('public/images/large/non-leafy/'.$product->small_picture)}}" width="100px;"></b>
+                                @endif</td>
                                 <td>{{ $product->name }}</td>
                             <td>{{$product->details}}</td>
                             <td>{{$product->unit_desc??'NA'}}</td>
