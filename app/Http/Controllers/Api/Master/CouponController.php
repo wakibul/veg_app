@@ -24,18 +24,16 @@ class CouponController extends Controller
         if ($validator->fails()) {
             return response()->json(['success'=>false,'error'=>$validator->errors()]);
         }
+        $coupon = Coupon::where('is_active',1)->get();
         if(auth('api')->user()->device_id == $request->device_id){
-            if(auth('api')->user()->free_offer > 0)
-            $coupon = Coupon::where('is_active',1)->get();
-            return response()->json(['success'=>true,'coupon'=>$coupon]);
+            if(auth('api')->user()->free_offer == 0)
+            $coupon = Coupon::where('is_active',1)->where('coupon_type','!=','first_offer')->get();
         }
-        else
-            $coupon = Coupon::where('coupon_type','!=','first_offer')->where('is_active',1)->get();
 
         if(!$coupon->isEmpty()){
             return response()->json(['success'=>true,'coupon'=>$coupon]);
         }
-        return response()->json(['success'=>false]);
+        return response()->json(['success'=>false,'message'=>'No coupon found']);
     }
 
 
