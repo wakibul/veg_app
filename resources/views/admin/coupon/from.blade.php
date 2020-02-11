@@ -45,8 +45,20 @@
     <div class="row">
         <div class="col-md-4">Coupon Type</div>
         <div class="col-md-8">
-            <input type="text" name="coupon_type" class="form-control"
-                value="@isset($coupon){{$coupon->coupon_type}}@endisset" required>
+
+
+            <select class="form-control" name="coupon_type" required>
+
+                <option value="">-- Please Select--</option>
+                @foreach($miscellaneous_masters as $key=>$miscellaneous_masters)
+                <option value="{{$miscellaneous_masters->type}}">
+                    {{$miscellaneous_masters->type}}
+                </option>
+
+                @endforeach
+
+            </select>
+
         </div>
     </div>
 </div>
@@ -55,17 +67,17 @@
     <div class="row">
         <div class="col-md-4">Max Coupon Used</div>
         <div class="col-md-8">
-            <input type="text" name="coupon_type" class="form-control"
+            <input type="text" name="max_coupon_use" class="form-control"
                 value="@isset($coupon){{$coupon->max_coupon_use}}@endisset" required>
         </div>
     </div>
 </div>
 <div class="form-group">
     <div class="row">
-        <div class="col-md-4">Valid Upto</div>
+        <div class="col-md-4">Valid Upto(days)</div>
         <div class="col-md-8">
             <input type="text" name="valid_to" class="form-control"
-                value="@isset($coupon){{$coupon->valid_to}}@endisset" required>
+                value="" required>
         </div>
     </div>
 </div>

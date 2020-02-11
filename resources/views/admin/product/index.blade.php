@@ -36,7 +36,7 @@
                                 <td class="sl">{{$key+1}}</td>
 
                                 <td>@if(!empty($product->small_picture))
-                                <b><img src="{{asset('public/images/large/non-leafy/'.$product->small_picture)}}" width="100px;"></b>
+                                <b><img src="{{$product->small_picture}}" width="100px;"></b>
                                 @endif</td>
                                 <td>{{ $product->name }}</td>
                             <td>{{$product->details}}</td>

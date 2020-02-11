@@ -1,4 +1,4 @@
-<form name="city" action="{{route('admin.assign_employee.store')}}" method="POST">
+<form name="employee" action="{{route('admin.assign_employee.store')}}" method="POST">
     @csrf
     <div class="row">
         <div class="col-md-12">
@@ -23,30 +23,32 @@
                     {{-- {{ dd($orders) }} --}}
                     @foreach($orders as $key=>$order)
                     @php
-                    $tr_color_class = "";
+                    $tr_class = "";
                     if($order->status == 0){
-                    $tr_color_class = "";
+                    $tr_class = "";
                     $lbl_class = "";
                     }
                     elseif($order->status == 1){
-                    $tr_color_class = "yellow";
+                    $tr_class = "text-yellow";
                     $lbl_class = "warning";
                     }
 
                     elseif($order->status == 2){
-                    $tr_color_class = "#68D281";
+                    $tr_class = "text-green";
                     $lbl_class = "success";
                     }
                     elseif($order->status == 3){
-                    $tr_color_class = "#99FFCC";
-                    $lbl_class = "info";
+                    $tr_color_class = "text-red";
+                    $lbl_class = "red";
                     }
                     elseif($order->status == 4){
-                    $tr_color_class = "info";
-                    $lbl_class = "";
+                    $tr_color_class = "text-info";
+                    $lbl_class = "blue";
                     }
+
+                    //dd($order->orderTransactions);
                     @endphp
-                    <tr bgcolor="{{ $tr_color_class }}">
+                    <tr class="{{$tr_class}}">
                         @if(($order->status==1) && !($order->employee_id))
                         <td>
                             <!-- Material unchecked -->

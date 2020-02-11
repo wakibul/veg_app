@@ -32,8 +32,10 @@
                     <div class="btn-group">
                         <a href="{{route('admin.coupon.edit',Crypt::encrypt($coupon->id))}}" class="btn btn-sm
                         btn-primary"><i class="fa fa-edit"></i></a>
+                        @if($key != 0)
                         <a href="{{route('admin.coupon.delete',Crypt::encrypt($coupon->id))}}"
                             class="btn btn-sm btn-danger"><i class="fa fa-trash"></i></a>
+                        @endif    
                     </div>
                 </td>
             </tr>

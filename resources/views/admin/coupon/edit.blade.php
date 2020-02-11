@@ -14,7 +14,7 @@
             </div>
             <div class="card-body">
                 <div class="row">
-                    <div class="col-md-3">
+                    <div class="col-md-12">
                         @include('admin.layout.alert')
 
                         <form name="coupon" action="{{route('admin.coupon.update',Crypt::encrypt($coupon->id))}}"
@@ -33,10 +33,10 @@
 
                         </form>
                     </div>
-                    @include('admin.coupon.index')
+
                 </div>
             </div>
-
+            @include('admin.coupon.index')
         </div>
     </div>
 

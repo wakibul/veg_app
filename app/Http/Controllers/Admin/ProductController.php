@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Cart;
 use App\Models\Category;
 use App\Models\packageMaster;
 use App\Models\Product;
@@ -168,17 +169,22 @@ class ProductController extends Controller
      */
     public function update(Request $request, $id)
     {
-
+        dd($request->all());
         $id = Crypt::decrypt($id);
         $product = Product::find($id);
+        if (!($request->file('small_picture'))) {
+            $path = public_path() . '/vendor/images/product/small';
+            $imageName = date('dmyhis') . 'product.' . $request->file('small_picture')->getClientOriginalExtension();
+            $request->file('small_picture')->move($path, $imageName);
 
-        $path = public_path() . '/vendor/images/product/small';
-        $imageName = date('dmyhis') . 'product.' . $request->file('small_picture')->getClientOriginalExtension();
+        }
+        if (!($request->file('large_picture'))) {
+            $imagePath = public_path() . '/vendor/images/product/large';
+            $largeImageName = date('dmyhis') . 'product.' . $request->file('large_picture')->getClientOriginalExtension();
+            $request->file('large_picture')->move($imagePath, $largeImageName);
 
-        $request->file('small_picture')->move($path, $imageName);
-        $imagePath = public_path() . '/vendor/images/product/large';
-        $largeImageName = date('dmyhis') . 'product.' . $request->file('large_picture')->getClientOriginalExtension();
-        $request->file('large_picture')->move($imagePath, $largeImageName);
+        }
+
         if ($request->is_subscribe == 0) {
             $is_subscribed = 0;
             $is_product = 1;
@@ -259,6 +265,12 @@ class ProductController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $id = Crypt::decrypt($id);
+        $product = Product::findOrFail($id);
+        $cart = Cart::where('product_id', $product->id)->delete();
+        $product->delete();
+
+        return back()->with('error', 'Product details Deleted Successfully');
+
     }
 }

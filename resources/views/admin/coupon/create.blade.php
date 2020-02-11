@@ -14,7 +14,7 @@
             </div>
             <div class="card-body">
                 <div class="row">
-                    <div class="col-md-3">
+                    <div class="col-md-12">
 
                         <form name="coupon" action="{{route('admin.coupon.store')}}" method="POST"
                             enctype="multipart/form-data">
@@ -32,11 +32,11 @@
 
                         </form>
                     </div>
-                    @include('admin.coupon.index')
+
                 </div>
 
             </div>
-
+            @include('admin.coupon.index')
         </div>
 
     </div>
