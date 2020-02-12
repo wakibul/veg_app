@@ -169,16 +169,19 @@ class ProductController extends Controller
      */
     public function update(Request $request, $id)
     {
-        dd($request->all());
+
+
+
         $id = Crypt::decrypt($id);
         $product = Product::find($id);
-        if (!($request->file('small_picture'))) {
+
+        if (($request->file('small_picture') != null)) {
             $path = public_path() . '/vendor/images/product/small';
             $imageName = date('dmyhis') . 'product.' . $request->file('small_picture')->getClientOriginalExtension();
             $request->file('small_picture')->move($path, $imageName);
 
         }
-        if (!($request->file('large_picture'))) {
+        if (($request->file('large_picture') != null)) {
             $imagePath = public_path() . '/vendor/images/product/large';
             $largeImageName = date('dmyhis') . 'product.' . $request->file('large_picture')->getClientOriginalExtension();
             $request->file('large_picture')->move($imagePath, $largeImageName);
@@ -197,6 +200,17 @@ class ProductController extends Controller
         $request->merge([
             "is_available" => true,
         ]);
+
+        if (($request->file('small_picture') != null)) {
+            $small_picture = 'veg_app/' . url('/public') . '/public/images/small' . $imageName;
+        } else {
+            $small_picture = $product->small_picture;
+        }
+        if (($request->file('large_picture') != null)) {
+            $large_picture = 'veg_app/' . url('/public') . '/public/images/large' . $largeImageName;
+        } else {
+            $large_picture = $product->large_picture;
+        }
         DB::beginTransaction();
         $data = [
 
@@ -204,9 +218,9 @@ class ProductController extends Controller
             'details' => $request->details,
             'unit_desc' => $request->unit_desc,
             'category_id' => $request->category_id,
-            'small_picture' => 'veg_app/' . url('/public') . '/public/images/small' . $imageName,
+            'small_picture' => $small_picture,
 
-            'large_picture' => 'veg_app/' . url('/public') . '/public/images/large' . $largeImageName,
+            'large_picture' => $large_picture,
 
             'status' => $request->product_status,
             'is_available' => $request->is_available,

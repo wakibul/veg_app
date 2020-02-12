@@ -12,4 +12,5 @@ class Coupon extends Model
     {
         return $this->belongsTo(MiscellaneousMaster::where('type','=','coupon_type'));
     }
+
 }

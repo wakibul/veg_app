@@ -102,6 +102,7 @@ class OrderController extends Controller
             $data['longitude'] = $request->longitude;
             $data['address'] = $request->address;
             $data['pincode'] = $request->pincode;
+            $data['coupon_id'] = $request->coupon_id;
             $data['time_slot_id'] = $request->time_slot_id;
             $data['delivery_date'] = $request->delivery_date;
             $data['delivery_charge'] = $charge_amount;
@@ -137,6 +138,9 @@ class OrderController extends Controller
         // }
 
     }
+
+
+
 
     /**
      * Display the specified resource.
