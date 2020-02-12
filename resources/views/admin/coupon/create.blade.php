@@ -45,5 +45,9 @@
 @endsection
 @section('js')
 <script src="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.12.6/js/standalone/selectize.min.js"></script>
-
+<script type="text/javascript">
+    $('.delete').on('click', function () {
+        return confirm('Are you sure to delete this coupon?');
+    });
+</script>
 @endsection

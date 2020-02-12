@@ -49,7 +49,6 @@ class CouponController extends Controller
         $days = $request->valid_to;
         $date_sum = date('Y-m-d', strtotime($current_date . ' + ' . $days . ' days'));
 
-
         $validator = Validator::make($request->all(), [
             'name' => 'required',
             'coupon_code' => 'required',
@@ -110,11 +109,10 @@ class CouponController extends Controller
     public function edit($id)
     {
 
-
         $id = Crypt::decrypt($id);
         $coupon = Coupon::find($id);
-        $create_date=dateFormat($coupon->created_at,'Y-m-d');
-        $up_to=dateFormat($coupon->valid_to,'Y-m-d');
+        $create_date = dateFormat($coupon->created_at, 'Y-m-d');
+        $up_to = dateFormat($coupon->valid_to, 'Y-m-d');
 
         $diff_in_day = dateDiff($create_date, $up_to, "Day");
 
@@ -143,7 +141,7 @@ class CouponController extends Controller
             'coupon_code' => 'required',
             'coupon_in' => 'required',
             'coupon_value' => 'required',
-            'coupon_type' => 'required',
+
             'valid_to' => 'required',
             'minimun_amount' => 'required',
             'is_active' => 'required',
@@ -156,7 +154,7 @@ class CouponController extends Controller
                 'coupon_code' => $request->coupon_code,
                 'coupon_in' => $request->coupon_in,
                 'coupon_value' => $request->coupon_value,
-                'coupon_type' => $request->coupon_type,
+                'coupon_type' => 'first_offer',
                 'valid_to' => $request->valid_to,
                 'minimun_amount' => $request->minimun_amount,
                 'is_active' => $request->is_active,
@@ -173,6 +171,23 @@ class CouponController extends Controller
             return back()->with('error', 'Something Went Wrong');
 
         }
+
+    }
+    public function status($id)
+    {
+        $id = Crypt::decrypt($id);
+        $coupon = Coupon::find($id);
+
+        if ($coupon->is_active == 1) {
+            $status = 0;
+        } else {
+            $status = 1;
+
+        }
+
+        $coupon->update(['is_active' => $status]);
+        $coupon->save();
+        return Redirect::route('admin.coupon.index')->with('success', 'Coupon Status Updated successfully');
 
     }
 

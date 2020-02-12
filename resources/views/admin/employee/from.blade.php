@@ -36,10 +36,10 @@
 </div>
 <div class="form-group">
     <div class="row">
-        <div class="col-md-4">Password</div>
+        <div class="col-md-4">@if(@isset($employee) )New Password @else Password @endif</div>
         <div class="col-md-6">
             <input type="password" name="pass" class="form-control"
-                value="@isset($employee){{$employee->password}}@endisset" required>
+                value="" required>
         </div>
     </div>
 </div>

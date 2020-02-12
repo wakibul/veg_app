@@ -9,7 +9,7 @@
         <div class="col-12">
             <div class="page-header">
                 <h1 class="page-title">
-                    Employee Master
+                    Delivery Boy Master
                 </h1>
             </div>
             <div class="card-body">

@@ -83,7 +83,11 @@ class EmployeeController extends Controller
      */
     public function show($id)
     {
-        //
+        $id = Crypt::decrypt($id);
+        $employee = employee::find($id);
+        return view('admin.employee.show', compact('employee'));
+
+
     }
 
     /**
