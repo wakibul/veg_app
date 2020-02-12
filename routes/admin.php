@@ -205,3 +205,16 @@ Route::group(['prefix' => 'coupon'], function () {
         'uses' => 'Admin\CouponController@destroy',
     ]);
 });
+Route::group(['prefix' => 'settlement'], function () {
+    Route::get('/index', [
+        'as' => 'settlement.index',
+        'middleware' => ['admin'],
+        'uses' => 'Admin\settlementController@index',
+    ]);
+    Route::post('/store', [
+        'as' => 'settlement.store',
+        'middleware' => ['admin'],
+        'uses' => 'Admin\settlementController@store',
+    ]);
+
+});
