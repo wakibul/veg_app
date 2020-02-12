@@ -10,7 +10,7 @@ class Location extends Model
 {
      public function pincodes()
     {
-        # code...
+
         return $this->belongsToMany(Pincode::Class);
     }
 }
