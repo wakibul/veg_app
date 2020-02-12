@@ -9,4 +9,8 @@ class Employee extends Model
     protected $guarded = ['id', 'token'];
 
     public static $default_password = 'employee@veg_app';
+    public function employeeTransactions(){
+        return $this->hasMany(EmployeeTransaction::class);
+    }
+
 }

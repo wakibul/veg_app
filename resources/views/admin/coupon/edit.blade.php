@@ -14,7 +14,7 @@
             </div>
             <div class="card-body">
                 <div class="row">
-                    <div class="col-md-3">
+                    <div class="col-md-12">
                         @include('admin.layout.alert')
 
                         <form name="coupon" action="{{route('admin.coupon.update',Crypt::encrypt($coupon->id))}}"
@@ -33,10 +33,10 @@
 
                         </form>
                     </div>
-                    @include('admin.coupon.index')
+
                 </div>
             </div>
-
+            @include('admin.coupon.index')
         </div>
     </div>
 
@@ -44,5 +44,9 @@
 @endsection
 @section('js')
 <script src="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.12.6/js/standalone/selectize.min.js"></script>
-
+<script type="text/javascript">
+    $('.delete').on('click', function () {
+        return confirm('Are you sure to delete this coupon?');
+    });
+</script>
 @endsection

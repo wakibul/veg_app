@@ -14,7 +14,7 @@
             </div>
             <div class="card-body">
                 <div class="row">
-                    <div class="col-md-3">
+                    <div class="col-md-12">
 
                         <form name="coupon" action="{{route('admin.coupon.store')}}" method="POST"
                             enctype="multipart/form-data">
@@ -32,11 +32,11 @@
 
                         </form>
                     </div>
-                    @include('admin.coupon.index')
+
                 </div>
 
             </div>
-
+            @include('admin.coupon.index')
         </div>
 
     </div>
@@ -45,5 +45,9 @@
 @endsection
 @section('js')
 <script src="https://cdnjs.cloudflare.com/ajax/libs/selectize.js/0.12.6/js/standalone/selectize.min.js"></script>
-
+<script type="text/javascript">
+    $('.delete').on('click', function () {
+        return confirm('Are you sure to delete this coupon?');
+    });
+</script>
 @endsection

@@ -88,6 +88,7 @@ $key = 0;
     <div class="row">
         <div class="col-md-2">Small Image</div>
         <div class="col-md-4">
+
             <div class="custom-file">
                 <input type="file" class="custom-file-input" name="small_picture" value="@isset($product){{$product->small_picture}}@endisset">
                 <label class="custom-file-label">Choose file...</label>

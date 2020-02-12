@@ -7,6 +7,7 @@
                 <th>Phone No.</th>
                 <th>Address</th>
                 <th>pin</th>
+                <th>Action</th>
             </tr>
         </thead>
         <tbody>
@@ -16,7 +17,7 @@
                 <td>{{$employee->name}}</td>
                 <td>{{$employee->mobile}}</td>
                 <td>{{$employee->address}}</td>
-                <td>{{$employee->pin}}</td>
+                <td>{{$employee->pincode}}</td>
                 <td>
                     <div class="btn-group">
                         <a href="{{route('admin.employee.edit',Crypt::encrypt($employee->id))}}" class="btn btn-sm

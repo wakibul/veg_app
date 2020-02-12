@@ -36,4 +36,32 @@ function testPusher(){
     $order = Order::first();
     return event(new OrderPusherEvent($order));
 }
+function dateFormat($dateTime, $format = "d-m-Y")
+{
+    if ($dateTime == "0000-00-00" || $dateTime == "0000-00-00 00:00:00") {
+        return " ";
+    }
+    $date = strtotime($dateTime);
+    if (date('d-m-Y', $date) != '01-01-1970') {
+        return date($format, $date);
+    } else {
+        return " ";
+    }
+}
 
+// type must be Day, Month, Year
+function dateDiff($from_date, $to_date, $type)
+{
+    if (trim($from_date) == "") {
+        $from_date = "2019-01-01";
+    }
+    $from_date = new \DateTime($from_date);
+    $to_date   = new \DateTime($to_date);
+    $diff      = $from_date->diff($to_date);
+    if ($type == "Month") {
+        return (($diff->format('%y') * 12) + $diff->format('%m'));
+    } elseif ($type == "Day") {
+        return $diff->format('%r%a');
+    }
+    return 0;
+}

@@ -97,6 +97,11 @@ Route::group(['prefix' => 'employee'], function () {
         'middleware' => ['admin'],
         'uses' => 'Admin\EmployeeController@destroy',
     ]);
+    Route::get('/show/{id}', [
+        'as' => 'employee.show',
+        'middleware' => ['admin'],
+        'uses' => 'Admin\EmployeeController@show',
+    ]);
 
 });
 
@@ -188,6 +193,11 @@ Route::group(['prefix' => 'coupon'], function () {
         'middleware' => ['admin'],
         'uses' => 'Admin\CouponController@update',
     ]);
+    Route::post('/status/{id}', [
+        'as' => 'coupon.status',
+        'middleware' => ['admin'],
+        'uses' => 'Admin\CouponController@status',
+    ]);
 
     Route::get('/delete/{id}', [
         'as' => 'coupon.delete',
@@ -195,4 +205,3 @@ Route::group(['prefix' => 'coupon'], function () {
         'uses' => 'Admin\CouponController@destroy',
     ]);
 });
-
