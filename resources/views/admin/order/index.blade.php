@@ -96,8 +96,7 @@
                             @endif</td>
                         <td>
                             <button type="button" onClick="showItems(this)" class="btn btn-info btn-sm"
-                                data-items="{{$order->orderTransactions->toJson()}}">
-                                <i class="fa fa-eye"></i> Item
+                                data-order="{{$order->toJson()}}" <i class="fa fa-eye"></i> Item
                             </button>
                         </td>
                         <td>
@@ -130,8 +129,9 @@
             <div class="modal-content">
 
                 <!-- Modal Header -->
-                <div class="modal-header">
-                    <h4 class="modal-title">Order Items</h4>
+                <div class="modal-header btn btn-info">
+                    <h4 class="modal-title">Order Items: <strong id="order_no"></strong></h4>
+                    <h6>Order Time:<strong id="order_time"></strong></h6>
 
                 </div>
 

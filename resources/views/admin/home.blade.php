@@ -15,7 +15,7 @@
             <div class="card">
                 <div class="card-body p-3 text-center">
 
-                    <div class="h1 m-0">1</div>
+                    <div class="h1 m-0">{{$todays_order}}</div>
                     <div class="text-muted mb-4">Todays Order</div>
                 </div>
             </div>
@@ -24,7 +24,7 @@
             <div class="card">
                 <div class="card-body p-3 text-center">
 
-                    <div class="h1 m-0">1</div>
+                    <div class="h1 m-0">{{$total_orders}}</div>
                     <div class="text-muted mb-4">Total Orders</div>
                 </div>
             </div>
@@ -37,48 +37,22 @@
                 </div>
             </div>
         </div>
-        <!--- <div class="col-6 col-sm-4 col-lg-2">
-            <div class="card">
-                <div class="card-body p-3 text-center">
-                    <div class="h1 m-0">1</div>
-                    <div class="text-muted mb-4">Guest Booking</div>
-                </div>
-            </div>
-        </div>
-        <div class="col-6 col-sm-4 col-lg-2">
-            <div class="card">
-                <div class="card-body p-3 text-center">
 
-                    <div class="h1 m-0">1</div>
-                    <div class="text-muted mb-4">Total Franchise</div>
-                </div>
-            </div>
-        </div>
-        <div class="col-6 col-sm-4 col-lg-2">
-            <div class="card">
-                <div class="card-body p-3 text-center">
-                    <div class="h1 m-0">1</div>
-                    <div class="text-muted mb-4">Total Doctors</div>
-                </div>
-            </div>
-        </div>
-
-    -->
 
 
 
     </div>
-   @include('admin.layout.alert')
+    @include('admin.layout.alert')
     @include('admin.order.index')
 
 </div>
 @endsection
 @section("css")
-    <style>
-        tbody tr{
-            border-bottom: 2px solid #9DB2A2;
-        }
-    </style>
+<style>
+    tbody tr {
+        border-bottom: 2px solid #9DB2A2;
+    }
+</style>
 @endsection
 @section('js')
 <script src="https://js.pusher.com/5.0/pusher.min.js"></script>
@@ -106,7 +80,9 @@
         console.log('showItems loadings');
         var $this = $(obj);
         var $modal = $("#myModal");
-        var items = $this.data("items");
+        var order = $this.data("order");
+        var items = order["order_transactions"];
+        console.log(order);
         console.log(items);
         var table_items = "";
         $(items).each(function(index, element){
@@ -116,7 +92,10 @@
             table_items +="<td>"+element.quantity+"</td>";
             table_items +="<td>"+element.price+"</td>";
             table_items +="</tr>";
-        })
+        });
+        $modal.find("#order_no").html(order.order_confirm_id ? order.order_confirm_id : "Pending#"+order.id);
+        $modal.find("#order_time").html(order.created_at);
+        $modal.find("#order_address").html(order.address);
         $modal.find("table tbody").html(table_items);
         $modal.modal();
     }

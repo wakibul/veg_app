@@ -21,6 +21,10 @@ class DashboardController extends Controller
         $users[] = Auth::guard()->user();
         $users[] = Auth::guard('admin')->user();
         $orders = Order::query();
+        $date = date('Y-m-d');
+
+        $total_orders = Order::count();
+        $todays_order = Order::where('created_at', $date)->count();
         $orders->when(request("slot_id"), function ($query) {
             return $query->where("time_slot_id", request("slot_id"));
         });
@@ -28,7 +32,7 @@ class DashboardController extends Controller
         $employees = Employee::get();
 //dd($users);
 
-        return view('admin.home', compact('orders', 'employees'));
+        return view('admin.home', compact('orders', 'employees', 'total_orders','todays_order'));
 
     }
 

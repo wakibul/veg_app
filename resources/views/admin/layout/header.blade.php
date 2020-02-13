@@ -60,45 +60,23 @@
                     </li>
                     <li class="nav-item">
                         <a href="javascript:void(0)" class="nav-link" data-toggle="dropdown"><i class="fa fa-tty"></i>
-                            Category </a>
+                            Masters </a>
                         <div class="dropdown-menu dropdown-menu-arrow">
-                            <a href="{{route('admin.category.index')}}" class="dropdown-item ">Add / Manage</a>
+                            <a href="{{route('admin.category.index')}}" class="dropdown-item ">Ctegory (Add /
+                                Manage)</a>
+
+                            <a href="{{route('admin.product.index')}}" class="dropdown-item ">Product (Add /
+                                Manage)</a>
+                            <a href="{{route('admin.coupon.index')}}" class="dropdown-item ">Coupon(Add/Manage)</a>
+                            <a href="{{route('admin.unit.index')}}" class="dropdown-item ">Unit(Add/Manage)</a>
+                            <a href="{{route('admin.employee.index')}}" class="dropdown-item ">Delivery
+                                Boy(Add/Manage)</a>
                         </div>
                     </li>
-                    <li class="nav-item dropdown">
-                        <a href="javascript:void(0)" class="nav-link" data-toggle="dropdown"><i
-                                class="fe fe-calendar"></i>Product</a>
-                        <div class="dropdown-menu dropdown-menu-arrow">
 
-                            <a href="{{route('admin.product.index')}}" class="dropdown-item ">Add/Manage</a>
-
-                        </div>
-                    </li>
                     <li class="nav-item dropdown">
-                        <a href="javascript:void(0)" class="nav-link" data-toggle="dropdown"><i class="fe fe-calendar"></i>Coupon</a>
-                        <div class="dropdown-menu dropdown-menu-arrow">
-                            <a href="{{route('admin.coupon.index')}}" class="dropdown-item ">Add/Manage</a>
-
-                        </div>
-                    </li>
-                    <li class="nav-item dropdown">
-                        <a href="javascript:void(0)" class="nav-link" data-toggle="dropdown"><i
-                                class="fe fe-calendar"></i> Unit</a>
-                        <div class="dropdown-menu dropdown-menu-arrow">
-                            <a href="{{route('admin.unit.index')}}" class="dropdown-item ">Add</a>
-
-                        </div>
-                    </li>
-                    <li class="nav-item dropdown">
-                        <a href="javascript:void(0)" class="nav-link" data-toggle="dropdown"><i
-                                class="fa fa-user"></i>Delivery Boy</a>
-                        <div class="dropdown-menu dropdown-menu-arrow">
-
-                            <a href="{{route('admin.employee.index')}}" class="dropdown-item ">Add/Manage</a>
-                        </div>
-                    </li>
-                    <li class="nav-item dropdown">
-                       <a href="{{route('admin.settlement.index')}}" class="nav-link "><i class="fa fa-calculator" aria-hidden="true"></i>Settlement</a>
+                        <a href="{{route('admin.settlement.index')}}" class="nav-link "><i class="fa fa-calculator"
+                                aria-hidden="true"></i>Settlement</a>
                     </li>
                     <!---<li class="nav-item dropdown">
                     <a href="javascript:void(0)" class="nav-link" data-toggle="dropdown"><i class="fe fe-file"></i> Doctor</a>

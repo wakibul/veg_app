@@ -168,7 +168,7 @@ Route::group(['prefix' => 'coupon'], function () {
     Route::get('/index', [
         'as' => 'coupon.index',
         'middleware' => ['admin'],
-        'uses' => 'Admin\couponController@index',
+        'uses' => 'Admin\CouponController@index',
     ]);
     Route::get('/create', [
         'as' => 'coupon.create',
