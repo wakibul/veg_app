@@ -65,6 +65,7 @@
                                                     <td>{{($employee->updated_balance)-($total_paid)}}</td>
 
                                                 </tr>
+
                                                 <tr class="hidden" tabindex="-1">
                                                     <td colspan="4">
                                                         <h4>transaction details</h4>
@@ -78,13 +79,13 @@
                                                                         <th>Order Id</th>
 
                                                                         <th>Amount</th>
-                                                                        <th>Action(Paid)</th>
+                                                                        <th>Action(Settlement)</th>
 
                                                                     </tr>
                                                                 </thead>
                                                                 <tbody>
-
-                                                                    @foreach ($employee->employeeTransactions as
+                                                                    @if((($employee->updated_balance)-($total_paid))!=0)
+                                                                    @foreach ($employee->employeeUnpaidTransactions as
                                                                     $key=>$employee_transaction)
                                                                     <tr>
                                                                         <td>{{ ($key+1) }}</td>
@@ -108,21 +109,24 @@
 
 
                                                                     @endforeach
+
                                                                     <tr>
                                                                         <td colspan="1"></td>
                                                                         <td>Total:</td>
-                                                                        <td>{{$employee->updated_balance}}</td>
+                                                                        <td>{{($employee->updated_balance)-($total_paid)}}
+                                                                        </td>
                                                                         <td>
                                                                             <button type="submit"
-                                                                                class="btn btn-primary">Pay</button>
+                                                                                class="btn btn-primary">Sattlement</button>
                                                                         </td>
                                                                     </tr>
-
+                                                                    @endif
                                                                 </tbody>
                                                             </table>
                                                         </form>
                                                     </td>
                                                 </tr>
+
                                                 @empty
                                                 <tr>
                                                     <td class="text-danger text-center" colspan="3">No Records found.

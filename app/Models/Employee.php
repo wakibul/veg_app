@@ -15,5 +15,9 @@ class Employee extends Model
     public function employeePaidTransactions(){
         return $this->hasMany(EmployeeTransaction::class)->where('status',2);
     }
+    public function employeeUnpaidTransactions(){
+        return $this->hasMany(EmployeeTransaction::class)->where('status', 1);
+
+    }
 
 }
