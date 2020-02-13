@@ -58,8 +58,8 @@ class EmployeeController extends Controller
      */
     public function user()
     {
-        //
-        $employee = Employee::findOrFail(auth('employee')->user()->id)->first();
+
+        $employee = Employee::where('id',auth('employee')->user()->id)->first();
         return response()->json(['success'=>true,'employee_details'=>$employee]);
     }
 
