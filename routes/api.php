@@ -31,7 +31,7 @@ Route::middleware('auth:api')->group(function(){
         Route::post('/product', 'Api\Master\ProductController@index');
         Route::get('/latest-product', 'Api\Master\ProductController@latest');
         Route::get('/popular-product', 'Api\Master\ProductController@popular');
-        Route::get('/banner', 'Api\Master\BannerController@index');
+        Route::get('/pages', 'Api\Master\PagesController@index');
         Route::post('/time-slot', 'Api\Master\TimeSlotController@index');
         Route::post('/pincode', 'Api\Master\PincodeController@index');
         Route::post('/offers', 'Api\Master\CouponController@index');
