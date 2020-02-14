@@ -115,12 +115,12 @@ if(isset($product)==true){
         <div class="col-md-2"> Is Subscrib</div>
         <div class="custom-control custom-checkbox">
             <input type="checkbox" class="custom-control-input" id="defaultUnchecked" name="is_subscribe"
-                onclick="onlySub(this)" value="0" @isset($product){{$product->is_subscribed==0?'selected':''}}@endisset>
+                onclick="onlySub(this)" value="0" @isset($product){{($product->is_subscribed==0)?'checked':''}}@endisset>
             <label class="custom-control-label" for="defaultUnchecked">Yes</label> &nbsp;
         </div>
         <div class="custom-control custom-checkbox">
             <input type="checkbox" class="custom-control-input" id="default" name="is_subscribe" onclick="onlySub(this)"
-                onclick="onlySub(this)" value="1" @isset($product){{$product->is_product==0?'selected':''}}@endisset>
+                onclick="onlySub(this)" value="1" @isset($product){{($product->is_product==0)?'checked':''}}@endisset>
             <label class="custom-control-label" for="default">No</label>
         </div>
 
