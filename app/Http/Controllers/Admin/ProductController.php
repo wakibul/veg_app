@@ -52,6 +52,7 @@ class ProductController extends Controller
     public function store(Request $request)
     {
 
+
         $path = public_path() . '/vendor/images/product/small';
         $imageName = date('dmyhis') . 'product.' . $request->file('small_picture')->getClientOriginalExtension();
 
@@ -82,7 +83,7 @@ class ProductController extends Controller
 
             'large_picture' => 'veg_app/' . url('/public') . '/public/images/large' . $largeImageName,
 
-            'status' => $request->product_status,
+            'status' => $request->productstatus,
             'is_available' => $request->is_available,
             'is_subscribed' => $is_subscribed,
             'is_product' => $is_product,
@@ -93,7 +94,7 @@ class ProductController extends Controller
         $default_key = 0;
         foreach ($request->default_packages as $key => $value) {
             if ($value) {
-                $default_key = $key;
+                $default_key = $value;
             }
         }
         // dd($request->default_packages);
@@ -172,7 +173,6 @@ class ProductController extends Controller
     {
 
 
-
         $id = Crypt::decrypt($id);
         $product = Product::find($id);
 
@@ -223,7 +223,7 @@ class ProductController extends Controller
 
             'large_picture' => $large_picture,
 
-            'status'        => $request->product_status,
+            'status'        => $request->productstatus,
             'is_available'  => $request->is_available,
             'is_subscribed' => $is_subscribed,
             'is_product'    => $is_product,
@@ -238,7 +238,7 @@ class ProductController extends Controller
         if($request->default_packages){
             foreach ($request->default_packages as $key => $value) {
                 if ($value) {
-                    $default_key = $key;
+                    $default_key = $value;
                 }
             }
         }
