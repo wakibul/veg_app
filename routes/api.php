@@ -37,6 +37,7 @@ Route::middleware('auth:api')->group(function(){
         Route::post('/offers', 'Api\Master\CouponController@index');
         Route::post('/offers/apply', 'Api\Master\CouponController@applyCoupon');
         Route::get('/banner', 'Api\Master\BannerController@index');
+        Route::post('/search', 'Api\Master\SearchController@index');
     });
     Route::group(['prefix' => 'customer'], function () {
         Route::get('/cancel-reason', 'Api\Customer\CancellationController@reason');
