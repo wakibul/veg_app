@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Employee;
 use App\Models\Order;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 
 class OrderController extends Controller
 {
@@ -129,19 +130,20 @@ class OrderController extends Controller
 
         }
         $employee_id = $request->employee_id;
-        return $this->sendAssignNotification($employee_id);
+        $this->sendAssignNotification($employee_id, $request->order_checks);
 
-        return redirect()->back()->with('success', 'Delivery Boy assign successfully');
+        return redirect()->back()->with('success', 'Delivery Boy assign successfully.');
 
     }
-    public function sendAssignNotification($employee_id)
+    public function sendAssignNotification($employee_id, $orders)
     {
-         $employee=Employee::find($employee_id);
-        $employee = $employee->name;
-        $title = "Order Assigned " . $booking->booking_no;
-        $message = "Please pay the total amount " . $booking->total_amount . " " . env("APP_CURRENCY", 'Rs');
-        $notification = sendMobilePushNotification($customer_message, $customer_title, [$customer->api_key], ["booking_id" => $booking->id, "booking_no" => $booking->booking_no], 106);
-        Log::debug($customer_notification);
+        $employee = Employee::find($employee_id);
+        // $employee = $employee->name;
+        $title = "Delivery Order Assigned ";
+        $customer_message = "Hi,".$employee->name." Login to view details.";
+
+        $notification = sendMobilePushNotification($customer_message, $title, [$employee->fcm_token], ["order_id" => $orders, "employee_id" => $employee->id], 101, true);
+        Log::debug($notification);
 /*         if ($booking->booked_service_provider) {
 $booked_service_provider       = $booking->booked_service_provider->first()->service_provider;
 $service_provider_title        = "Service Completed " . $booking->booking_no;
