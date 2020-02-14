@@ -154,7 +154,8 @@ class ProductController extends Controller
         $categories = Category::get();
         $package_masters = packageMaster::get();
 
-        $product = Product::find($id);
+        $product = Product::with(["productPackage"])->find($id);
+        // dd($product);
 
         return view('admin.product.edit', compact('product', 'categories', 'package_masters'));
 
@@ -214,55 +215,57 @@ class ProductController extends Controller
         DB::beginTransaction();
         $data = [
 
-            'name' => $request->name,
-            'details' => $request->details,
-            'unit_desc' => $request->unit_desc,
-            'category_id' => $request->category_id,
+            'name'          => $request->name,
+            'details'       => $request->details,
+            'unit_desc'     => $request->unit_desc,
+            'category_id'   => $request->category_id,
             'small_picture' => $small_picture,
 
             'large_picture' => $large_picture,
 
-            'status' => $request->product_status,
-            'is_available' => $request->is_available,
+            'status'        => $request->product_status,
+            'is_available'  => $request->is_available,
             'is_subscribed' => $is_subscribed,
-            'is_product' => $is_product,
+            'is_product'    => $is_product,
 
         ];
-        $product = $product->update($data);
+
+        $product->update($data);
+        $product->productPackage()->delete();
 
         $default_key = 0;
-        foreach ($request->default_packages as $key => $value) {
-            if ($value) {
-                $default_key = $key;
+
+        if($request->default_packages){
+            foreach ($request->default_packages as $key => $value) {
+                if ($value) {
+                    $default_key = $key;
+                }
             }
         }
 
         if ($product) {
             $product_packages_array = [];
             $product_packages = [];
-
             foreach ($request->category_ids as $key => $category_id) {
-
                 $product_packages_data = [
-                    'skucode' => $request->skucodes[$key],
-                    'product_id' => $id,
+                    'skucode'            => $request->skucodes[$key],
+                    'product_id'         => $id,
                     'package_masters_id' => $request->category_ids[$key],
-                    'market_price' => $request->market_prices[$key],
-                    'offer_price' => $request->offer_prices[$key],
-                    'offer_percentage' => $request->offer_percentages[$key],
-                    'is_offer' => $request->is_offers[$key],
-                    'status' => $request->status[$key],
-
-                    'created_at' => getCurrentDate(),
-                    'updated_at' => getCurrentDate(),
+                    'market_price'       => $request->market_prices[$key],
+                    'offer_price'        => $request->offer_prices[$key],
+                    'offer_percentage'   => $request->offer_percentages[$key],
+                    'is_offer'           => $request->is_offers[$key],
+                    'status'             => $request->status[$key],
+                    'created_at'         => getCurrentDate(),
+                    'updated_at'         => getCurrentDate(),
                 ];
+
                 $product_packages_array[] = $product_packages_data;
-                $product_packages[] = ProductPackage::create($product_packages_data);
+                $product_packages[] = $product->productPackage()->create($product_packages_data);
             }
             $product = Product::find($id);
 
             $default_id = $product_packages[$default_key]->id;
-
             $product->default_package = $default_id;
             $product->save();
 

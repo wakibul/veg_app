@@ -62,7 +62,7 @@
 
                                                     @endphp
 
-                                                    <td>{{($employee->updated_balance)-($total_paid)}}</td>
+                                                    <td>{{$employee->updated_balance}}</td>
 
                                                 </tr>
 
@@ -72,6 +72,9 @@
                                                         <form name="employee"
                                                             action="{{route('admin.settlement.store')}}" method="POST">
                                                             @csrf
+
+                                                            <input type="hidden" name="employee_id"
+                                                                value="{{$employee->id}}">
                                                             <table class="table table-bordered">
                                                                 <thead>
                                                                     <tr>
@@ -84,7 +87,7 @@
                                                                     </tr>
                                                                 </thead>
                                                                 <tbody>
-                                                                    @if((($employee->updated_balance)-($total_paid))!=0)
+
                                                                     @foreach ($employee->employeeUnpaidTransactions as
                                                                     $key=>$employee_transaction)
                                                                     <tr>
@@ -109,15 +112,21 @@
 
 
                                                                     @endforeach
-
+                                                                    @if(($employee->updated_balance)!=0)
                                                                     <tr>
                                                                         <td colspan="1"></td>
                                                                         <td>Total:</td>
-                                                                        <td>{{($employee->updated_balance)-($total_paid)}}
+                                                                        <td>{{ $employee->updated_balance }}
                                                                         </td>
                                                                         <td>
                                                                             <button type="submit"
                                                                                 class="btn btn-primary">Sattlement</button>
+                                                                        </td>
+                                                                    </tr>
+                                                                    @else
+                                                                    <tr>
+                                                                        <td class="text-danger text-center" colspan="4">
+                                                                            No Records found.
                                                                         </td>
                                                                     </tr>
                                                                     @endif
