@@ -17,13 +17,12 @@ $(".package:last").show("slow");
 resetDefaultPackages();
 }
 removePackage = function (obj) {
-
     if ($(".package").length == 1) {
         alert("Atleast one package required.");
         return false;
     }
-    $(obj).parents(".package").hide("slow", function () {
-console.log("remove button clicked");
+    $(".package:last").hide("slow", function () {
+        console.log("remove button clicked");
         $(this).remove();
     });
 }

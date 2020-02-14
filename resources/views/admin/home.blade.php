@@ -55,7 +55,8 @@
 </style>
 @endsection
 @section('js')
-<script src="https://js.pusher.com/5.0/pusher.min.js"></script>
+<script src="https://js.pusher.com/5.1/pusher.min.js"></script>
+
 <script>
     $(document).ready(function(){
         $('#employee').on('show.bs.collapse', function () {

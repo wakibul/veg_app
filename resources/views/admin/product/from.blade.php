@@ -1,16 +1,17 @@
 @csrf
 @php
+$productPackages = collect();
 if(isset($product)==true){
-if($product->count()){
-if($product->productPackage()->exists()){
-$productPackages = $product->productPackage;
-}
+    if($product->count()){
+        if($product->productPackage()->exists()){
+            $productPackages = $product->productPackage;
+        }
+    }else{
+        $productPackages = collect();
+    }
 }else{
-$productPackages = collect();
-}
-}else{
-$productPackages = collect();
-$key = 0;
+    $productPackages = collect();
+    $key = 0;
 }
 
 
@@ -45,8 +46,7 @@ $key = 0;
                 @foreach($categories as $category)
 
                 <option value="{{$category->id}}" @isset($product)
-                {{($product->category_id==$category->id)? 'selected':''}}
-                    @endisset">
+                    {{($product->category_id==$category->id)? 'selected':''}} @endisset">
                     {{$category->name}}</option>
                 @endforeach
 
@@ -90,7 +90,8 @@ $key = 0;
         <div class="col-md-4">
 
             <div class="custom-file">
-                <input type="file" class="custom-file-input" name="small_picture" value="@isset($product){{$product->small_picture}}@endisset">
+                <input type="file" class="custom-file-input" name="small_picture"
+                    value="@isset($product){{$product->small_picture}}@endisset">
                 <label class="custom-file-label">Choose file...</label>
 
             </div>
@@ -100,7 +101,8 @@ $key = 0;
         <div class="col-md-4">
 
             <div class="custom-file">
-                <input type="file" class="custom-file-input" name="large_picture" value="@isset($product){{$product->large_picture}} @endisset">
+                <input type="file" class="custom-file-input" name="large_picture"
+                    value="@isset($product){{$product->large_picture}} @endisset">
                 <label class="custom-file-label">Choose file...</label>
 
             </div>
@@ -133,18 +135,21 @@ $key = 0;
                     Product Packages
                 </h1>
             </div>
-
+        @if($productPackages->count())
             @forelse ($productPackages as $key => $productpackage)
-            @include('admin.product.product-package-form')
+                @include('admin.product.product-package-form')
             @empty
-            @if(old('old_producPackages')!=null)
-            @foreach(old('old_producPackages') as $key => $producPackage)
-            @include('admin.product.product-package-form')
-            @endforeach
-            @else
-            @include('admin.product.product-package-form')
-            @endif
+                 @if(old('old_productPackages')!=null)
+                    @foreach(old('old_productPackages') as $key => $productPackage)
+                        @include('admin.product.product-package-form')
+                    @endforeach
+                @else
+                    @include('admin.product.product-package-form')
+                @endif
             @endforelse
+        @else
+            @include('admin.product.product-package-form')
+        @endif
             <div class="col-8 col-md-12">
                 <div class="text-right  col-md-offset-10">
                     <button type="button" class="btn btn-primary" onclick="addMorePackage()">

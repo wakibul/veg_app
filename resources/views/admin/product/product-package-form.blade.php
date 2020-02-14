@@ -8,7 +8,7 @@
                             <div class="row">
                                 <div class="mb-3">
                                     <label><input type="checkbox" name="default_packages[]" class="order" value="1"
-                                            onClick="onlyOne(this)"> Select as a default
+                                            onClick="onlyOne(this)" @isset($product) @if($productpackage->id == $product->default_package) checked @endif @endisset> Select as a default
                                         package</label>
                                 </div>
 
@@ -28,9 +28,8 @@
                                     <select class="form-control" name="category_ids[]" required>
                                         <option value="">-- Please Select Package unit --</option>
                                         @foreach($package_masters as $package_master)
-
                                         <option value="{{$package_master->id}}"
-                                            @isset($product){{($productpackage->product_id==$package_master->id?'selected':'')}}@endisset>
+                                            @isset($product){{($productpackage->package_masters_id==$package_master->id?'selected':'')}}@endisset>
                                             {{$package_master->name}}</option>
                                         @endforeach
 
@@ -77,28 +76,20 @@
                                             @isset($product){{$productpackage->is_offer==1?'selected':''}}@endisset>
                                             Yes</option>
                                         <option value="0"
-                                            @isset($product){{$productpackage->is_product==0?'selected':''}}@endisset>
+                                            @isset($product){{$productpackage->is_offer==0?'selected':''}}@endisset>
                                             No</option>
-
-
-
                                     </select>
                                 </div>
                                 <div class="col-md-2">Status</div>
                                 <div class="col-md-4">
                                     <select class="form-control" name="status[]">
                                         <option value="">-- Please Select --</option>
-
-
                                         <option value="1"
-                                            @isset($product){{$productpackage->is_product==1?'selected':''}}@endisset>
+                                            @isset($product){{$productpackage->status ==1?'selected':''}}@endisset>
                                             Active</option>
                                         <option value="0"
-                                            @isset($product){{$productpackage->is_product==0?'selected':''}}@endisset>
+                                            @isset($product){{$productpackage->status ==0?'selected':''}}@endisset>
                                             In Active</option>
-
-
-
                                     </select>
                                 </div>
                             </div>
