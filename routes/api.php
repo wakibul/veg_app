@@ -38,6 +38,8 @@ Route::middleware('auth:api')->group(function(){
         Route::post('/offers/apply', 'Api\Master\CouponController@applyCoupon');
         Route::get('/banner', 'Api\Master\BannerController@index');
         Route::post('/search', 'Api\Master\SearchController@index');
+        Route::post('/location', 'Api\Master\LocationController@store');
+        Route::get('/location/index', 'Api\Master\LocationController@index');
     });
     Route::group(['prefix' => 'customer'], function () {
         Route::get('/cancel-reason', 'Api\Customer\CancellationController@reason');
