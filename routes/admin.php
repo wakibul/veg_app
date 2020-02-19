@@ -218,3 +218,13 @@ Route::group(['prefix' => 'settlement'], function () {
     ]);
 
 });
+Route::group(['prefix' => 'report'], function () {
+    Route::get('/index', [
+        'as' => 'report.index',
+        'middleware' => ['admin'],
+        'uses' => 'Admin\reportController@index',
+    ]);
+
+
+});
+

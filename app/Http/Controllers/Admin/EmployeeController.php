@@ -45,6 +45,8 @@ class EmployeeController extends Controller
      */
     public function store(Request $request)
     {
+
+
         $validator = Validator::make($request->all(), [
             'name' => 'required',
             'address' => 'required',
@@ -54,11 +56,18 @@ class EmployeeController extends Controller
         if ($validator->fails()) {
             return Redirect::back()->withErrors($validator)->withInput();
         }
+        $path = public_path() . '/vendor/images/employee';
+        $imageName = date('dmyhis') . 'employee.' . $request->file('document')->getClientOriginalExtension();
+
+        $request->file('document')->move($path, $imageName);
+
+
         try {
             $data = ['name' => $request->name,
                 'address' => $request->address,
                 'pincode' => $request->pin,
                 'mobile' => $request->mobile,
+                'document'=> 'veg_app/' . url('/public') . '/images/employee' . $imageName,
                 'password' => bcrypt($request->pass),
 
             ];
@@ -86,7 +95,6 @@ class EmployeeController extends Controller
         $id = Crypt::decrypt($id);
         $employee = employee::find($id);
         return view('admin.employee.show', compact('employee'));
-
 
     }
 

@@ -83,6 +83,7 @@
                                 </span>
                             </a>
                         <td width="30%">{{date("d-m-Y h:i a", strtotime($order->confirmation_time??'NA'))}}</td>
+
                         <td>@if(!$order->order_confirm_id)
                             Waiting for Confirmation
                             @elseif($order->status==1)

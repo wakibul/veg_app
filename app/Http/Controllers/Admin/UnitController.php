@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\packageMaster;
 use App\Models\Unit;
 use Exception;
 use Illuminate\Http\Request;
@@ -21,7 +22,7 @@ class UnitController extends Controller
      */
     public function index()
     {
-        $units = Unit::paginate(10);
+        $units = packageMaster::paginate(10);
 
         return view('admin.unit.create', compact('units'));
 
@@ -55,11 +56,10 @@ class UnitController extends Controller
         }
         try {
             $data = ['name' => $request->name,
-                'abb' => $request->abb,
                 'status' => $request->status,
 
             ];
-            Unit::create($data);
+            packageMaster::create($data);
             return Redirect::route('admin.unit.index')->with('success', 'Unit added successfully');
 
         } catch (Exception $e) {
@@ -92,9 +92,9 @@ class UnitController extends Controller
     public function edit($id)
     {
         $id = Crypt::decrypt($id);
-        $unit = Unit::find($id);
+        $unit = packageMaster::find($id);
 
-        $units = Unit::paginate(10);
+        $units = packageMaster::paginate(10);
 
         return view('admin.unit.edit', compact('units', 'unit'));
 

@@ -7,6 +7,7 @@
                 <th>Phone No.</th>
                 <th>Address</th>
                 <th>pin</th>
+                <th>Document</th>
                 <th>Action</th>
             </tr>
         </thead>
@@ -18,6 +19,12 @@
                 <td>{{$employee->mobile}}</td>
                 <td>{{$employee->address}}</td>
                 <td>{{$employee->pincode}}</td>
+                <td>
+                    <a href="">
+                        <i class="fa fa-eye"style="vertical-align:middle"></i>
+
+                    </a>
+                </td>
                 <td>
                     <div class="btn-group">
                         <a href="{{route('admin.employee.edit',Crypt::encrypt($employee->id))}}" class="btn btn-sm

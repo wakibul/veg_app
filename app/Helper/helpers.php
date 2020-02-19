@@ -62,7 +62,7 @@ function sendMobilePushNotification(String $message = null, String $title = null
     ];
     if (!$tokens) {
         $tokens = [
-            "0f758845-07f5-48ad-88d9-321dc35fa5bc",
+            "69a1fc40-3dfa-4a15-9a2b-fb6e378f2269",
             // "76ece62b-bcfe-468c-8a78-839aeaa8c5fa",
             // "8e0f21fa-9a5a-4ae7-a9a6-ca1f24294b86"
         ];

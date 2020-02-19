@@ -15,7 +15,7 @@
             <div class="card-body">
                 <div class="row">
                     <div class="col-md-6">
-                      @include('admin.layout.alert')
+                        @include('admin.layout.alert')
                         <form name="city" action="{{route('admin.category.store')}}" method="POST"
                             enctype="multipart/form-data">
                             @csrf
@@ -24,14 +24,6 @@
                                     <div class="col-md-4">Name</div>
                                     <div class="col-md-6">
                                         <input type="text" name="name" class="form-control" required>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <div class="row">
-                                    <div class="col-md-4">Upload Picture</div>
-                                    <div class="col-md-6">
-                                        <input type="file" name="banner_image" class="form-control" required>
                                     </div>
                                 </div>
                             </div>
@@ -74,7 +66,7 @@
                                 <tr>
                                     <td>{{ ($key+1) }}</td>
                                     <td>{{$category->name}}</td>
-                                    <td></td>
+
                                     <td>
                                         <div class="btn-group">
                                             {{-- <a href="{{route('admin.category.edit',Crypt::encrypt($category->id))}}"

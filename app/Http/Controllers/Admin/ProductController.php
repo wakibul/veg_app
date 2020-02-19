@@ -51,8 +51,7 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
-
-
+       dd($request->all());
         $path = public_path() . '/vendor/images/product/small';
         $imageName = date('dmyhis') . 'product.' . $request->file('small_picture')->getClientOriginalExtension();
 
@@ -79,9 +78,9 @@ class ProductController extends Controller
             'details' => $request->details,
             'unit_desc' => $request->unit_desc,
             'category_id' => $request->category_id,
-            'small_picture' => 'veg_app/' . url('/public') . '/public/images/small' . $imageName,
+            'small_picture' => 'veg_app/' . url('/public') . '/images/small' . $imageName,
 
-            'large_picture' => 'veg_app/' . url('/public') . '/public/images/large' . $largeImageName,
+            'large_picture' => 'veg_app/' . url('/public') . '/images/large' . $largeImageName,
 
             'status' => $request->productstatus,
             'is_available' => $request->is_available,
@@ -172,7 +171,6 @@ class ProductController extends Controller
     public function update(Request $request, $id)
     {
 
-
         $id = Crypt::decrypt($id);
         $product = Product::find($id);
 
@@ -215,18 +213,18 @@ class ProductController extends Controller
         DB::beginTransaction();
         $data = [
 
-            'name'          => $request->name,
-            'details'       => $request->details,
-            'unit_desc'     => $request->unit_desc,
-            'category_id'   => $request->category_id,
+            'name' => $request->name,
+            'details' => $request->details,
+            'unit_desc' => $request->unit_desc,
+            'category_id' => $request->category_id,
             'small_picture' => $small_picture,
 
             'large_picture' => $large_picture,
 
-            'status'        => $request->productstatus,
-            'is_available'  => $request->is_available,
+            'status' => $request->productstatus,
+            'is_available' => $request->is_available,
             'is_subscribed' => $is_subscribed,
-            'is_product'    => $is_product,
+            'is_product' => $is_product,
 
         ];
 
@@ -235,7 +233,7 @@ class ProductController extends Controller
 
         $default_key = 0;
 
-        if($request->default_packages){
+        if ($request->default_packages) {
             foreach ($request->default_packages as $key => $value) {
                 if ($value) {
                     $default_key = $value;
@@ -248,23 +246,23 @@ class ProductController extends Controller
             $product_packages = [];
             foreach ($request->category_ids as $key => $category_id) {
                 $product_packages_data = [
-                    'skucode'            => $request->skucodes[$key],
-                    'product_id'         => $id,
+                    'skucode' => $request->skucodes[$key],
+                    'product_id' => $id,
                     'package_masters_id' => $request->category_ids[$key],
-                    'market_price'       => $request->market_prices[$key],
-                    'offer_price'        => $request->offer_prices[$key],
-                    'offer_percentage'   => $request->offer_percentages[$key],
-                    'is_offer'           => $request->is_offers[$key],
-                    'status'             => $request->status[$key],
-                    'created_at'         => getCurrentDate(),
-                    'updated_at'         => getCurrentDate(),
+                    'market_price' => $request->market_prices[$key],
+                    'offer_price' => $request->offer_prices[$key],
+                    'offer_percentage' => $request->offer_percentages[$key],
+                    'is_offer' => $request->is_offers[$key],
+                    'status' => $request->status[$key],
+                    'created_at' => getCurrentDate(),
+                    'updated_at' => getCurrentDate(),
                 ];
 
                 $product_packages_array[] = $product_packages_data;
-                $product_packages[] = $product->productPackage()->create($product_packages_data);
+                $product_packages[] = ProductPackage::create($product_packages_data);
+
             }
             $product = Product::find($id);
-
             $default_id = $product_packages[$default_key]->id;
             $product->default_package = $default_id;
             $product->save();

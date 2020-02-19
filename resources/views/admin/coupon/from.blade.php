@@ -47,7 +47,7 @@
         <div class="col-md-4">Max Coupon Used</div>
         <div class="col-md-8">
             <input type="text" name="max_coupon_use" class="form-control"
-                value="@isset($coupon){{$coupon->max_coupon_use}}@endisset" required>
+                value="@isset($coupon){{$coupon->max_coupon_use}} @endisset" required>
         </div>
     </div>
 </div>
@@ -55,7 +55,7 @@
     <div class="row">
         <div class="col-md-4">Valid Upto(days)</div>
         <div class="col-md-8">
-            <input type="text" name="valid_to" class="form-control" value="" required>
+        <input type="text" name="valid_to" class="form-control" value="@isset($coupon){{$date_value}}@endisset" required>
         </div>
     </div>
 </div>

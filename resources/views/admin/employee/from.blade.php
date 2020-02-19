@@ -43,4 +43,19 @@
         </div>
     </div>
 </div>
+<div class="form-group">
+    <div class="row">
+        <div class="col-md-4">Document</div>
+        <div class="col-md-6">
+
+            <div class="custom-file">
+                <input type="file" class="custom-file-input" name="document"
+                    value="@isset($employee){{$employee->document}}@endisset" required>
+                <label class="custom-file-label">Choose file...</label>
+
+            </div>
+
+        </div>
+    </div>
+</div>
 

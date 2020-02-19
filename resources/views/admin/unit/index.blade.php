@@ -4,7 +4,6 @@
             <tr>
                 <th>#</th>
                 <th>Unit Name</th>
-                <th>Abbreviation</th>
                 <th>Status</th>
                 <th>Action</th>
             </tr>
@@ -14,7 +13,6 @@
             <tr>
                 <td>{{ ($key+1) }}</td>
                 <td>{{$unit->name}}</td>
-                <td>{{$unit->abb}}</td>
                 <td>@if($unit->status==0)Not Available @else Available @endif</td>
                 <td>
                     <div class="btn-group">

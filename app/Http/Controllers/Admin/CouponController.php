@@ -108,19 +108,24 @@ class CouponController extends Controller
      */
     public function edit($id)
     {
-
         $id = Crypt::decrypt($id);
         $coupon = Coupon::find($id);
+
+        $current_date = date("Y-m-d");
+        $created_date = dateFormat($coupon->created_at, 'Y-m-d');
+        $different = dateDiff($created_date, $current_date, "Day");
+
         $create_date = dateFormat($coupon->created_at, 'Y-m-d');
         $up_to = dateFormat($coupon->valid_to, 'Y-m-d');
 
         $diff_in_day = dateDiff($create_date, $up_to, "Day");
+        $date_value = $diff_in_day - $different;
 
         $miscellaneous_masters = MiscellaneousMaster::get();
 
         $coupons = Coupon::paginate(10);
 
-        return view('admin.coupon.edit', compact('coupon', 'coupons', 'miscellaneous_masters'));
+        return view('admin.coupon.edit', compact('coupon', 'coupons', 'miscellaneous_masters', 'date_value'));
 
     }
 
@@ -199,6 +204,10 @@ class CouponController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $id = Crypt::decrypt($id);
+        Coupon::findOrFail($id)->delete();
+
+        return back()->with('error','Coupon Deleted Successfully');
+
     }
 }
