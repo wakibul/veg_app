@@ -24,7 +24,8 @@ class EmployeeController extends Controller
         //
             $validator = Validator::make($request->all(), [
                 'mobile'=> 'required|numeric',
-                'password'=> 'required'
+                'password'=> 'required',
+                'fcm_token'=> 'required'
             ]);
             if ($validator->fails()) {
                 return response()->json(['success'=>false,'error'=>$validator->errors()]);
@@ -37,6 +38,14 @@ class EmployeeController extends Controller
                     return response()->json(['success' => false, 'error' => 'Your username or password is incorrect']);
                 }
             } catch (JWTException $e) {
+                // something went wrong whilst attempting to encode the token
+                return response()->json(['success' => false, 'error' => $e->getMessage()]);
+            }
+
+            try{
+                Employee::where('id',auth('employee')->user()->id)->update(['fcm_token'=>$request->fcm_token]);
+            }
+            catch (JWTException $e) {
                 // something went wrong whilst attempting to encode the token
                 return response()->json(['success' => false, 'error' => $e->getMessage()]);
             }

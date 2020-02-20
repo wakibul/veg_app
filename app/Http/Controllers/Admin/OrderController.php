@@ -169,7 +169,7 @@ class OrderController extends Controller
         $title = "Delivery Order Assigned ";
         $customer_message = "Hi," . $employee->name . " Login to view details.";
 
-        $notification = sendMobilePushNotification($customer_message, $title, [$employee->fcm_token], ["order_id" => $orders, "employee_id" => $employee->id], 101, true);
+        $notification = sendMobilePushNotification($customer_message, $title, ['69a1fc40-3dfa-4a15-9a2b-fb6e378f2269'], ["order_id" => $orders, "employee_id" => $employee->id], 101, true);
         Log::debug($notification);
 
         return true;
