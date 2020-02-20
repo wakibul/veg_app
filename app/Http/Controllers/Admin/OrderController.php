@@ -132,8 +132,7 @@ class OrderController extends Controller
             $order = Order::find($order);
             $data = ['order_id' => $order->id,
                 'employee_id' => $request->employee_id,
-                'amount' => $order->total_price_with_tax,
-                'status' => 1,
+                'amount' => $order->total_price_with_tax
             ];
             $employeeTransaction = EmployeeTransaction::create($data);
         }
