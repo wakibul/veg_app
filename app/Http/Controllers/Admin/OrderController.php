@@ -169,7 +169,7 @@ class OrderController extends Controller
         $title = "New Order";
         $customer_message = "New Order has arrived";
 
-        $notification = sendMobilePushNotification($customer_message, $title, [$employee->fcm_token], ["employee_id" => $employee->id], 101, true);
+        $notification = sendMobilePushNotification($customer_message, $title, [$employee->fcm_token], ["employee_id" => $employee->id,"notification_code"=>101], 101, true);
         Log::debug($notification);
 
         return true;
