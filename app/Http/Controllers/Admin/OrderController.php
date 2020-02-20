@@ -148,12 +148,12 @@ class OrderController extends Controller
         }
 
         $employee=Employee::find($request->employee_id);
-        $data=[
-        'updated_balance'=>$employee->updated_balance+$amount,
+        // $data=[
+        // 'updated_balance'=>$employee->updated_balance+$amount,
 
-        ];
-        $employee->update($data);
-        $employee->save();
+        // ];
+        // $employee->update($data);
+        // $employee->save();
 
         $employee_id = $request->employee_id;
         $this->sendAssignNotification($employee_id, $request->order_checks);
