@@ -20,7 +20,7 @@
                 <td>{{$employee->address}}</td>
                 <td>{{$employee->pincode}}</td>
                 <td>
-                    <a href="">
+                    <a href="{{ $employee->document }}">
                         <i class="fa fa-eye"style="vertical-align:middle"></i>
 
                     </a>
