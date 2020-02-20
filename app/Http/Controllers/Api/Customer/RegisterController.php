@@ -117,7 +117,8 @@ class RegisterController extends Controller
 	{
 		$validator = Validator::make($request->all(), [
 			'mobile'=> 'required|numeric',
-			'password'=> 'required'
+            'password'=> 'required',
+
 		]);
 		if ($validator->fails()) {
 			return response()->json(['success'=>false,'error'=>$validator->errors()]);
