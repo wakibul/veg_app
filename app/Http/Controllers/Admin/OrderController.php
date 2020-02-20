@@ -121,8 +121,7 @@ class OrderController extends Controller
 
         foreach ($request->order_checks as $key => $order) {
             $order = Order::find($order);
-            $data = ['employee_id' => $request->employee_id,
-                'status' => 3,
+            $data = ['employee_id' => $request->employee_id
 
             ];
             $order->update($data);
@@ -142,7 +141,7 @@ class OrderController extends Controller
         $title = "Delivery Order Assigned ";
         $customer_message = "Hi," . $employee->name . " Login to view details.";
 
-        $notification = sendMobilePushNotification($customer_message, $title, [$employee->fcm_token], ["order_id" => $orders, "employee_id" => $employee->id], 101, true);
+        $notification = sendMobilePushNotification($customer_message, $title, ['69a1fc40-3dfa-4a15-9a2b-fb6e378f2269'], ["order_id" => $orders, "employee_id" => $employee->id], 101, true);
         Log::debug($notification);
 /*         if ($booking->booked_service_provider) {
 $booked_service_provider       = $booking->booked_service_provider->first()->service_provider;
