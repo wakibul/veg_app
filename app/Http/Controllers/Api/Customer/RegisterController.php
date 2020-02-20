@@ -34,13 +34,16 @@ class RegisterController extends Controller
         $otp = mt_rand(100000, 999999);
 
         $first_offer = Coupon::where([['is_active',1],['coupon_type','first_offer']])->first();
+        if($first_offer != null)
+            $free_offer = $first_offer->max_coupon_use;
+        else
+            $free_offer = 0;
         $offer_months = MiscellaneousMaster::where([['status',1],['type','first_offer_months']])->first();
         $cust = Customer::where([['device_id',$request->device_id],['status',1]])->first();
 		if($cust){
 			$free_offer = 0;
 		}
-		else
-		$free_offer = $first_offer->max_coupon_use;
+		// $free_offer = $first_offer->max_coupon_use;
         $offer_month = '+'.$offer_months->master_value.' months';
 		$offer_vaild_to = date('Y-m-d', strtotime($offer_month));
 		DB::beginTransaction();
