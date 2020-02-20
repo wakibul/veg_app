@@ -90,6 +90,8 @@ class ForgotPasswordController extends Controller
             return response()->json(['success' => true, 'token' => $token,'message'=>'Password changed successfully','user' => [
                         'name'          => auth('api')->user()->name,
                         'email'         => auth('api')->user()->email,
+                        'mobile'         => auth('api')->user()->mobile,
+                        'device_id'         => auth('api')->user()->device_id,
                         'id'            => auth('api')->user()->id
                     ] ]);
             }
