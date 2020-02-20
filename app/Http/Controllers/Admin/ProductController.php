@@ -51,7 +51,8 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
-       dd($request->all());
+
+
         $path = public_path() . '/vendor/images/product/small';
         $imageName = date('dmyhis') . 'product.' . $request->file('small_picture')->getClientOriginalExtension();
 
@@ -71,6 +72,8 @@ class ProductController extends Controller
         $request->merge([
             "is_available" => true,
         ]);
+
+
         DB::beginTransaction();
         $data = [
 
@@ -78,9 +81,9 @@ class ProductController extends Controller
             'details' => $request->details,
             'unit_desc' => $request->unit_desc,
             'category_id' => $request->category_id,
-            'small_picture' => 'veg_app/' . url('/public') . '/images/small' . $imageName,
+            'small_picture' =>  url('/public') . '/images/small' . $imageName,
 
-            'large_picture' => 'veg_app/' . url('/public') . '/images/large' . $largeImageName,
+            'large_picture' =>  url('/public') . '/images/large' . $largeImageName,
 
             'status' => $request->productstatus,
             'is_available' => $request->is_available,
@@ -201,12 +204,12 @@ class ProductController extends Controller
         ]);
 
         if (($request->file('small_picture') != null)) {
-            $small_picture = 'veg_app/' . url('/public') . '/public/images/small' . $imageName;
+            $small_picture = url('/public') . '/public/images/small' . $imageName;
         } else {
             $small_picture = $product->small_picture;
         }
         if (($request->file('large_picture') != null)) {
-            $large_picture = 'veg_app/' . url('/public') . '/public/images/large' . $largeImageName;
+            $large_picture = url('/public') . '/public/images/large' . $largeImageName;
         } else {
             $large_picture = $product->large_picture;
         }

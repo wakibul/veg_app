@@ -34,12 +34,12 @@
                     <div class="col-md-6">
                         <div class="input-daterange input-group" id="bs_datepicker_range_container">
                             <div class="form-line">
-                                <input type="text" class="form-control" id="from_date" name="from_date" placeholder="From Date"
+                                <input type="text" class="form-control datepicker" id="from_date" name="from_date" placeholder="From Date"
                                     autocomplete="off" value="{{request('from_date')}}">
                             </div>
                             <span class="input-group-addon">&nbsp;to&nbsp;</span>
                             <div class="form-line">
-                                <input type="text" class="form-control" id="to_date" name="to_date" placeholder="To Date"
+                                <input type="text" class="form-control datepicker" id="to_date" name="to_date" placeholder="To Date"
                                     autocomplete="off" value="{{request('to_date')}}">
                             </div>
                         </div>
