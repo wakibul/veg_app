@@ -43,7 +43,7 @@ class EmployeeController extends Controller
             }
 
             try{
-                Employee::where('id',auth('employee')->user()->id)->update(['fcm_token',$request->fcm_token]);
+                Employee::where('id',auth('employee')->user()->id)->update(['fcm_token'=>$request->fcm_token]);
             }
             catch (JWTException $e) {
                 // something went wrong whilst attempting to encode the token
