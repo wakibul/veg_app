@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Employee;
+use App\Models\EmployeeTransaction;
 use App\Models\Order;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
@@ -122,13 +123,39 @@ class OrderController extends Controller
         foreach ($request->order_checks as $key => $order) {
             $order = Order::find($order);
             $data = ['employee_id' => $request->employee_id,
-                'status' => 3,
-
             ];
             $order->update($data);
             $order->save();
 
         }
+        foreach ($request->order_checks as $key => $order) {
+            $order = Order::find($order);
+            $data = ['order_id' => $order->id,
+                'employee_id' => $request->employee_id,
+                'amount' => $order->total_price_with_tax,
+                'status' => 1,
+            ];
+            $employeeTransaction = EmployeeTransaction::create($data);
+        }
+        $amount = 0;
+
+        foreach ($request->order_checks as $key => $order) {
+
+            $order = Order::find($order);
+            $amount =$amount+$order->total_price_with_tax;
+
+
+
+        }
+
+        $employee=Employee::find($request->employee_id);
+        $data=[
+        'updated_balance'=>$employee->updated_balance+$amount,
+
+        ];
+        $employee->update($data);
+        $employee->save();
+
         $employee_id = $request->employee_id;
         $this->sendAssignNotification($employee_id, $request->order_checks);
 
@@ -144,13 +171,7 @@ class OrderController extends Controller
 
         $notification = sendMobilePushNotification($customer_message, $title, [$employee->fcm_token], ["order_id" => $orders, "employee_id" => $employee->id], 101, true);
         Log::debug($notification);
-/*         if ($booking->booked_service_provider) {
-$booked_service_provider       = $booking->booked_service_provider->first()->service_provider;
-$service_provider_title        = "Service Completed " . $booking->booking_no;
-$service_provider_message      = "Customer is waiting for your confirmation.";
-$service_provider_notification = sendMobilePushNotification($service_provider_message, $service_provider_title, [$booked_service_provider->api_key], ["booking_id" => $booking->id, "booking_no" => $booking->booking_no], 106);
-Log::debug($service_provider_notification);
-} */
+
         return true;
 
     }

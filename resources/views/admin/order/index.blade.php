@@ -37,11 +37,11 @@
                     $tr_class = "text-green";
                     $lbl_class = "success";
                     }
-                    elseif($order->status == 3){
+                    elseif($order->employee_id == null){
                     $tr_color_class = "text-red";
                     $lbl_class = "red";
                     }
-                    elseif($order->status == 4){
+                    elseif($order->status == 3){
                     $tr_color_class = "text-info";
                     $lbl_class = "blue";
                     }
@@ -90,9 +90,9 @@
                             Confirmed
                             @elseif($order->status==2)
                             Completed
-                            @elseif($order->status==3)
+                            @elseif($order->employee_id==null)
                             Assigned Delivery Boy
-                            @elseif($order->status==4)
+                            @elseif($order->status==3)
                             cancelled
                             @endif</td>
                         <td>
