@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api\Master;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Content;
+use App\Models\MiscellaneousMaster;
 class PagesController extends Controller
 {
     /**
@@ -20,6 +21,17 @@ class PagesController extends Controller
             return response()->json(['success'=>true,'contents'=>$contents]);
         else
             return response()->json(['success'=>false,'message'=>'No record found']);
+
+    }
+
+    public function toEmail()
+    {
+
+        $email = MiscellaneousMaster::where('type','email')->first();
+        if($email)
+            return response()->json(['success'=>true,'to_email'=>$email->master_value]);
+        else
+            return response()->json(['success'=>false,'error'=>'Email does not exist']);
 
     }
 

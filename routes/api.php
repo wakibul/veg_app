@@ -21,7 +21,10 @@ use Illuminate\Http\Request;
 Route::post('/customer/register', 'Api\Customer\RegisterController@register');
 Route::post('/customer/verify', 'Api\Customer\RegisterController@verify');
 Route::post('/customer/login', 'Api\Customer\RegisterController@login');
-
+Route::post('/customer/resend-otp', 'Api\Customer\RegisterController@resendOtp');
+Route::post('/customer/forgot-password', 'Api\Customer\ForgotPasswordController@index');
+Route::post('/customer/validate-otp', 'Api\Customer\ForgotPasswordController@validateOtp');
+Route::post('/customer/change-password', 'Api\Customer\ForgotPasswordController@changePassword');
 Route::middleware('auth:api')->group(function(){
     Route::group(['prefix' => 'master'], function () {
         Route::get('/state', 'Api\Master\StateController@index');
@@ -40,6 +43,7 @@ Route::middleware('auth:api')->group(function(){
         Route::post('/search', 'Api\Master\SearchController@index');
         Route::post('/location', 'Api\Master\LocationController@store');
         Route::get('/location/index', 'Api\Master\LocationController@index');
+        Route::get('/email', 'Api\Master\PagesController@toEmail');
     });
     Route::group(['prefix' => 'customer'], function () {
         Route::get('/cancel-reason', 'Api\Customer\CancellationController@reason');
