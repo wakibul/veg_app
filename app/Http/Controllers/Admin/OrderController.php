@@ -139,9 +139,9 @@ class OrderController extends Controller
         $employee = Employee::find($employee_id);
         // $employee = $employee->name;
         $title = "Delivery Order Assigned ";
-        $customer_message = "Hi," . $employee->name . " Login to view details.";
+        $customer_message = "New Order Assigned";
 
-        $notification = sendMobilePushNotification($customer_message, $title, ['69a1fc40-3dfa-4a15-9a2b-fb6e378f2269'], ["order_id" => $orders, "employee_id" => $employee->id], 101, true);
+        $notification = sendMobilePushNotification($customer_message, $title, [$employee->fcm_token], ["order_id" => $orders, "employee_id" => $employee->id], 101, true);
         Log::debug($notification);
 /*         if ($booking->booked_service_provider) {
 $booked_service_provider       = $booking->booked_service_provider->first()->service_provider;
