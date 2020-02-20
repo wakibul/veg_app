@@ -166,10 +166,10 @@ class OrderController extends Controller
     {
         $employee = Employee::find($employee_id);
         // $employee = $employee->name;
-        $title = "Delivery Order Assigned ";
-        $customer_message = "New Order Assigned";
+        $title = "New Order";
+        $customer_message = "New Order has arrived";
 
-        $notification = sendMobilePushNotification($customer_message, $title, [$employee->fcm_token], ["order_id" => $orders, "employee_id" => $employee->id], 101, true);
+        $notification = sendMobilePushNotification($customer_message, $title, [$employee->fcm_token], ["employee_id" => $employee->id], 101, true);
         Log::debug($notification);
 
         return true;
