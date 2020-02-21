@@ -67,7 +67,7 @@ class EmployeeController extends Controller
                 'address' => $request->address,
                 'pincode' => $request->pin,
                 'mobile' => $request->mobile,
-                'document'=> 'veg_app/' . url('/public') . '/images/employee' . $imageName,
+                'document'=> url('/public') . '/vendor/images/employee' . $imageName,
                 'password' => bcrypt($request->pass),
 
             ];

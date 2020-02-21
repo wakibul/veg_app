@@ -164,6 +164,49 @@ Route::group(['prefix' => 'product'], function () {
         'uses' => 'Admin\ProductController@destroy',
     ]);
 });
+Route::group(['prefix' => 'banner'], function () {
+    Route::get('/index', [
+        'as' => 'banner.index',
+        'middleware' => ['admin'],
+        'uses' => 'Admin\BannerController@index',
+    ]);
+    Route::get('/create', [
+        'as' => 'banner.create',
+        'middleware' => ['admin'],
+        'uses' => 'Admin\BannerController@create',
+    ]);
+
+    Route::post('/store', [
+        'as' => 'banner.store',
+        'middleware' => ['admin'],
+        'uses' => 'Admin\BannerController@store',
+    ]);
+
+    Route::get('/edit/{id}', [
+        'as' => 'banner.edit',
+        'middleware' => ['admin'],
+        'uses' => 'Admin\BannerController@edit',
+    ]);
+
+    Route::post('/update/{id}', [
+        'as' => 'banner.update',
+        'middleware' => ['admin'],
+        'uses' => 'Admin\BannerController@update',
+    ]);
+
+    Route::get('/delete/{id}', [
+        'as' => 'banner.delete',
+        'middleware' => ['admin'],
+        'uses' => 'Admin\BannerController@destroy',
+    ]);
+    Route::post('/status/{id}', [
+        'as' => 'banner.status',
+        'middleware' => ['admin'],
+        'uses' => 'Admin\BannerController@status',
+    ]);
+
+});
+
 Route::group(['prefix' => 'coupon'], function () {
     Route::get('/index', [
         'as' => 'coupon.index',
@@ -225,6 +268,4 @@ Route::group(['prefix' => 'report'], function () {
         'uses' => 'Admin\reportController@index',
     ]);
 
-
 });
-

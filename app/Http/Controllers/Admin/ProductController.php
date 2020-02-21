@@ -8,6 +8,7 @@ use App\Models\Category;
 use App\Models\packageMaster;
 use App\Models\Product;
 use App\Models\ProductPackage;
+use Validator;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\DB;
@@ -22,9 +23,25 @@ class ProductController extends Controller
      */
     public function index()
     {
-        $products = Product::paginate(15);
+        $products = Product::query();
 
-        return view('admin.product.index', compact('products'));
+        $products = $this->filter($products)->paginate(15);
+
+        $categories = Category::get();
+
+        return view('admin.product.index', compact('products', 'categories'));
+    }
+    public function filter($products)
+    {
+
+        $products->when(request("name"), function ($query) {
+            $query->where('name', request('name'));
+        });
+        $products->when(request("category_id"), function ($query) {
+            $query->where('category_id', request('category_id'));
+        });
+        return $products;
+
     }
 
     /**
@@ -51,13 +68,20 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
+        $validator = Validator::make($request->all(), [
 
+            'small_picture' => 'required|mimes:jpeg,jpg,png',
+            'large_picture' => 'required|mimes:jpeg,jpg,png',
+        ]);
+        if ($validator->fails()) {
+            return Redirect::back()->withErrors($validator)->withInput();
+        }
 
-        $path = public_path() . '/vendor/images/product/small';
+        $path = public_path() . '/images/product/small';
         $imageName = date('dmyhis') . 'product.' . $request->file('small_picture')->getClientOriginalExtension();
 
         $request->file('small_picture')->move($path, $imageName);
-        $imagePath = public_path() . '/vendor/images/product/large';
+        $imagePath = public_path() . '/images/product/large';
         $largeImageName = date('dmyhis') . 'product.' . $request->file('large_picture')->getClientOriginalExtension();
         $request->file('large_picture')->move($imagePath, $largeImageName);
         if ($request->is_subscribe == 0) {
@@ -73,7 +97,6 @@ class ProductController extends Controller
             "is_available" => true,
         ]);
 
-
         DB::beginTransaction();
         $data = [
 
@@ -81,9 +104,11 @@ class ProductController extends Controller
             'details' => $request->details,
             'unit_desc' => $request->unit_desc,
             'category_id' => $request->category_id,
-            'small_picture' =>  url('/public') . '/images/small' . $imageName,
+            'small_picture' => url('/public') . '/images/product/small/' . $imageName,
 
-            'large_picture' =>  url('/public') . '/images/large' . $largeImageName,
+
+            'large_picture' => url('/public') . '/images/product/large/' . $largeImageName,
+
 
             'status' => $request->productstatus,
             'is_available' => $request->is_available,
@@ -159,7 +184,6 @@ class ProductController extends Controller
 
         $product = Product::with(["productPackage"])->find($id);
 
-
         return view('admin.product.edit', compact('product', 'categories', 'package_masters'));
 
     }
@@ -174,19 +198,26 @@ class ProductController extends Controller
     public function update(Request $request, $id)
     {
 
+        $validator = Validator::make($request->all(), [
+
+            'small_picture' => 'required|mimes:jpeg,jpg,png',
+            'large_picture' => 'required|mimes:jpeg,jpg,png',
+        ]);
+        if ($validator->fails()) {
+            return Redirect::back()->withErrors($validator)->withInput();
+        }
 
         $id = Crypt::decrypt($id);
         $product = Product::find($id);
 
-
         if (($request->file('small_picture') != null)) {
-            $path = public_path() . '/vendor/images/product/small';
+            $path = public_path() . '/images/product/small';
             $imageName = date('dmyhis') . 'product.' . $request->file('small_picture')->getClientOriginalExtension();
             $request->file('small_picture')->move($path, $imageName);
 
         }
         if (($request->file('large_picture') != null)) {
-            $imagePath = public_path() . '/vendor/images/product/large';
+            $imagePath = public_path() . '/images/product/large';
             $largeImageName = date('dmyhis') . 'product.' . $request->file('large_picture')->getClientOriginalExtension();
             $request->file('large_picture')->move($imagePath, $largeImageName);
 
@@ -206,12 +237,12 @@ class ProductController extends Controller
         ]);
 
         if (($request->file('small_picture') != null)) {
-            $small_picture = url('/public') . '/public/images/small' . $imageName;
+            $small_picture = url('/public') . '/images/product/small/' . $imageName;
         } else {
             $small_picture = $product->small_picture;
         }
         if (($request->file('large_picture') != null)) {
-            $large_picture = url('/public') . '/public/images/large' . $largeImageName;
+            $large_picture = url('/public') . '/images/product/large/' . $largeImageName;
         } else {
             $large_picture = $product->large_picture;
         }
@@ -246,7 +277,6 @@ class ProductController extends Controller
             }
         }
 
-
         if ($product) {
             $product_packages_array = [];
             $product_packages = [];
@@ -269,9 +299,8 @@ class ProductController extends Controller
 
             }
 
-
             $product = Product::find($id);
-            $default_id = $product_packages[$default_key-1]->id;
+            $default_id = $product_packages[$default_key - 1]->id;
             $product->default_package = $default_id;
             $product->save();
 
