@@ -20,10 +20,10 @@ removePackage = function (obj) {
         alert("Atleast one package required.");
         return false;
     }
-    $(".package:last").hide("slow", function () {
-        console.log("remove button clicked");
-        $(this).remove();
+    $(obj).parents(".package").hide("slow", function () {
+    $(this).remove();
     });
+
 }
 function onlyOne(checkbox) {
     /* var checkboxes = document.getElementsByName('default_package')
