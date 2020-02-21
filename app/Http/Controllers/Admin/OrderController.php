@@ -132,8 +132,7 @@ class OrderController extends Controller
             $order = Order::find($order);
             $data = ['order_id' => $order->id,
                 'employee_id' => $request->employee_id,
-                'amount' => $order->total_price_with_tax,
-                'status' => 1,
+                'amount' => $order->total_price_with_tax
             ];
             $employeeTransaction = EmployeeTransaction::create($data);
         }
@@ -149,12 +148,12 @@ class OrderController extends Controller
         }
 
         $employee=Employee::find($request->employee_id);
-        $data=[
-        'updated_balance'=>$employee->updated_balance+$amount,
+        // $data=[
+        // 'updated_balance'=>$employee->updated_balance+$amount,
 
-        ];
-        $employee->update($data);
-        $employee->save();
+        // ];
+        // $employee->update($data);
+        // $employee->save();
 
         $employee_id = $request->employee_id;
         $this->sendAssignNotification($employee_id, $request->order_checks);
@@ -166,10 +165,10 @@ class OrderController extends Controller
     {
         $employee = Employee::find($employee_id);
         // $employee = $employee->name;
-        $title = "Delivery Order Assigned ";
-        $customer_message = "Hi," . $employee->name . " Login to view details.";
+        $title = "New Order";
+        $customer_message = "New Order has arrived";
 
-        $notification = sendMobilePushNotification($customer_message, $title, ['69a1fc40-3dfa-4a15-9a2b-fb6e378f2269'], ["order_id" => $orders, "employee_id" => $employee->id], 101, true);
+        $notification = sendMobilePushNotification($customer_message, $title, [$employee->fcm_token], ["employee_id" => $employee->id,"notification_code"=>101], 101, true);
         Log::debug($notification);
 
         return true;
