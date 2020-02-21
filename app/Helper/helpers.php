@@ -51,6 +51,7 @@ function dateFormat($dateTime, $format = "d-m-Y")
 }
 function sendMobilePushNotification(String $message = null, String $title = null, array $tokens = [], $data = [], $notification_code = 100, $for_service_provider = false, array $buttons = [])
 {
+
     /*
      * 100 = Default Code
 
@@ -68,6 +69,7 @@ function sendMobilePushNotification(String $message = null, String $title = null
         ];
     }
     if (gettype($data) == "object") {
+
         $data->notification_code = $notification_code;
     } elseif (gettype($data) == "array") {
         $data["notification_code"] = $notification_code;

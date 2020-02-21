@@ -161,7 +161,7 @@ class OrderController extends Controller
         return redirect()->back()->with('success', 'Delivery Boy assign successfully.');
 
     }
-    public function sendAssignNotification($employee_id, $orders)
+    public function sendAssignNotification($employee_id)
     {
         $employee = Employee::find($employee_id);
         // $employee = $employee->name;
