@@ -8,11 +8,11 @@ use App\Models\Category;
 use App\Models\packageMaster;
 use App\Models\Product;
 use App\Models\ProductPackage;
-use Validator;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Redirect;
+use Validator;
 
 class ProductController extends Controller
 {
@@ -70,8 +70,8 @@ class ProductController extends Controller
     {
         $validator = Validator::make($request->all(), [
 
-            'small_picture' => 'required|mimes:jpeg,jpg,png',
-            'large_picture' => 'required|mimes:jpeg,jpg,png',
+            'small_picture' => 'required|mimes:jpeg,jpg,png|dimensions:min_width=320,min_height=200',
+            'large_picture' => 'required|mimes:jpeg,jpg,png|dimensions:min_width=640,min_height=400',
         ]);
         if ($validator->fails()) {
             return Redirect::back()->withErrors($validator)->withInput();
@@ -106,9 +106,7 @@ class ProductController extends Controller
             'category_id' => $request->category_id,
             'small_picture' => url('/public') . '/images/product/small/' . $imageName,
 
-
             'large_picture' => url('/public') . '/images/product/large/' . $largeImageName,
-
 
             'status' => $request->productstatus,
             'is_available' => $request->is_available,
@@ -197,12 +195,21 @@ class ProductController extends Controller
      */
     public function update(Request $request, $id)
     {
+        if (($request->file('small_picture') != null)) {
 
-        $validator = Validator::make($request->all(), [
+            $validator = Validator::make($request->all(), [
 
-            'small_picture' => 'required|mimes:jpeg,jpg,png',
-            'large_picture' => 'required|mimes:jpeg,jpg,png',
-        ]);
+                'small_picture' => 'mimes:jpeg,jpg,png|dimensions:min_width=320,min_height=200',
+
+            ]);
+        }
+        if (($request->file('large_picture') != null)) {
+            $validator = Validator::make($request->all(), [
+
+                'large_picture' => 'required|mimes:jpeg,jpg,png|dimensions:min_width=640,min_height=400',
+
+            ]);
+        }
         if ($validator->fails()) {
             return Redirect::back()->withErrors($validator)->withInput();
         }
