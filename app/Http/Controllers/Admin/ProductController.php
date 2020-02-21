@@ -202,6 +202,10 @@ class ProductController extends Controller
                 'small_picture' => 'mimes:jpeg,jpg,png|dimensions:min_width=320,min_height=200',
 
             ]);
+            if ($validator->fails()) {
+                return Redirect::back()->withErrors($validator)->withInput();
+            }
+
         }
         if (($request->file('large_picture') != null)) {
             $validator = Validator::make($request->all(), [
@@ -209,9 +213,10 @@ class ProductController extends Controller
                 'large_picture' => 'required|mimes:jpeg,jpg,png|dimensions:min_width=640,min_height=400',
 
             ]);
-        }
-        if ($validator->fails()) {
-            return Redirect::back()->withErrors($validator)->withInput();
+            if ($validator->fails()) {
+                return Redirect::back()->withErrors($validator)->withInput();
+            }
+
         }
 
         $id = Crypt::decrypt($id);
