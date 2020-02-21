@@ -104,9 +104,11 @@ class ProductController extends Controller
             'details' => $request->details,
             'unit_desc' => $request->unit_desc,
             'category_id' => $request->category_id,
-            'small_picture' => url('/public') . '/images/product/small' . $imageName,
+            'small_picture' => url('/public') . '/images/product/small/' . $imageName,
 
-            'large_picture' => url('/public') . '/images/product/large' . $largeImageName,
+
+            'large_picture' => url('/public') . '/images/product/large/' . $largeImageName,
+
 
             'status' => $request->productstatus,
             'is_available' => $request->is_available,
