@@ -158,7 +158,7 @@ class ProductController extends Controller
         $package_masters = packageMaster::get();
 
         $product = Product::with(["productPackage"])->find($id);
-        // dd($product);
+
 
         return view('admin.product.edit', compact('product', 'categories', 'package_masters'));
 
@@ -174,8 +174,10 @@ class ProductController extends Controller
     public function update(Request $request, $id)
     {
 
+
         $id = Crypt::decrypt($id);
         $product = Product::find($id);
+
 
         if (($request->file('small_picture') != null)) {
             $path = public_path() . '/vendor/images/product/small';
@@ -244,6 +246,7 @@ class ProductController extends Controller
             }
         }
 
+
         if ($product) {
             $product_packages_array = [];
             $product_packages = [];
@@ -265,8 +268,10 @@ class ProductController extends Controller
                 $product_packages[] = ProductPackage::create($product_packages_data);
 
             }
+
+
             $product = Product::find($id);
-            $default_id = $product_packages[$default_key]->id;
+            $default_id = $product_packages[$default_key-1]->id;
             $product->default_package = $default_id;
             $product->save();
 
