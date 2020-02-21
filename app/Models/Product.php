@@ -10,7 +10,7 @@ class Product extends Model
     protected $fillable = ['name','details','unit_desc','category_id','large_picture','small_picture','status','is_available','is_subscribed','is_product'];
     public function productPackage()
     {
-        return $this->hasMany('App\Models\ProductPackage', 'product_id', 'id')->where('status', 1);
+        return $this->hasMany('App\Models\ProductPackage', 'product_id', 'id');
     }
      public function category()
     {
