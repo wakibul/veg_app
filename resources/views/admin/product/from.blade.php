@@ -157,15 +157,7 @@ if(isset($product)==true){
                     </button>
                 </div>
             </div>
-            <div class="col-8 col-md-12">
-                <div class="text-right col-md-offset-4 remove_package">
-                    {{-- @if ($application->count()) --}}
-                    <button type="button" class="btn btn-danger">
-                        <i class="fa fa-trash" aria-hidden="true" onclick="removePackage(this)"> Delete Product</i>
-                    </button>
-                    {{-- @endif --}}
-                </div>
-            </div>
+
             <hr>
 
 
