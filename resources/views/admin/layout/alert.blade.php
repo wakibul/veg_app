@@ -7,10 +7,8 @@
 @endif
 
 @if(Session::has('error'))
-<div class="alert alert-danger">
-    @foreach ($errors->all() as $error)
-    <div>{{ $error }}</div>
-    @endforeach
+<div class="alert alert-success">
+    {!! session('error') !!}
 </div>
 @endif
 

@@ -30,19 +30,6 @@ class BannerController extends Controller
      */
     public function create(Request $request)
     {
-        $this->validate($request, [
-            'image' => 'required|mimes:jpeg,jpg,png|dimensions:min_width=250,min_height=500',
-        ]);
-
-        $path = public_path() . '/vendor/images/banner';
-        $imageName = date('dmyhis') . 'banner_image.' . $request->file('image')->getClientOriginalExtension();
-
-        $request->file('image')->move($path, $imageName);
-        $data = [
-            'image' => url('/public') . '/images/banner' . $imageName,
-        ];
-        $product = Banner::create($data);
-        return Redirect::back()->with('success', 'Image added successfully');
 
     }
 
@@ -54,7 +41,22 @@ class BannerController extends Controller
      */
     public function store(Request $request)
     {
-        //
+
+        $this->validate($request, [
+            'image' => 'required|mimes:jpeg,jpg,png|',
+        ]);
+
+        $path = public_path() . '/images/banner/';
+        $imageName = date('dmyhis') . 'banner_image.' . $request->file('image')->getClientOriginalExtension();
+
+        $request->file('image')->move($path, $imageName);
+        $data = [
+            'banner_image' => url('/public') . '/images/banner/' . $imageName,
+        ];
+
+        $banner = Banner::create($data);
+        return Redirect::back()->with('success', 'Image added successfully');
+
     }
 
     /**
@@ -99,6 +101,7 @@ class BannerController extends Controller
      */
     public function status($id)
     {
+
         $id = Crypt::decrypt($id);
         $banner = Banner::find($id);
 
@@ -118,8 +121,7 @@ class BannerController extends Controller
     {
         $id = Crypt::decrypt($id);
         Banner::findOrFail($id)->delete();
-
-        return back()->with('error', 'Banner Image Deleted Successfully');
+        return Redirect::route('admin.banner.index')->with('error', 'Banner Image Deleted Successfully');
 
     }
 }
