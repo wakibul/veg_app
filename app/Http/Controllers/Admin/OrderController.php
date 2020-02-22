@@ -120,7 +120,7 @@ class OrderController extends Controller
 
         $customerMessage = FCM::sendTo($token, $option, $notification, $data);
 
-        $this->sendAcceptNotification($order_details);
+
 
         return redirect()->back();
 
