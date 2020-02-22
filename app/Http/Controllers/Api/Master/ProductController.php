@@ -42,24 +42,28 @@ class ProductController extends Controller
     {
         //
         $products = Product::select('id','name','details','large_picture','small_picture','is_available','default_package')->with('productPackage:id,product_id,package_masters_id,market_price,offer_price,is_offer,offer_percentage','productPackage.packageMaster:id,name')->where([['status',1],['is_product',1]])->latest()->paginate(10);
+        $max_price = MaxMin::max('market_price');
+        $min = MaxMin::min('market_price');
         if(!$products->isEmpty())
             $status = true;
         else
             $status = false;
 
-        return response()->json(['success'=>$status,'product_details'=>$products]);
+        return response()->json(['success'=>$status,'max_price'=>$max_price,'min_price'=>$min,'product_details'=>$products]);
     }
 
     public function popular()
     {
         //
         $products = Product::select('id','name','details','large_picture','small_picture','is_available','default_package')->with('productPackage:id,product_id,package_masters_id,market_price,offer_price,is_offer,offer_percentage','productPackage.packageMaster:id,name')->where([['status',1],['is_product',1]])->inRandomOrder()->paginate(10);
+        $max_price = MaxMin::max('market_price');
+        $min = MaxMin::min('market_price');
         if(!$products->isEmpty())
             $status = true;
         else
             $status = false;
 
-        return response()->json(['success'=>$status,'product_details'=>$products]);
+        return response()->json(['success'=>$status,'max_price'=>$max_price,'min_price'=>$min,'product_details'=>$products]);
     }
 
 
