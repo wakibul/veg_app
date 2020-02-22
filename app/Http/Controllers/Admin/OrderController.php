@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
@@ -12,6 +11,9 @@ use LaravelFCM\Facades\FCM;
 use LaravelFCM\Message\OptionsBuilder;
 use LaravelFCM\Message\PayloadDataBuilder;
 use LaravelFCM\Message\PayloadNotificationBuilder;
+
+
+
 
 class OrderController extends Controller
 {
@@ -183,15 +185,14 @@ class OrderController extends Controller
         return redirect()->back()->with('success', 'Delivery Boy assign successfully.');
 
     }
-
-    public function sendAcceptNotification($order_details)
+    public function sendAssignNotification($employee_id)
     {
+        $employee = Employee::find($employee_id);
+        // $employee = $employee->name;
+        $title = "New Order";
+        $customer_message = "New Order has arrived";
 
-        $title = "Order Accept";
-
-        $user_message = "Dear Customer, you order has been received with order no " . $order_details->order_confirm_id;
-
-        $notification = sendMobilePushNotification($user_message, $title, [$order_details->fcm_token], ["mobile_no" => $order_details->recipient_no, "notification_code" => 102], 102, true);
+        $notification = sendMobilePushNotification($customer_message, $title, [$employee->fcm_token], ["employee_id" => $employee->id, "notification_code" => 101], 101, true);
         Log::debug($notification);
 
         return true;
