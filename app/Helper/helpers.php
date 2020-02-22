@@ -54,6 +54,7 @@ function sendMobilePushNotification(String $message = null, String $title = null
 
     /*
      * 100 = Default Code
+     * 102=confirm code
 
      */
     $app_id = env("ONE_SIGNAL_APP_ID", '');
