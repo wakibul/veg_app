@@ -30,7 +30,7 @@
                     }
                     elseif($order->status == 1){
                     $tr_class = "text-yellow";
-                    $lbl_class = "warning";
+                    $lbl_class = "#FFFFFF";
                     }
 
                     elseif($order->status == 2){
