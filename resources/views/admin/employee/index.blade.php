@@ -1,11 +1,11 @@
-<div class="col-md-6">
+<div class="col-md-5">
     <table class="table">
         <thead>
             <tr>
                 <th>#</th>
                 <th>Name</th>
                 <th>Phone No.</th>
-                <th>Address</th>
+                <th >Address</th>
                 <th>pin</th>
                 <th>Document</th>
                 <th>Action</th>
@@ -17,7 +17,7 @@
                 <td>{{ ($key+1) }}</td>
                 <td>{{$employee->name}}</td>
                 <td>{{$employee->mobile}}</td>
-                <td>{{$employee->address}}</td>
+                <td width="25%">{{$employee->address}}</td>
                 <td>{{$employee->pincode}}</td>
                 <td>
                     <a href="{{ $employee->document }}">
