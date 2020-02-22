@@ -82,7 +82,7 @@
                                     {{$order->timeSlot->slot}}
                                 </span>
                             </a>
-                        <td width="30%">{{date("d-m-Y h:i a", strtotime($order->confirmation_time??'NA'))}}</td>
+                        <td width="30%">@if($order->status!=0){{date("d-m-Y h:i a", strtotime($order->confirmation_time??'NA'))}} @else NA @endif</td>
 
                         <td>@if(!$order->order_confirm_id)
                             Waiting for Confirmation
