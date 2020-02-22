@@ -28,7 +28,7 @@ class DashboardController extends Controller
         $orders->when(request("slot_id"), function ($query) {
             return $query->where("time_slot_id", request("slot_id"));
         });
-        $orders = $orders->with("orderTransactions.product")->where('status', '!=', 4)->orderBy('id', 'DESC')->paginate(10);
+        $orders = $orders->with("orderTransactions.product")->with('orderTransactions.product.productPackage.packageMaster')->where('status', '!=', 4)->orderBy('id', 'DESC')->paginate(10);
         $employees = Employee::get();
 //dd($users);
 

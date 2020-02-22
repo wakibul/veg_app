@@ -75,14 +75,20 @@
         var $modal = $("#myModal");
         var order = $this.data("order");
         var items = order["order_transactions"];
-        console.log(order);
-        console.log(items);
+        // console.log(order);
+        // console.log(items);
         var table_items = "";
         $(items).each(function(index, element){
+            console.log(element);
             table_items +="<tr>";
             table_items +="<td>"+(index+1)+"</td>";
             table_items +="<td>"+element.product.name+"</td>";
             table_items +="<td>"+element.quantity+"</td>";
+                            var master =  element.product.product_package.filter(function(obj) {
+                               if (obj.id == element.product_package_id) return obj;
+                            });
+            table_items +="<td>"+(master[0].package_master.name)+"</td>";
+
             table_items +="<td>"+element.price+"</td>";
             table_items +="</tr>";
         });
