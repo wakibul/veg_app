@@ -96,6 +96,7 @@ class OrderController extends Controller
         $order_confirm_id = getOrderConfirmId();
         $order->update(['status' => 1, 'confirmation_time' => getCurrentDate(), 'order_confirm_id' => $order_confirm_id]);
         $order->save();
+
         return redirect()->back();
 
     }

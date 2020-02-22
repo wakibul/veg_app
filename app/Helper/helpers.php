@@ -74,10 +74,12 @@ function sendMobilePushNotification(String $message = null, String $title = null
     } elseif (gettype($data) == "array") {
         $data["notification_code"] = $notification_code;
     }
+
     $fields = [
         'app_id' => $app_id,
         'include_player_ids' => $tokens,
         'data' => $data,
+        'notification_code'=>$notification_code,
         'contents' => $content,
         'headings' => [
             "en" => $title,
