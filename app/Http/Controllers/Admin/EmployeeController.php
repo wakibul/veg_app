@@ -61,16 +61,17 @@ class EmployeeController extends Controller
 
         $request->file('document')->move($path, $imageName);
 
-
         try {
-            $data = ['name' => $request->name,
+            $data = [
+                'name' => $request->name,
                 'address' => $request->address,
                 'pincode' => $request->pin,
                 'mobile' => $request->mobile,
-                'document'=> url('/public') . '/vendor/images/employee' . $imageName,
+                'document'=> url('/public') . '/vendor/images/employee/' . $imageName,
                 'password' => bcrypt($request->pass),
 
             ];
+
             Employee::create($data);
             return Redirect::route('admin.employee.index')->with('success', 'Delivery boy added successfully');
 
