@@ -8,7 +8,8 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class Employee extends Model
 {
     use SoftDeletes;
-    protected $guarded = ['id', 'token'];
+    protected $guarded = ['id','token'];
+    protected $fillable = ['id','name','address','pincode','mobile','document','password','token'];
 
     public static $default_password = 'employee@veg_app';
     public function employeeTransactions(){
