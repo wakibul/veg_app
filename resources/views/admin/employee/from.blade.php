@@ -20,7 +20,7 @@
     <div class="row">
         <div class="col-md-4">Pin</div>
         <div class="col-md-6">
-            <input type="text" name="pin" class="form-control" value="@isset($employee){{$employee->pincode}}@endisset"
+            <input type="number" name="pin" class="form-control" value="@isset($employee){{$employee->pincode}}@endisset"
                 required>
         </div>
     </div>
@@ -29,7 +29,7 @@
     <div class="row">
         <div class="col-md-4">Phone No</div>
         <div class="col-md-6">
-            <input type="text" name="mobile" class="form-control" value="@isset($employee){{$employee->mobile}}@endisset"
+            <input type="number" name="mobile" class="form-control" value="@isset($employee){{$employee->mobile}}@endisset"
                 required>
         </div>
     </div>
