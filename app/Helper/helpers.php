@@ -54,6 +54,7 @@ function sendMobilePushNotification(String $message = null, String $title = null
 
     /*
      * 100 = Default Code
+     * 102=confirm code
 
      */
     $app_id = env("ONE_SIGNAL_APP_ID", '');
@@ -74,10 +75,12 @@ function sendMobilePushNotification(String $message = null, String $title = null
     } elseif (gettype($data) == "array") {
         $data["notification_code"] = $notification_code;
     }
+
     $fields = [
         'app_id' => $app_id,
         'include_player_ids' => $tokens,
         'data' => $data,
+        'notification_code'=>$notification_code,
         'contents' => $content,
         'headings' => [
             "en" => $title,

@@ -143,6 +143,7 @@
                             <th>#</th>
                             <th>Item Name</th>
                             <th>Quantity</th>
+                            <th>Type</th>
                             <th>Price</th>
                         </thead>
                         <tbody>

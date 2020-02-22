@@ -8,6 +8,10 @@ use App\Models\EmployeeTransaction;
 use App\Models\Order;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
+use LaravelFCM\Facades\FCM;
+use LaravelFCM\Message\OptionsBuilder;
+use LaravelFCM\Message\PayloadDataBuilder;
+use LaravelFCM\Message\PayloadNotificationBuilder;
 
 class OrderController extends Controller
 {
@@ -95,7 +99,27 @@ class OrderController extends Controller
         $order = Order::find($orderId);
         $order_confirm_id = getOrderConfirmId();
         $order->update(['status' => 1, 'confirmation_time' => getCurrentDate(), 'order_confirm_id' => $order_confirm_id]);
-        $order->save();
+        $order = $order->save();
+        $order_details = Order::find($orderId);
+        $token = $order_details->fcm_token;
+        $optionBuilder = new OptionsBuilder();
+        $optionBuilder->setTimeToLive(60 * 20);
+
+        $notificationBuilder = new PayloadNotificationBuilder("Today's Report");
+        $notificationBuilder->setBody("Thank you,Your order Has been Received with Order No: {$order_details->order_confirm_id}")
+            ->setSound('default');
+
+        $dataBuilder = new PayloadDataBuilder();
+        $dataBuilder->addData(['a_data' => 'my_data']);
+
+        $option = $optionBuilder->build();
+        $notification = $notificationBuilder->build();
+        $data = $dataBuilder->build();
+
+        $customerMessage = FCM::sendTo($token, $option, $notification, $data);
+
+        $this->sendAcceptNotification($order_details);
+
         return redirect()->back();
 
     }
@@ -132,7 +156,7 @@ class OrderController extends Controller
             $order = Order::find($order);
             $data = ['order_id' => $order->id,
                 'employee_id' => $request->employee_id,
-                'amount' => $order->total_price_with_tax
+                'amount' => $order->total_price_with_tax,
             ];
             $employeeTransaction = EmployeeTransaction::create($data);
         }
@@ -141,13 +165,11 @@ class OrderController extends Controller
         foreach ($request->order_checks as $key => $order) {
 
             $order = Order::find($order);
-            $amount =$amount+$order->total_price_with_tax;
-
-
+            $amount = $amount + $order->total_price_with_tax;
 
         }
 
-        $employee=Employee::find($request->employee_id);
+        $employee = Employee::find($request->employee_id);
         // $data=[
         // 'updated_balance'=>$employee->updated_balance+$amount,
 
@@ -161,14 +183,15 @@ class OrderController extends Controller
         return redirect()->back()->with('success', 'Delivery Boy assign successfully.');
 
     }
-    public function sendAssignNotification($employee_id)
-    {
-        $employee = Employee::find($employee_id);
-        // $employee = $employee->name;
-        $title = "New Order";
-        $customer_message = "New Order has arrived";
 
-        $notification = sendMobilePushNotification($customer_message, $title, [$employee->fcm_token], ["employee_id" => $employee->id,"notification_code"=>101], 101, true);
+    public function sendAcceptNotification($order_details)
+    {
+
+        $title = "Order Accept";
+
+        $user_message = "Dear Customer, you order has been received with order no " . $order_details->order_confirm_id;
+
+        $notification = sendMobilePushNotification($user_message, $title, [$order_details->fcm_token], ["mobile_no" => $order_details->recipient_no, "notification_code" => 102], 102, true);
         Log::debug($notification);
 
         return true;
