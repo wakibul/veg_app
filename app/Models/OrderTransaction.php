@@ -3,10 +3,12 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class OrderTransaction extends Model
 {
     //
+    use SoftDeletes;
     protected $guarded  = ['id','token'];
     public function product(){
 		return $this->belongsTo('App\Models\Product', 'product_id','id');
