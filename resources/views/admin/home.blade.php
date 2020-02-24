@@ -44,6 +44,7 @@
     tbody tr {
         border-bottom: 2px solid #9DB2A2;
     }
+
 </style>
 @endsection
 @section('js')

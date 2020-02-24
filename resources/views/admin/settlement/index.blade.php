@@ -100,6 +100,7 @@
                                                                         <td>@if($employee_transaction->status==1)
                                                                             <label class="checkbox-inline"><input
                                                                                     type="checkbox"
+                                                                                    class="settlement"
                                                                                     name="employee_transactions[]"
                                                                                     value="{{ $employee_transaction->id }}">
                                                                             </label>
@@ -120,6 +121,7 @@
                                                                         </td>
                                                                         <td>
                                                                             <button type="submit"
+                                                                                onclick="return settlementcheck(this);"
                                                                                 class="btn btn-primary">Sattlement</button>
                                                                         </td>
                                                                     </tr>
@@ -170,5 +172,15 @@
             $(this).next("tr").toggleClass("hidden");
         })
     });
+</script>
+<script>
+    settlementcheck = function(obj) {
+
+    var total_settelment_chack = $(obj).parents("form").find(".settlement:checked").length;
+    if(total_settelment_chack<=0){
+        alert("Have to select at-least one checkbox!!!");
+        return false;
+    }
+}
 </script>
 @endsection

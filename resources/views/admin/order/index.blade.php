@@ -29,7 +29,7 @@
                     $lbl_class = "";
                     }
                     elseif($order->status == 1){
-                    $tr_class = "text-yellow";
+                    $tr_class = "text-blue";
                     $lbl_class = "#FFFFFF";
                     }
 
@@ -185,7 +185,7 @@
                         <div class="col-md-1 offset-md-3"><b>Name</b></div>
                         <div class="col-md-4">
                             <select class="form-control" name="employee_id">
-                                <option value="">-- Please Select Employee --</option>
+                                <option value="">-- Please Select Delivery Boy --</option>
                                 @foreach($employees as $employee)
 
                                 <option value="{{$employee->id}}">
