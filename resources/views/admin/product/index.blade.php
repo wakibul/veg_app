@@ -98,7 +98,7 @@
                                 <td>{{$product->details}}</td>
                                 <td>{{$product->unit_desc??'NA'}}</td>
                                 <td>{{$product->category->name}}</td>
-                                <td>@if($product->is_available==0)NotAvailable @else Available @endif</td>
+                                <td>@if($product->status==0)Not Available @else Available @endif</td>
                                 <td>{{$product->defultPackage->packageMaster->name ?? "NA"}}</td>
 
                                 </td>
