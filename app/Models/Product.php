@@ -13,7 +13,7 @@ class Product extends Model
 
     public function productPackage()
     {
-        return $this->hasMany('App\Models\ProductPackage', 'product_id', 'id');
+        return $this->hasMany('App\Models\ProductPackage', 'product_id', 'id')->where('status',1)->withTrashed();
     }
      public function category()
     {
