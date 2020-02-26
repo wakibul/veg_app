@@ -195,6 +195,7 @@ class ProductController extends Controller
      */
     public function update(Request $request, $id)
     {
+
         if (($request->file('small_picture') != null)) {
 
             $validator = Validator::make($request->all(), [
@@ -244,9 +245,7 @@ class ProductController extends Controller
             $is_product = 0;
 
         }
-        $request->merge([
-            "is_available" => true,
-        ]);
+
 
         if (($request->file('small_picture') != null)) {
             $small_picture = url('/public') . '/images/product/small/' . $imageName;
@@ -259,6 +258,7 @@ class ProductController extends Controller
             $large_picture = $product->large_picture;
         }
         DB::beginTransaction();
+
         $data = [
 
             'name' => $request->name,
