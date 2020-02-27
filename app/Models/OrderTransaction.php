@@ -15,7 +15,7 @@ class OrderTransaction extends Model
     }
 
     public function productPackage(){
-		return $this->belongsTo('App\Models\ProductPackage', 'product_package_id','id');
+		return $this->belongsTo('App\Models\ProductPackage', 'product_package_id','id')->withTrashed();
     }
 
     public function order(){
