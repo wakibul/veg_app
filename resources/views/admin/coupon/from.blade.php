@@ -77,7 +77,7 @@
 
                 <option value="1" @isset($coupon){{$coupon->is_active==1?'selected':''}}@endisset>Active</option>
 
-                <option value="2" @isset($coupon){{$coupon->is_active==0?'selected':''}}@endisset>InActive</option>
+                <option value="0" @isset($coupon){{$coupon->is_active==0?'selected':''}}@endisset>InActive</option>
 
             </select>
         </div>

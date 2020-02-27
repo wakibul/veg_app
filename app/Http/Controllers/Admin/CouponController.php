@@ -45,24 +45,12 @@ class CouponController extends Controller
     public function store(Request $request)
     {
 
+
         $current_date = date("Y-m-d");
         $days = $request->valid_to;
         $date_sum = date('Y-m-d', strtotime($current_date . ' + ' . $days . ' days'));
 
-        $validator = Validator::make($request->all(), [
-            'name' => 'required',
-            'coupon_code' => 'required',
-            'coupon_in' => 'required',
-            'coupon_value' => 'required',
-            'max_coupon_use' => 'required',
-            'coupon_type' => 'required',
-            'valid_to' => 'required',
-            'minimun_amount' => 'required',
-            'is_active' => 'required',
-        ]);
-        if ($validator->fails()) {
-            return Redirect::back()->withErrors($validator)->withInput();
-        }
+
         try {
             $data = ['name' => $request->name,
                 'coupon_code' => $request->coupon_code,
@@ -141,6 +129,10 @@ class CouponController extends Controller
 
         $id = Crypt::decrypt($id);
         $coupon = Coupon::find($id);
+        $current_date = $coupon->valid_to;
+        $days = $request->valid_to;
+        $date_sum = date('Y-m-d', strtotime($current_date . ' + ' . $days . ' days'));
+
         $validator = Validator::make($request->all(), [
             'name' => 'required',
             'coupon_code' => 'required',
@@ -160,7 +152,7 @@ class CouponController extends Controller
                 'coupon_in' => $request->coupon_in,
                 'coupon_value' => $request->coupon_value,
                 'coupon_type' => 'first_offer',
-                'valid_to' => $request->valid_to,
+                'valid_to' => $date_sum,
                 'minimun_amount' => $request->minimun_amount,
                 'is_active' => $request->is_active,
 
@@ -207,7 +199,7 @@ class CouponController extends Controller
         $id = Crypt::decrypt($id);
         Coupon::findOrFail($id)->delete();
 
-        return back()->with('error','Coupon Deleted Successfully');
+        return back()->with('error', 'Coupon Deleted Successfully');
 
     }
 }

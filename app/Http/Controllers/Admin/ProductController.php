@@ -196,6 +196,7 @@ class ProductController extends Controller
     public function update(Request $request, $id)
     {
 
+
         if (($request->file('small_picture') != null)) {
 
             $validator = Validator::make($request->all(), [
