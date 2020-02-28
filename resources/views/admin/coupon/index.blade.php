@@ -28,7 +28,7 @@
                 <td>{{$coupon->max_coupon_use}}</td>
                 <td>{{$coupon->valid_to}}</td>
                 <td>{{$coupon->minimun_amount}}</td>
-                <td>@if($coupon->is_active==0)Active @else InActive @endif</td>
+                <td>@if($coupon->is_active==0)InActive @else Active @endif</td>
                 <td>
 
                     <form action="{{route('admin.coupon.status',Crypt::encrypt($coupon->id))}}" method="post">
@@ -36,9 +36,9 @@
                         @csrf
 
                         <button type="submit" class="btn btn-success" @if($coupon->is_active==0)
-                            onclick="return confirm('are you sure to InActive this coupon?')" @else onclick="return
-                            confirm('are you sure to Active this coupon?')" @endif>@if($coupon->is_active==0)InActive
-                            @else Active @endif</button>
+                            onclick="return confirm('are you sure to Active this coupon?')" @else onclick="return
+                            confirm('are you sure to InActive this coupon?')" @endif>@if($coupon->is_active==0)Active
+                            @else InActive @endif</button>
 
                     </form>
 
