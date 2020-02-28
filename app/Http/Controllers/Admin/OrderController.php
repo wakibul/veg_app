@@ -154,24 +154,24 @@ class OrderController extends Controller
             $order->save();
 
         }
-        foreach ($request->order_checks as $key => $order) {
-            $order = Order::find($order);
-            $data = ['order_id' => $order->id,
-                'employee_id' => $request->employee_id,
-                'amount' => $order->total_price_with_tax,
-            ];
-            $employeeTransaction = EmployeeTransaction::create($data);
-        }
-        $amount = 0;
+        //foreach ($request->order_checks as $key => $order) {
+        //    $order = Order::find($order);
+        //    $data = ['order_id' => $order->id,
+        //        'employee_id' => $request->employee_id,
+         //       'amount' => $order->total_price_with_tax,
+         //   ];
+         //   $employeeTransaction = EmployeeTransaction::create($data);
+        //}
+       // $amount = 0;
 
-        foreach ($request->order_checks as $key => $order) {
+        //foreach ($request->order_checks as $key => $order) {
 
-            $order = Order::find($order);
-            $amount = $amount + $order->total_price_with_tax;
+         //   $order = Order::find($order);
+          //  $amount = $amount + $order->total_price_with_tax;
 
-        }
+        //}
 
-        $employee = Employee::find($request->employee_id);
+        //$employee = Employee::find($request->employee_id);
         // $data=[
         // 'updated_balance'=>$employee->updated_balance+$amount,
 

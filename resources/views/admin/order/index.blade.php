@@ -82,7 +82,9 @@
                                     {{$order->timeSlot->slot}}
                                 </span>
                             </a>
-                        <td width="30%">@if($order->status!=0){{date("d-m-Y h:i a", strtotime($order->confirmation_time??'NA'))}} @else NA @endif</td>
+                        <td width="30%">
+                            @if($order->status!=0){{date("d-m-Y h:i a", strtotime($order->confirmation_time??'NA'))}}
+                            @else NA @endif</td>
 
                         <td>@if(!$order->order_confirm_id)
                             Waiting for Confirmation
@@ -101,21 +103,23 @@
                             </button>
                         </td>
                         <td>
-                            @if($order->status==0)
-                            <a href="{{route('admin.dashboard.order.accept',Crypt::encrypt($order->id))}}">
-                                <i class="btn btn-sm btn-success">Confirm</i>
-                            </a>
-                            <a href="{{route('admin.dashboard.order.reject',Crypt::encrypt($order->id))}}">
-                                <i class="btn btn-sm btn-danger">Cancel</i>
-                            </a>
+                            <div class="btn-group">
+                                @if($order->status==0)
+                                <a href="{{route('admin.dashboard.order.accept',Crypt::encrypt($order->id))}}">
+                                    <i class="btn btn-sm btn-success">Confirm</i>
+                                </a>
+                                <a href="{{route('admin.dashboard.order.reject',Crypt::encrypt($order->id))}}">
+                                    <i class="btn btn-sm btn-danger">Cancel</i>
+                                </a>
 
 
-                            @elseif($order->status==1)
-                            <a class="btn btn-sm btn-warning"
-                                href="{{route('admin.dashboard.order.close',Crypt::encrypt($order->id))}}"><i
-                                    class="fa fa-close"></i> Close
-                                Order</a>
-                            @endif
+                                @elseif($order->status==1)
+                                <a class="btn btn-sm btn-warning"
+                                    href="{{route('admin.dashboard.order.close',Crypt::encrypt($order->id))}}"><i
+                                        class="fa fa-close"></i> Close
+                                    Order</a>
+                                @endif
+                            </div>
                         </td>
                     </tr>
                     @endforeach

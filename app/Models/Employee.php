@@ -9,7 +9,7 @@ class Employee extends Model
 {
     use SoftDeletes;
     protected $guarded = ['id','token'];
-    protected $fillable = ['id','name','address','pincode','mobile','document','password','token'];
+    protected $fillable = ['id','name','address','pincode','mobile','document','updated_balance','password','token'];
 
     public static $default_password = 'employee@veg_app';
     public function employeeTransactions(){
