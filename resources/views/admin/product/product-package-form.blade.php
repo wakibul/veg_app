@@ -5,7 +5,7 @@
                 <div class="form-group">
                     <div class="row">
                         <div class="mb-3">
-                            <label><input type="checkbox" name="default_packages[]" class="order" value="1"
+                            <label><input type="checkbox" name="default_packages[]" class="order" value="0"
                                     onClick="onlyOne(this)" @isset($product) @if($productpackage->id ==
                                 $product->default_package) checked @endif @endisset> Select as a default
                                 package</label>
@@ -49,13 +49,13 @@
 
                         <div class="col-md-2">Offer Percentage</div>
                         <div class="col-md-2">
-                            <input type="text" name="offer_percentages[]" class="form-control offer_per"
+                            <input type="number" name="offer_percentages[]" class="form-control offer_per"
                                 value="@isset($product){{$productpackage->offer_percentage}}@endisset" id="offer_per"
                                 onkeyup="offerPrice(this)" required>
                         </div>
                         <div class="col-md-2">Offer Price</div>
                         <div class="col-md-2">
-                            <input type="text" name="offer_prices[]" class="form-control offer_price"
+                            <input type="number" name="offer_prices[]" class="form-control offer_price"
                                 value="@isset($product){{$productpackage->offer_price}}@endisset" id="offer_price"
                                 required>
                         </div>

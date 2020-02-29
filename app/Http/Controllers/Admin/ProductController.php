@@ -70,8 +70,8 @@ class ProductController extends Controller
     {
         $validator = Validator::make($request->all(), [
 
-            'small_picture' => 'required|mimes:jpeg,jpg,png|dimensions:min_width=320,min_height=200',
-            'large_picture' => 'required|mimes:jpeg,jpg,png|dimensions:min_width=640,min_height=400',
+            'small_picture' => 'required|mimes:jpeg,jpg,png',
+            'large_picture' => 'required|mimes:jpeg,jpg,png',
         ]);
         if ($validator->fails()) {
             return Redirect::back()->withErrors($validator)->withInput();
@@ -290,6 +290,7 @@ class ProductController extends Controller
             }
         }
 
+
         if ($product) {
             $product_packages_array = [];
             $product_packages = [];
@@ -313,7 +314,7 @@ class ProductController extends Controller
             }
 
             $product = Product::find($id);
-            $default_id = $product_packages[$default_key - 1]->id;
+            $default_id = $product_packages[$default_key]->id;
             $product->default_package = $default_id;
             $product->save();
 
