@@ -39,7 +39,7 @@
         <div class="col-md-4">@if(@isset($employee) )New Password @else Password @endif</div>
         <div class="col-md-6">
             <input type="password" name="pass" class="form-control"
-                value="" required>
+                value="" >
         </div>
     </div>
 </div>
@@ -50,7 +50,7 @@
 
             <div class="custom-file">
                 <input type="file" class="custom-file-input" name="document"
-                    value="@isset($employee){{$employee->document}}@endisset" required>
+                    value="@isset($employee){{$employee->document}}@endisset">
                 <label class="custom-file-label">Choose file...</label>
 
             </div>

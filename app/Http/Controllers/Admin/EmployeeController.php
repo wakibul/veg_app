@@ -45,41 +45,48 @@ class EmployeeController extends Controller
      */
     public function store(Request $request)
     {
+        $mobile_count = Employee::where('mobile', $request->mobile)->count();
+        if ($mobile_count > 0) {
+            return Redirect::route('admin.employee.index')->with('error', 'This Mobile No Is Already In Used');
 
+        } else {
+            $validator = Validator::make($request->all(), [
+                'name' => 'required',
+                'address' => 'required',
+                'pin' => 'required',
+                'mobile' => 'required',
+                'document' => 'required',
+                'pass' => 'required',
+            ]);
+            if ($validator->fails()) {
+                return Redirect::back()->withErrors($validator)->withInput();
+            }
+            $path = public_path() . '/vendor/images/employee';
+            $imageName = date('dmyhis') . 'employee.' . $request->file('document')->getClientOriginalExtension();
 
-        $validator = Validator::make($request->all(), [
-            'name' => 'required',
-            'address' => 'required',
-            'pin' => 'required',
-            'mobile' => 'required',
-        ]);
-        if ($validator->fails()) {
-            return Redirect::back()->withErrors($validator)->withInput();
-        }
-        $path = public_path() . '/vendor/images/employee';
-        $imageName = date('dmyhis') . 'employee.' . $request->file('document')->getClientOriginalExtension();
+            $request->file('document')->move($path, $imageName);
 
-        $request->file('document')->move($path, $imageName);
+            try {
+                $data = [
+                    'name' => $request->name,
+                    'address' => $request->address,
+                    'pincode' => $request->pin,
+                    'mobile' => $request->mobile,
+                    'document' => url('/public') . '/vendor/images/employee/' . $imageName,
+                    'password' => bcrypt($request->pass),
 
-        try {
-            $data = [
-                'name' => $request->name,
-                'address' => $request->address,
-                'pincode' => $request->pin,
-                'mobile' => $request->mobile,
-                'document'=> url('/public') . '/vendor/images/employee/' . $imageName,
-                'password' => bcrypt($request->pass),
+                ];
 
-            ];
+                Employee::create($data);
+                return Redirect::route('admin.employee.index')->with('success', 'Delivery boy added successfully');
 
-            Employee::create($data);
-            return Redirect::route('admin.employee.index')->with('success', 'Delivery boy added successfully');
+            } catch (Exception $e) {
+                DB::rollback();
+                dd($e);
+                Session::flash('error', 'Something Went Wrong');
+                return back();
 
-        } catch (Exception $e) {
-            DB::rollback();
-            dd($e);
-            Session::flash('error', 'Something Went Wrong');
-            return back();
+            }
 
         }
 
