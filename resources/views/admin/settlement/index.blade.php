@@ -122,7 +122,7 @@
                                                                         <td>
                                                                             <button type="submit"
                                                                                 onclick="return settlementcheck(this);"
-                                                                                class="btn btn-primary">Sattlement</button>
+                                                                                class="btn btn-primary">Settlement</button>
                                                                         </td>
                                                                     </tr>
                                                                     @else
