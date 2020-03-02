@@ -5,6 +5,7 @@
 
 @section('content')
 <div class="container">
+    @include('admin.layout.alert')
     <div class="page-header">
         <h1 class="page-title">
             All Customers

@@ -9,7 +9,6 @@ use App\Models\NotificationDetail;
 use Illuminate\Http\Request;
 use Str;
 
-
 class CustomerController extends Controller
 {
     /**
@@ -87,27 +86,33 @@ class CustomerController extends Controller
      */
     public function notification(Request $request)
     {
-        $data = [
-            'uuid' => (String) Str::uuid(),
-            'notification_msg' => $request->msg,
-        ];
-        $notification = Notification::create($data);
+        if ($request->customer_checks == null) {
+            return redirect()->back()->with('error', 'Please select AtLeast One Customer  .');
 
-        foreach ($request->customer_checks as $key => $customer_check) {
-            $notification_details = [
-
-                'notification_id' => $notification->id,
-                'customer_id' => $customer_check,
+        } else {
+            $data = [
+                'uuid' => (String) Str::uuid(),
+                'notification_msg' => $request->msg,
             ];
+            $notification = Notification::create($data);
 
-            $notification_details =NotificationDetail::create($notification_details);
+            foreach ($request->customer_checks as $key => $customer_check) {
+                $notification_details = [
 
-            $customer = Customer::find($customer_check);
-            $customer_no = $customer->mobile;
-            $sms=sendNewSMS($customer_no,$request->msg);
+                    'notification_id' => $notification->id,
+                    'customer_id' => $customer_check,
+                ];
+
+                $notification_details = NotificationDetail::create($notification_details);
+
+                $customer = Customer::find($customer_check);
+                $customer_no = $customer->mobile;
+                $sms = sendNewSMS($customer_no, $request->msg);
+            }
+
         }
-        return redirect()->back()->with('success', 'Notification Send Successfully.');
 
+        return redirect()->back()->with('success', 'Notification Send Successfully.');
 
     }
     public function destroy($id)
