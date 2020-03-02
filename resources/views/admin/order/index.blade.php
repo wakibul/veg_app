@@ -86,15 +86,15 @@
                             @if($order->status!=0){{date("d-m-Y h:i a", strtotime($order->confirmation_time??'NA'))}}
                             @else NA @endif</td>
 
-                        <td>@if(!$order->order_confirm_id)
+                        <td>@if(!($order->order_confirm_id) && ($order->status==0))
                             Waiting for Confirmation
                             @elseif($order->status==1)
                             Confirmed
                             @elseif($order->status==2)
                             Completed
-                            @elseif($order->employee_id==null)
+                            @elseif($order->employee_id!=null)
                             Assigned Delivery Boy
-                            @elseif($order->status==3)
+                            @elseif(!($order->order_confirm_id) && ($order->status==3))
                             cancelled
                             @endif</td>
                         <td>
@@ -108,7 +108,7 @@
                                 <a href="{{route('admin.dashboard.order.accept',Crypt::encrypt($order->id))}}">
                                     <i class="btn btn-sm btn-success">Confirm</i>
                                 </a>
-                                <a href="{{route('admin.dashboard.order.reject',Crypt::encrypt($order->id))}}">
+                                <a data-close-url="{{route('admin.dashboard.order.reject',Crypt::encrypt($order->id))}}" onclick="closeOrder(this)">
                                     <i class="btn btn-sm btn-danger">Cancel</i>
                                 </a>
 
@@ -213,3 +213,35 @@
     </div>
 
 </form>
+<div class="modal fade" id="order_close_modal" role="dialog">
+    <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+
+                <h4 class="modal-title">Close Order</h4>
+            </div>
+            <form action="" method="POST">
+                {{csrf_field()}}
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-xs-6">
+                            <label for="buffer_time">Cancellation Reason</label>
+                            <input type="text" class="form-control" name="reason" id="reason" required>
+                            <div class="form-check">
+                                <input type="checkbox" class="form-check-input" id="send_notification" name="send_notification" value="1" checked>
+                                <label class="form-check-label" for="send_notification">Cancellation Notification Send to Customer</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">Cancel Order</button>
+                </div>
+            </form>
+        </div>
+
+    </div>
+</div>

@@ -42,8 +42,8 @@
                                             <thead>
                                                 <tr>
                                                     <th>#</th>
-                                                    <th>Engineer Name</th>
-                                                    <th>Total Machines</th>
+                                                    <th>Employee Name</th>
+                                                    <th>Contact Number</th>
                                                     <th>Amount Pending</th>
                                                 </tr>
                                             </thead>

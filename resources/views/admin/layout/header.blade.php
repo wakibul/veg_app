@@ -83,6 +83,10 @@
                         <a href="{{route('admin.report.index')}}" class="nav-link "><i class="fa fa-calculator"
                                 aria-hidden="true"></i>Report</a>
                     </li>
+                    <li class="nav-item dropdown">
+                        <a href="{{route('admin.customer.index')}}" class="nav-link "><i class="fa fa-user"
+                                aria-hidden="true"></i>Customers</a>
+                    </li>
                     <!---<li class="nav-item dropdown">
                     <a href="javascript:void(0)" class="nav-link" data-toggle="dropdown"><i class="fe fe-file"></i> Doctor</a>
                     <div class="dropdown-menu dropdown-menu-arrow">

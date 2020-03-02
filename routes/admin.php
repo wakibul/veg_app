@@ -35,6 +35,12 @@ Route::group(['prefix' => 'category'], function () {
         'middleware' => ['admin'],
         'uses' => 'Admin\CategoryController@destroy',
     ]);
+    Route::post('/status/{id}', [
+        'as' => 'category.status',
+        'middleware' => ['admin'],
+        'uses' => 'Admin\CategoryController@status',
+    ]);
+
 });
 Route::group(['prefix' => 'unit'], function () {
     Route::get('/index', [
@@ -111,7 +117,7 @@ Route::group(['prefix' => 'order'], function () {
         'middleware' => ['admin'],
         'uses' => 'Admin\OrderController@acceptOrder',
     ]);
-    Route::get('/order_reject/{order_id}', [
+    Route::post('/order_reject/{order_id}', [
         'as' => 'dashboard.order.reject',
         'middleware' => ['admin'],
         'uses' => 'Admin\OrderController@rejectOrder',
@@ -266,6 +272,19 @@ Route::group(['prefix' => 'report'], function () {
         'as' => 'report.index',
         'middleware' => ['admin'],
         'uses' => 'Admin\reportController@index',
+    ]);
+
+});
+Route::group(['prefix' => 'customer'], function () {
+    Route::get('/index', [
+        'as' => 'customer.index',
+        'middleware' => ['admin'],
+        'uses' => 'Admin\CustomerController@index',
+    ]);
+    Route::post('/notification', [
+        'as' => 'customer.notification.store',
+        'middleware' => ['admin'],
+        'uses' => 'Admin\CustomerController@notification',
     ]);
 
 });

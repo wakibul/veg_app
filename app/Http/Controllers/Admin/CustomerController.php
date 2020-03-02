@@ -3,10 +3,14 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Models\Order;
+use App\Models\Customer;
+use App\Models\Notification;
+use App\Models\NotificationDetail;
 use Illuminate\Http\Request;
+use Str;
 
-class reportController extends Controller
+
+class CustomerController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,33 +19,9 @@ class reportController extends Controller
      */
     public function index()
     {
-        $orders = Order::query();
-        $orders = $this->filter($orders)->paginate(10);
-        $total_order = $orders->count();
-        $total_delivery = $orders->where('status', 2)->count();
-        $total_cancel = $orders->where('status', 4)->count();
+        $customers = Customer::paginate(10);
+        return view('admin.customer.index', compact('customers'));
 
-
-        return view('admin.report.index', compact('orders', 'total_order', 'total_delivery', 'total_cancel'));
-    }
-    public function filter($orders)
-    {
-        $orders->when(request("order_confirm_id"), function ($query) {
-            $query->where('order_confirm_id', request('order_confirm_id'));
-        });
-
-        $orders->when(request("status"), function ($query) {
-            $query->where('status', request('status'));
-        });
-
-        $orders->when(request('from_date'), function ($query) {
-            $query->whereDate('created_at', '>=', request('from_date'));
-        });
-        $orders->when(request('to_date'), function ($query) {
-            $query->whereDate('created_at', '<=', request('to_date'));
-        });
-
-        return $orders;
     }
 
     /**
@@ -105,6 +85,31 @@ class reportController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
+    public function notification(Request $request)
+    {
+        $data = [
+            'uuid' => (String) Str::uuid(),
+            'notification_msg' => $request->msg,
+        ];
+        $notification = Notification::create($data);
+
+        foreach ($request->customer_checks as $key => $customer_check) {
+            $notification_details = [
+
+                'notification_id' => $notification->id,
+                'customer_id' => $customer_check,
+            ];
+
+            $notification_details =NotificationDetail::create($notification_details);
+
+            $customer = Customer::find($customer_check);
+            $customer_no = $customer->mobile;
+            $sms=sendNewSMS($customer_no,$request->msg);
+        }
+        return redirect()->back()->with('success', 'Notification Send Successfully.');
+
+
+    }
     public function destroy($id)
     {
         //

@@ -109,6 +109,13 @@
             return false;
         }
     }
+    closeOrder = function(Obj){
+        console.log(Obj);
+        var order_id_url = $(Obj).data("close-url");
+        console.log(order_id_url);
+        $("#order_close_modal").find("form").prop("action", order_id_url);
+        $("#order_close_modal").modal();
+    }
 </script>
 
 @endsection

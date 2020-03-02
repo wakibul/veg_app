@@ -14,7 +14,6 @@ function sendNewSMS($mobilenumbers, $message)
 
     $m = '91' . $mobilenumbers;
     $mobileno = $m;
-
     $ch = curl_init($url . "?user=$user&password=$password&mobiles=$m&sms=" . $message . "&senderid=DELIND");
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
     $ch = curl_exec($ch);
