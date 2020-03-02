@@ -11,6 +11,8 @@ use App\Models\Cart;
 use App\Models\DeliveryCharge;
 use App\Models\Pincode;
 use App\Models\TimeSlot;
+use App\Models\Customer;
+use App\Models\Coupon;
 use Validator,DB;
 class OrderController extends Controller
 {
@@ -23,7 +25,7 @@ class OrderController extends Controller
     {
         //
         $user_id = auth('api')->user()->id;
-        $orders = Order::select('id','order_confirm_id','otp','total_price_with_tax','time_slot_id','created_at','status')->with('timeSlot:id,slot','orderTransaction:id,order_id,quantity,product_id,product_package_id','orderTransaction.product:id,name','orderTransaction.productPackage:id,product_id,package_masters_id,market_price,offer_price,offer_percentage,is_offer','orderTransaction.productPackage.packageMaster:id,name')->where('user_id',$user_id)->orderBy('id','desc')->withTrashed()->paginate(10);
+        $orders = Order::select('id','order_confirm_id','otp','total_price_with_tax','time_slot_id','created_at','status')->with('timeSlot:id,slot','orderTransaction:id,order_id,quantity,product_id,product_package_id','orderTransaction.product:id,name','orderTransaction.productPackage:id,product_id,package_masters_id,market_price,offer_price,offer_percentage,is_offer','orderTransaction.productPackage.packageMaster:id,name')->where('user_id',$user_id)->orderBy('id','desc')->withTrashed()->paginate(30);
         if(!$orders->isEmpty())
             return response()->json(['success'=>true,'orders'=>$orders]);
         else
@@ -73,16 +75,18 @@ class OrderController extends Controller
         if($pincode == null){
             return response()->json(['success'=>false,'error'=>'Sorry, unable to delivery in this pincode']);
         }
-        if($totalPrice < $delivery_charges->minimum_amount)
-        {
-            return response()->json(['success'=>false,'error'=>'The minimum  amount should be '.$delivery_charges->minimum_amount]);
-        }
+
         if($totalPrice < $delivery_charges->maximum_amount){
             $charge_amount = $delivery_charges->charge_amount;
             $totalPrice = floatval($totalPrice)+floatval($delivery_charges->charge_amount);
         }
         else{
             $charge_amount = '0.00';
+        }
+
+        if($totalPrice < $delivery_charges->minimum_amount)
+        {
+            return response()->json(['success'=>false,'error'=>'The minimum  amount should be '.$delivery_charges->minimum_amount]);
         }
 
         $ordersCount = Order::where([['time_slot_id',$request->time_slot_id],['delivery_date',$request->delivery_date]])->count();
@@ -119,6 +123,13 @@ class OrderController extends Controller
                     OrderTransaction::create($orderTrans);
                 }
                 Cart::with('item')->where('user_id',$user_id)->delete();
+                if($request->coupon_id != ''){
+	                if($request->coupon_id == 1){
+	                	if(auth('api')->user()->free_offer > 0){
+	                		Customer::where('id',auth('api')->user()->id)->decrement('free_offer');
+	                	}
+	                }
+            	}
                 DB::commit();
                 //$current_order = Order::with('orderTransactions.product')->find($order->id);
                 return response()->json([

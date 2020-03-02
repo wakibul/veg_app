@@ -41,15 +41,15 @@ class CouponController extends Controller
     {
         //
         $validator = Validator::make($request->all(), [
-            'coupon_code' => 'required',
+            'coupon_id' => 'required',
             'price'=> 'required'
         ]);
         if ($validator->fails()) {
             return response()->json(['success'=>false,'error'=>$validator->errors()]);
         }
-        $coupon_code = $request->coupon_code;
+        $coupon_id = $request->coupon_id;
         $price = $request->price;
-        $coupon = Coupon::where([['coupon_code',$coupon_code],['is_active',1]])->first();
+        $coupon = Coupon::where([['id',$coupon_id],['is_active',1]])->first();
         if($coupon){
             $user_id    = auth('api')->user()->id;
             $orders = Order::where([['user_id',$user_id],['coupon_id',$coupon->id]])->count();
@@ -71,17 +71,17 @@ class CouponController extends Controller
                  $reduced_amount = intval($coupon->coupon_value);
                  $discount_price = intval($price)-intval($reduced_amount);
             }
-        $firstCoupon= Coupon::where([['coupon_code',$coupon_code],['is_active',1],['is_active',1],['coupon_type','first_offer']])->first();
+        $firstCoupon= Coupon::where([['id',$coupon_id],['is_active',1],['coupon_type','first_offer']])->first();
         if($firstCoupon)
         {
-            if(auth('api')->user()->free_offer_valid_to <= date('Y-m-d')){
+            if(auth('api')->user()->free_offer_valid_to < date('Y-m-d')){
                 return response()->json(['success'=>false,'error'=>'The offer is expired']);
             }
-            if(auth('api')->user()->free_offer > 0){
-                Customer::where('id',auth('api')->user()->id)->decrement('free_offer');
+            if(auth('api')->user()->free_offer == 0){
+                //Customer::where('id',auth('api')->user()->id)->decrement('free_offer');
+                return response()->json(['success'=>false,'error'=>'The offer is not applicable now']);
             }
-            else
-            return response()->json(['success'=>false,'error'=>'The offer is not applicable now']);
+
 
         }
             return response()->json(['success'=>true,'original_price'=>$price,'reduced_amount'=>$reduced_amount,'discount_price'=>$discount_price,'message'=>'Coupon applied successfull']);
