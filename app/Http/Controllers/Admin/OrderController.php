@@ -2,6 +2,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Customer;
 use App\Models\Employee;
 use App\Models\EmployeeTransaction;
 use App\Models\Order;
@@ -125,12 +126,25 @@ class OrderController extends Controller
         return redirect()->back();
 
     }
-    public function rejectOrder($order_id)
+    public function rejectOrder(Request $request,$order_id)
     {
+
+        $data=[
+            "cancellation_reason"=>$request->reason,
+            'status' => 3,
+
+        ];
         $orderId = decrypt($order_id);
         $order = Order::find($orderId);
-        $order->update(['status' => 4]);
+        $order->update($data);
         $order->save();
+        if($request->send_notification==1){
+            $user_id=$order->user_id;
+            $customer=Customer::find( $user_id);
+            $mobile=$customer->mobile;
+            $sendMsg=sendNewSMS($mobile,$request->reason);
+
+        }
         return redirect()->back()->with('error', 'Order Cancel');
 
     }

@@ -9,7 +9,7 @@
         <div class="col-12">
             <div class="page-header">
                 <h1 class="page-title">
-                   Edit Category
+                    Category Master
                 </h1>
             </div>
             <div class="card-body">
@@ -31,7 +31,7 @@
                         </form>
                     </div>
 
-                    @include('admin.category.index')
+                   @include('admin.category.index')
 
                 </div>
             </div>

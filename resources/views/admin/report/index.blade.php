@@ -33,7 +33,7 @@
 
             </table>
 
-            {{$orders->links()}}
+
         </div>
     </div>
     <form name="employee" action="{{route('admin.assign_employee.store')}}" method="POST">
@@ -48,9 +48,9 @@
                             <th>Sl.</th>
                             <th>OTP</th>
                             <th>Order No</th>
-                            <th width="30%">Address</th>
+                            <th width="20%">Address</th>
                             <th>Phone No</th>
-                            <th width="30%">Order Time</th>
+                            <th width="20%">Order Time</th>
                             <th>Confirm Time</th>
                             <th>Status</th>
                             <th>Item</th>
@@ -99,7 +99,7 @@
                             </td>
 
 
-                            <td width="30%">{{$order->address??'NA'}}</td>
+                            <td width="20%">{{$order->address??'NA'}}</td>
                             <td>{{$order->recipient_no ??'NA'}}</td>
                             <td>{{date("d-m-Y h:i a", strtotime($order->created_at))}}<br>
                                 <a href="{{route("admin.home", ["slot_id" => $order->time_slot_id])}}">
@@ -107,7 +107,7 @@
                                         {{$order->timeSlot->slot}}
                                     </span>
                                 </a>
-                            <td width="30%">{{date("d-m-Y h:i a", strtotime($order->confirmation_time??'NA'))}}</td>
+                            <td width="20%">{{date("d-m-Y h:i a", strtotime($order->confirmation_time??'NA'))}}</td>
 
                             <td>@if(!$order->order_confirm_id)
                                 Waiting for Confirmation
@@ -121,9 +121,12 @@
                                 cancelled
                                 @endif</td>
                             <td>
-                                <button type="button" onClick="showItems(this)" class="btn btn-info btn-sm"
-                                    data-order="{{$order->toJson()}}" <i class="fa fa-eye"></i> Item
-                                </button>
+                               @foreach($order->orderTransactions as $orderKey => $orderTransaction)
+
+                                <span class="label label-{{$lbl_class}}">{{$orderTransaction->product->name}}
+                                ({{$orderTransaction->quantity}} ({{$orderTransaction->productPackage->PackageMaster->name}}))</span>
+
+                                @endforeach
                             </td>
 
                         </tr>

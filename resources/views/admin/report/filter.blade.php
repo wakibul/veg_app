@@ -12,7 +12,7 @@
                                 <div class="row">
                                     <div class="col-md-4">Order Confirm Id</div>
                                     <div class="col-md-8">
-                                      <input type="text" class="form-control" name="name" value="{{request()->order_confirm_id}}">
+                                      <input type="text" class="form-control" name="order_confirm_id" id="order_confirm_id" value="{{request()->order_confirm_id}}">
                                     </div>
                                 </div>
                             </div>
@@ -25,8 +25,7 @@
                                 <option value="0">Not Yet Comfirm</option>
                                 <option value="1">Confirm</option>
                                 <option value="2">Delivered</option>
-                                <option value="3">Assign Delivery Boy</option>
-                                <option value="3">Cancle</option>
+                                <option value="3">Cancel</option>
 
                             </select>
                         </div>
