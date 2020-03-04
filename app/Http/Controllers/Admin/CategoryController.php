@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Category;
+use App\Models\CategoryCity;
 use App\Models\City;
 use Crypt;
 use DB;
@@ -133,6 +134,7 @@ class CategoryController extends Controller
 
         $id = Crypt::decrypt($id);
         $category = Category::find($id);
+        $category_city=CategoryCity::where('category_id',$id)->first();
 
         if ($category->status == 1) {
             $status = 0;
@@ -140,8 +142,9 @@ class CategoryController extends Controller
             $status = 1;
 
         }
-
+        $category_city->update(['status'=>$status]);
         $category->update(['status' => $status]);
+        $category_city->save();
         $category->save();
         return Redirect::route('admin.category.index')->with('success', 'Category Status Updated successfully');
 

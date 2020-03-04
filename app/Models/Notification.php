@@ -12,6 +12,6 @@ class Notification extends Model
 
 
     public function notificationDetails(){
-        return $this->hasMany(notificationDetail::class);
+        return $this->hasMany(NotificationDetail::class);
     }
 }
