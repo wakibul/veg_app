@@ -121,6 +121,7 @@ class RegisterController extends Controller
 		$validator = Validator::make($request->all(), [
 			'mobile'=> 'required|numeric',
             'password'=> 'required',
+            'fcm_token'=> 'required'
 
 		]);
 		if ($validator->fails()) {
@@ -144,7 +145,10 @@ class RegisterController extends Controller
 		}
 		else{
 			$r_email = "";
-		}
+        }
+
+        Customer::where('id',auth('api')->user()->id)->update(['fcm_token'=>$request->fcm_token]);
+
         return response()->json(['success' => true, 'token' => $token, 'customer_details' => [
                     'name'          => auth('api')->user()->name,
                     'email'         => $r_email,
