@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api\Master;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Banner;
+use App\Models\Advertisement;
 use Validator;
 class BannerController extends Controller
 {
@@ -30,9 +31,18 @@ class BannerController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function advertisement()
     {
         //
+        $advertisements = Advertisement::select('id','picture')->where([['status',1],['type',1]])->get();
+        if(!$advertisements->isEmpty()){
+            return response()->json(['success'=>true,'advertisement'=>$advertisements]);
+        }
+        else{
+            $advertisements = Advertisement::select('id','picture')->where([['status',1],['type',0]])->get();
+            return response()->json(['success'=>true,'advertisement'=>$advertisements]);
+        }
+
     }
 
     /**
