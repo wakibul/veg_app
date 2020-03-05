@@ -72,6 +72,7 @@
                             <a href="{{route('admin.employee.index')}}" class="dropdown-item ">Delivery
                                 Boy(Add/Manage)</a>
                             <a href="{{route('admin.banner.index')}}" class="dropdown-item ">Banner(Add/Manage)</a>
+                            <a href="{{route('admin.footer-banner.index')}}" class="dropdown-item ">Footer Banner(Add/Manage)</a>
                         </div>
                     </li>
 

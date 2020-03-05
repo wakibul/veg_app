@@ -212,6 +212,49 @@ Route::group(['prefix' => 'banner'], function () {
     ]);
 
 });
+Route::group(['prefix' => 'footer-banner'], function () {
+    Route::get('/index', [
+        'as' => 'footer-banner.index',
+        'middleware' => ['admin'],
+        'uses' => 'Admin\AdvertisementController@index',
+    ]);
+    Route::get('/create', [
+        'as' => 'footer-banner.create',
+        'middleware' => ['admin'],
+        'uses' => 'Admin\AdvertisementController@create',
+    ]);
+
+    Route::post('/store', [
+        'as' => 'footer-banner.store',
+        'middleware' => ['admin'],
+        'uses' => 'Admin\AdvertisementController@store',
+    ]);
+
+    Route::get('/edit/{id}', [
+        'as' => 'footer-banner.edit',
+        'middleware' => ['admin'],
+        'uses' => 'Admin\AdvertisementController@edit',
+    ]);
+
+    Route::post('/update/{id}', [
+        'as' => 'footer-banner.update',
+        'middleware' => ['admin'],
+        'uses' => 'Admin\AdvertisementController@update',
+    ]);
+
+    Route::get('/delete/{id}', [
+        'as' => 'footer-banner.delete',
+        'middleware' => ['admin'],
+        'uses' => 'Admin\AdvertisementController@destroy',
+    ]);
+    Route::post('/status/{id}', [
+        'as' => 'footer-banner.status',
+        'middleware' => ['admin'],
+        'uses' => 'Admin\AdvertisementController@status',
+    ]);
+
+});
+
 
 Route::group(['prefix' => 'coupon'], function () {
     Route::get('/index', [
