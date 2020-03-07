@@ -25,7 +25,7 @@ class OrderController extends Controller
      */
     public function index()
     {
-        $orders = Order::where('status', '!=', 3)->paginate(10);
+        $orders = Order::where('status', '!=', 3)->paginate(25);
 
         return view('admin.order.index', compact('orders'));
     }

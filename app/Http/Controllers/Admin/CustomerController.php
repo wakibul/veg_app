@@ -6,7 +6,12 @@ use App\Http\Controllers\Controller;
 use App\Models\Customer;
 use App\Models\Notification;
 use App\Models\NotificationDetail;
+use App\Models\Order;
 use Illuminate\Http\Request;
+use LaravelFCM\Facades\FCM;
+use LaravelFCM\Message\OptionsBuilder;
+use LaravelFCM\Message\PayloadDataBuilder;
+use LaravelFCM\Message\PayloadNotificationBuilder;
 use Str;
 
 class CustomerController extends Controller
@@ -18,7 +23,8 @@ class CustomerController extends Controller
      */
     public function index()
     {
-        $customers = Customer::paginate(10);
+        $customers = Customer::with(["orders"])->paginate(25);
+
         return view('admin.customer.index', compact('customers'));
 
     }
@@ -94,12 +100,12 @@ class CustomerController extends Controller
                 'uuid' => (String) Str::uuid(),
                 'notification_msg' => $request->msg,
             ];
-            $notification = Notification::create($data);
+            $notification_data = Notification::create($data);
 
             foreach ($request->customer_checks as $key => $customer_check) {
                 $notification_details = [
 
-                    'notification_id' => $notification->id,
+                    'notification_id' => $notification_data->id,
                     'customer_id' => $customer_check,
                 ];
 
@@ -107,7 +113,23 @@ class CustomerController extends Controller
 
                 $customer = Customer::find($customer_check);
                 $customer_no = $customer->mobile;
-                $sms = sendNewSMS($customer_no, $request->msg);
+                $order = Order::where('user_id', $customer->id)->first();
+                $token = $order->fcm_token;
+                $optionBuilder = new OptionsBuilder();
+                $optionBuilder->setTimeToLive(60 * 20);
+
+                $notificationBuilder = new PayloadNotificationBuilder("Today's Report");
+                $notificationBuilder->setBody("$request->msg")->setSound('default');
+
+                $dataBuilder = new PayloadDataBuilder();
+                $dataBuilder->addData(['a_data' => 'my_data']);
+
+                $option = $optionBuilder->build();
+                $notification = $notificationBuilder->build();
+                $data = $dataBuilder->build();
+
+                $customerMessage = FCM::sendTo($token, $option, $notification, $data);
+
             }
 
         }

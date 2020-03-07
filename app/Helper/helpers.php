@@ -7,7 +7,7 @@ function sendNewSMS($mobilenumbers, $message)
 {
     $user = 'oneindia';
     $password = '0a9bc4a70aXX';
-    $senderid = 'DELIND';
+    $senderid = 'Local Farmer';
 
     $url = 'http://t.instaclicksms.in/sendsms.jsp';
     $message = urlencode($message);

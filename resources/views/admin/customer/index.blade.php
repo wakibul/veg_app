@@ -17,20 +17,22 @@
         <div class="row">
             <div class="col-md-12">
                 <table class="table table-bordered table-hover" id="orderTable">
-                    <caption>Customers</caption>
+
                     <thead>
                         <tr>
                             <th>#</th>
                             <th>Sl.</th>
                             <th>Name</th>
-
+                            <th>Pin</th>
                             <th width="20%">Address</th>
                             <th>Phone No</th>
                         </tr>
                     </thead>
                     <tbody>
                         {{-- {{ dd($orders) }} --}}
+
                         @foreach($customers as $key=>$customer)
+                        @forelse($customer->orders as $order)
 
                         <tr>
                             <td>
@@ -43,12 +45,17 @@
                             </td>
                             <td>{{$key+1}}</td>
                             <td>{{$customer->name??'NA'}}</td>
-                            <td width="20%">{{$customer->address??'NA'}}</td>
-                            <td>{{$customer->mobile??'NA'}}</td>
+
+                            <td>{{$order->pincode}}</td>
+                            <td width="20%">{{$order->address??'NA'}}</td>
+                            <td>{{$customer->mobile}}</td>
+
 
 
                         </tr>
                         @endforeach
+                        @endforeach
+
                     </tbody>
                 </table>
 
@@ -62,7 +69,8 @@
                 <div class="col-sm-2">
 
                     <button style="align:right" data-toggle="collapse" href="#employee" aria-expanded="false"
-                        aria-controls="collapseExample" type="button" class="btn btn-outline-success" onclick="return check()">Send
+                        aria-controls="collapseExample" type="button" class="btn btn-outline-success"
+                        onclick="return check()">Send
                         Notification</button>
 
                 </div>
@@ -81,7 +89,8 @@
                         <div class="row">
                             <div class="col-md-2 offset-md-3"><b>Notification:</b></div>
                             <div class="col-md-4">
-                                <textarea class="form-control" name="msg" id="msg" rows="3" placeholder="write your notification message here.. "></textarea>
+                                <textarea class="form-control" name="msg" id="msg" rows="3"
+                                    placeholder="write your notification message here.. " required></textarea>
 
                             </div>
                         </div>
