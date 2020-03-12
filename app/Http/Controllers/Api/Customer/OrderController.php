@@ -162,7 +162,7 @@ class OrderController extends Controller
     public function address()
     {
         //
-        $orders = Order::select('latitude','longitude','address','pincode')->where('id',auth('api')->user()->id)->get();
+        $orders = Order::select('latitude','longitude','address','pincode')->where('user_id',auth('api')->user()->id)->get();
         if(!$orders->isEmpty()){
             return response()->json(['success'=>true,'address'=>$orders]);
         }
