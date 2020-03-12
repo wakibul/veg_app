@@ -159,9 +159,15 @@ class OrderController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function address()
     {
         //
+        $orders = Order::select('latitude','longitude','address','pincode')->where('id',auth('api')->user()->id)->get();
+        if(!$orders->isEmpty()){
+            return response()->json(['success'=>true,'address'=>$orders]);
+        }
+        else
+            return response()->json(['success'=>false]);
     }
 
     /**

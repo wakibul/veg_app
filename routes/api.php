@@ -49,6 +49,7 @@ Route::middleware('auth:api')->group(function(){
     Route::group(['prefix' => 'customer'], function () {
         Route::get('/cancel-reason', 'Api\Customer\CancellationController@reason');
         Route::post('/cancel', 'Api\Customer\CancellationController@store');
+
     });
 
     Route::group(['prefix' => 'cart'], function () {
@@ -60,6 +61,7 @@ Route::middleware('auth:api')->group(function(){
     Route::group(['prefix' => 'order'], function () {
         Route::post('/store', 'Api\Customer\OrderController@store');
         Route::get('/list', 'Api\Customer\OrderController@index');
+        Route::get('/address', 'Api\Customer\OrderController@address');
     });
 });
 
