@@ -126,6 +126,37 @@ class LocationController extends Controller
 
     }
 
+    public function addressUpdate(Request $request)
+    {
+        //
+        $validator = Validator::make($request->all(),[
+            'id' => 'required',
+            'latitude' => 'required',
+            'longitude' => 'required',
+            'house_no' => 'required',
+            'landmark' => 'required',
+            'address' => 'required',
+        ]);
+        if ($validator->fails()) {
+            return response()->json(['success'=>false,'error'=>$validator->errors()]);
+        }
+        DB::beginTransaction();
+        try{
+            CustomerAddress::where('id',$request->id)->update(['latitude'=>$request->latitude,
+            'longitude'=>$request->longitude,'house_no'=>$request->house_no,
+            'house_no'=>$request->house_no,'landmark'=>$request->landmark,
+            'address'=>$request->address
+            ]);
+        }
+        catch(\Exception $e){
+            return response()->json(['success'=>false,'error'=>'Address can not be updated','er'=>$e->getMessage()]);
+        }
+        DB::commit();
+        $customer = CustomerAddress::where('status',1)->get();
+        return response()->json(['success'=>true,'data'=>$customer]);
+
+    }
+
     /**
      * Update the specified resource in storage.
      *
