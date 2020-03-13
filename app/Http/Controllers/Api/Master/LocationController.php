@@ -114,9 +114,16 @@ class LocationController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function addressIndex()
     {
         //
+        $customers = CustomerAddress::where('status',1)->get();
+        if(!$customers->isEmpty()){
+            return response()->json(['success'=>true,'data'=>$customers]);
+        }
+        else
+        return response()->json(['success'=>false]);
+
     }
 
     /**
