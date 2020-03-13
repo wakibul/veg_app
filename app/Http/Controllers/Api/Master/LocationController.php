@@ -164,9 +164,26 @@ class LocationController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function addressDelete(Request $request)
     {
         //
+        $validator = Validator::make($request->all(),[
+            'id' => 'required'
+        ]);
+        if ($validator->fails()) {
+            return response()->json(['success'=>false,'error'=>$validator->errors()]);
+        }
+        DB::beginTransaction();
+        try{
+           CustomerAddress::where('id',$request->id)->delete();
+        }
+        catch(\Exception $e){
+            return response()->json(['success'=>false,'error'=>'something went wrong','er'=>$e->getMessage()]);
+        }
+        DB::commit();
+        $customer = CustomerAddress::where('status',1)->get();
+        return response()->json(['success'=>true,'data'=>$customer]);
+
     }
 
     /**
