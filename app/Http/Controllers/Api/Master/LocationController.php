@@ -103,7 +103,8 @@ class LocationController extends Controller
             return response()->json(['success'=>false,'error'=>'Address can not be updated','er'=>$e->getMessage()]);
         }
         DB::commit();
-        return response()->json(['success'=>true,'data'=>$data]);
+        $customer = CustomerAddress::where('status',1)->get();
+        return response()->json(['success'=>true,'data'=>$customer]);
 
     }
 
