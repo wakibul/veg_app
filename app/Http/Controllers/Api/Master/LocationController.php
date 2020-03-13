@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Validator;
 use App\Models\Customer;
+use App\Models\CustomerAddress;
 use DB;
 class LocationController extends Controller
 {
@@ -73,9 +74,37 @@ class LocationController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function addressStore(Request $request)
     {
         //
+        $validator = Validator::make($request->all(),[
+            'address_type' => 'required',
+            'latitude' => 'required',
+            'longitude' => 'required',
+            'house_no' => 'required',
+            'landmark' => 'required',
+            'address' => 'required',
+        ]);
+        if ($validator->fails()) {
+            return response()->json(['success'=>false,'error'=>$validator->errors()]);
+        }
+        $data['customer_id'] = auth('api')->user()->id;
+        $data['address_type'] = $request->address_type;
+        $data['latitude'] = $request->latitude;
+        $data['longitude'] = $request->longitude;
+        $data['house_no'] = $request->house_no;
+        $data['landmark'] = $request->landmark;
+        $data['address'] = $request->address;
+        DB::beginTransaction();
+        try{
+            CustomerAddress::create($data);
+        }
+        catch(\Exception $e){
+            return response()->json(['success'=>false,'error'=>'Address can not be updated','er'=>$e->getMessage()]);
+        }
+        DB::commit();
+        return response()->json(['success'=>true]);
+
     }
 
     /**

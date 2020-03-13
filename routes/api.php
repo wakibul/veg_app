@@ -45,11 +45,11 @@ Route::middleware('auth:api')->group(function(){
         Route::get('/location/index', 'Api\Master\LocationController@index');
         Route::get('/email', 'Api\Master\PagesController@toEmail');
         Route::get('/advertisement', 'Api\Master\BannerController@advertisement');
+        Route::post('/address/store', 'Api\Master\LocationController@addressStore');
     });
     Route::group(['prefix' => 'customer'], function () {
         Route::get('/cancel-reason', 'Api\Customer\CancellationController@reason');
         Route::post('/cancel', 'Api\Customer\CancellationController@store');
-
     });
 
     Route::group(['prefix' => 'cart'], function () {
