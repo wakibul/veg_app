@@ -97,13 +97,13 @@ class LocationController extends Controller
         $data['address'] = $request->address;
         DB::beginTransaction();
         try{
-            CustomerAddress::create($data);
+            CustomerAddress::updateOrCreate($data);
         }
         catch(\Exception $e){
             return response()->json(['success'=>false,'error'=>'Address can not be updated','er'=>$e->getMessage()]);
         }
         DB::commit();
-        return response()->json(['success'=>true]);
+        return response()->json(['success'=>true,'data'=>$data]);
 
     }
 
