@@ -7,4 +7,5 @@ use Illuminate\Database\Eloquent\Model;
 class CustomerAddress extends Model
 {
     //
+    protected $guarded = ['id','token'];
 }
