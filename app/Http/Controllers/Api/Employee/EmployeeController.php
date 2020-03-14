@@ -145,7 +145,7 @@ class EmployeeController extends Controller
     public function currentOrders(Request $request)
     {
         //
-        $orders = Order::select('id','order_confirm_id','recipient_no','latitude','longitude','address','time_slot_id','delivery_date','total_price_with_tax','status')->with('timeSlot:id,slot')->where('employee_id',auth('employee')->user()->id)->where('status',1)->orderBy('id','desc')->get();
+        $orders = Order::select('id','order_confirm_id','recipient_no','latitude','longitude','address','time_slot_id','delivery_date','total_price_with_tax','status')->with('timeSlot:id,slot','orderTransaction:id,order_id,product_id,quantity,product_package_id','orderTransaction.product:id,name','orderTransaction.productPackage:id,package_masters_id','orderTransaction.productPackage.packageMaster:id,name')->where('employee_id',auth('employee')->user()->id)->where('status',1)->orderBy('id','desc')->get();
         if(!$orders->isEmpty())
             return response()->json(['success'=>true,'orders'=>$orders]);
         else
@@ -155,7 +155,7 @@ class EmployeeController extends Controller
     public function myOrders(Request $request)
     {
         //
-        $orders = Order::select('id','order_confirm_id','recipient_no','latitude','longitude','address','time_slot_id','delivery_date','total_price_with_tax','status','delivered_time')->with('timeSlot:id,slot')->where('employee_id',auth('employee')->user()->id)->where('status',2)->orderBy('id','desc')->paginate(3);
+        $orders = Order::select('id','order_confirm_id','recipient_no','latitude','longitude','address','time_slot_id','delivery_date','total_price_with_tax','status')->with('timeSlot:id,slot','orderTransaction:id,order_id,product_id,quantity,product_package_id','orderTransaction.product:id,name','orderTransaction.productPackage:id,package_masters_id','orderTransaction.productPackage.packageMaster:id,name')->where('employee_id',auth('employee')->user()->id)->where('status',2)->orderBy('id','desc')->paginate(3);
         if(!$orders->isEmpty())
             return response()->json(['success'=>true,'orders'=>$orders]);
         else

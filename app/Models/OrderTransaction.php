@@ -11,7 +11,7 @@ class OrderTransaction extends Model
     use SoftDeletes;
     protected $guarded  = ['id','token'];
     public function product(){
-		return $this->belongsTo('App\Models\Product', 'product_id','id');
+		return $this->belongsTo('App\Models\Product', 'product_id','id')->withTrashed();
     }
 
     public function productPackage(){
@@ -19,6 +19,6 @@ class OrderTransaction extends Model
     }
 
     public function order(){
-		return $this->belongsTo('App\Models\Order', "order_id", "id");
+		return $this->belongsTo('App\Models\Order', "order_id", "id")->withTrashed();
     }
 }

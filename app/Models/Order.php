@@ -22,7 +22,7 @@ class Order extends Model
         return $this->belongsTo(User::class);
     }
     public function orderTransaction(){
-        return $this->hasMany(OrderTransaction::class);
+        return $this->hasMany(OrderTransaction::class)->withTrashed();
     }
 
 }
