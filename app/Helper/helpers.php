@@ -6,7 +6,7 @@ use App\Models\Order;
 function sendNewSMS($mobilenumbers, $message)
 {
     $user = 'product';
-    $password = 'admin@56';
+    $password = '41b826cb00XX';
     $senderid = 'FARMER';
 
     $url = 'http://t.instaclicksms.in/sendsms.jsp';
