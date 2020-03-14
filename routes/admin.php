@@ -255,7 +255,6 @@ Route::group(['prefix' => 'footer-banner'], function () {
 
 });
 
-
 Route::group(['prefix' => 'coupon'], function () {
     Route::get('/index', [
         'as' => 'coupon.index',
@@ -329,5 +328,18 @@ Route::group(['prefix' => 'customer'], function () {
         'middleware' => ['admin'],
         'uses' => 'Admin\CustomerController@notification',
     ]);
+
+});
+Route::group(['prefix' => 'changePasword'], function () {
+    Route::get('/index', [
+        'as' => 'changePassword',
+        'middleware' => ['admin'],
+        'uses' => 'Admin\ResetPasswordController@index',
+    ]);
+    Route::post('/editPassword', [
+    'as' => 'editPassword',
+    'middleware' => ['admin'],
+    'uses' => 'Admin\ResetPasswordController@update',
+]);
 
 });

@@ -15,7 +15,7 @@
     <link rel="icon" href="./favicon.ico" type="image/x-icon"/>
     <link rel="shortcut icon" type="image/x-icon" href="./favicon.ico" />
     <!-- Generated: 2018-04-16 09:29:05 +0200 -->
-    <title>{{ config('app.name', 'Book Ur Doctor') }}</title>
+    <title>{{ config('app.name') }}</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,300i,400,400i,500,500i,600,600i,700,700i&amp;subset=latin-ext">
     <script src="{{asset('public/assets/js/require.min.js')}}"></script>
@@ -67,12 +67,7 @@
                                     </span>
                      @endif
                   </div>
-                  <div class="form-group">
-                    <label class="custom-control custom-checkbox">
-                      <input type="checkbox" name="remember" class="custom-control-input" />
-                      <span class="custom-control-label">Remember me</span>
-                    </label>
-                  </div>
+                  
                   <div class="form-footer">
                     <button type="submit" class="btn btn-primary btn-block">Sign in</button>
                   </div>

@@ -76,25 +76,35 @@
         var $modal = $("#myModal");
         var order = $this.data("order");
         var items = order["order_transactions"];
-        // console.log(order);
+        var coupon=order["coupon"];
+
+
+        console.log(coupon);
         // console.log(items);
         var table_items = "";
+        var total = 0;
         $(items).each(function(index, element){
             console.log(element);
             table_items +="<tr>";
             table_items +="<td>"+(index+1)+"</td>";
             table_items +="<td>"+element.product.name+"</td>";
-            table_items +="<td>"+element.quantity+"</td>";
+            table_items +="<td class='text-right'>"+element.quantity+"</td>";
                             var master =  element.product.product_package.filter(function(obj) {
                                if (obj.id == element.product_package_id) return obj;
                             });
             table_items +="<td>"+(master[0].package_master.name)+"</td>";
 
-            table_items +="<td>"+element.price+"</td>";
+            table_items +="<td>"+element.price.toFixed(2)+"</td>";
             table_items +="</tr>";
+            total+=element.price ;
+
         });
+        var coupon_amount = (coupon.coupon_in = 1 ? ((total.toFixed(2) /100) *coupon.coupon_value.toFixed(2)) : coupon.coupon_value.toFixed(2)).toFixed(2);
         $modal.find("#order_no").html(order.order_confirm_id ? order.order_confirm_id : "Pending#"+order.id);
         $modal.find("#order_time").html(order.created_at);
+        $modal .find("#total_price").html(total.toFixed(2));
+         $modal .find("#coupon_price").html(coupon_amount);
+        $modal . find("#total_price_with_coupon") . html(Math.ceil((order.total_price_with_tax.toFixed(2) - coupon_amount)).toFixed(2) );
         $modal.find("#order_address").html(order.address);
         $modal.find("table tbody").html(table_items);
         $modal.modal();
