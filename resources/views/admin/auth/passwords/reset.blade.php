@@ -14,26 +14,27 @@
             </div>
             <div class="card-body">
                 <div class="row">
+                    <div class="col-md-3">
+                    </div>
                     <div class="col-md-5">
                        @include('admin.layout.alert')
                         <form name="city" action="{{route('admin.editPassword')}}" method="POST"
                             enctype="multipart/form-data">
                             @csrf
                        <div class="form-group">
-                          <div class="row">
-                          <div class="col-md-6">
-                          <input type="password" name="pass" class="form-control"
-                          value="" >
-                         </div>
-                        </div>
-                        </div>
-<div class="form-group">
-                                <div class="row">
-                                    <div class="col-md-2 offset-3">
-                                        <button type="submit" class="btn btn-primary">Submit</button>
-                                    </div>
+                            <div class="row">
+                             <div class="col-md-4">New Password:</div>
+                                <div class="col-md-6">
+                                    <input type="password" name="pass" class="form-control"
+                                            value="" >
                                 </div>
                             </div>
+                        </div>
+
+                        <div class="col-md-2 offset-3">
+                            <button type="submit" class="btn btn-primary">Submit</button>
+                        </div>
+
 
 
                         </form>
