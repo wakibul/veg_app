@@ -24,5 +24,8 @@ class Order extends Model
     public function orderTransaction(){
         return $this->hasMany(OrderTransaction::class);
     }
+    public function coupon(){
+        return $this->belongsTo(Coupon::class);
+    }
 
 }

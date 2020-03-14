@@ -16,6 +16,7 @@
                         <th>Confirm Time</th>
                         <th>Status</th>
                         <th>Item</th>
+                        <th>Total Amount</th>
                         <th>Action</th>
                     </tr>
                 </thead>
@@ -74,9 +75,10 @@
                         </td>
 
 
-                        <td width="30%">{{$order->address??'NA'}}</td>
+                        <td width="35%">{{$order->address??'NA'}}</td>
                         <td>{{$order->recipient_no ??'NA'}}</td>
-                        <td>{{date("d-m-Y h:i a", strtotime($order->created_at))}}<br>
+                        <td width="30%">{{date("d-m-Y h:i a", strtotime($order->created_at))}}<br><hr>
+                        <h6>Delivery Date:<br>{{$order->delivery_date}}</h6><br>
                             <a href="{{route("admin.home", ["slot_id" => $order->time_slot_id])}}">
                                 <span class="label label-info">
                                     {{$order->timeSlot->slot}}
@@ -101,6 +103,8 @@
                             <button type="button" onClick="showItems(this)" class="btn btn-info btn-sm"
                                 data-order="{{$order->toJson()}}" <i class="fa fa-eye"></i> Item
                             </button>
+                        </td>
+                        <td>{{$order->total_price_with_tax}}.00
                         </td>
                         <td>
                             <div class="btn-group">
@@ -153,11 +157,24 @@
                         <tbody>
 
                         </tbody>
+
+
+
                     </table>
                 </div>
+                <hr>
+                <div class="container text-right">
+                        <h4>Price: <strong id="total_price"></strong></h4>
+
+                        <h4>Coupon Price: <strong id="coupon_price"></strong></h4>
+
+                        </h4>Total amount with delivery charges: <strong id="total_price_with_coupon"></strong></h4>
+                       </div>
 
                 <!-- Modal footer -->
                 <div class="modal-footer">
+
+
                     <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
                 </div>
 

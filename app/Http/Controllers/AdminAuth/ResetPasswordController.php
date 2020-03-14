@@ -76,4 +76,7 @@ class ResetPasswordController extends Controller
     {
         return Auth::guard('admin');
     }
+    public function index(){
+        return view('admin.auth.reset');
+    }
 }
