@@ -30,6 +30,13 @@ class CustomerController extends Controller
         return view('admin.customer.index', compact('customers'));
 
     }
+     public function verified()
+    {
+        $customers = Customer::with(["orders"])->where('fcm_token','!=',null)->paginate(25);
+
+        return view('admin.customer.verified', compact('customers'));
+
+    }
 
     /**
      * Show the form for creating a new resource.
@@ -115,8 +122,16 @@ class CustomerController extends Controller
 
                 $customer = Customer::find($customer_check);
                 $customer_no = $customer->mobile;
-                $order = Order::where('user_id', $customer->id)->first();
+            
+                $order = Order::where('user_id', $customer->id)->whereNotNull('fcm_token')->first();
+                try {
                 $token = $order->fcm_token;
+            } catch (\Exception $e) {
+                continue;
+         return back()->withError($e->getMessage())->withInput();
+}
+
+
                 $optionBuilder = new OptionsBuilder();
                 $optionBuilder->setTimeToLive(60 * 20);
 

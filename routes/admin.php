@@ -323,13 +323,19 @@ Route::group(['prefix' => 'customer'], function () {
         'middleware' => ['admin'],
         'uses' => 'Admin\CustomerController@index',
     ]);
+    Route::get('/index/verified', [
+        'as' => 'customer.verified',
+        'middleware' => ['admin'],
+        'uses' => 'Admin\CustomerController@verified',
+    ]);
+
     Route::post('/notification', [
         'as' => 'customer.notification.store',
         'middleware' => ['admin'],
         'uses' => 'Admin\CustomerController@notification',
     ]);
-    Route::get('/customer/view/{customer_id}',[
-        'as'=>'customer.view',
+    Route::get('/customer/view/{customer_id}', [
+        'as' => 'customer.view',
         'middleware' => ['admin'],
         'uses' => 'Admin\CustomerController@view',
     ]);
@@ -342,9 +348,9 @@ Route::group(['prefix' => 'changePasword'], function () {
         'uses' => 'Admin\ResetPasswordController@index',
     ]);
     Route::post('/editPassword', [
-    'as' => 'editPassword',
-    'middleware' => ['admin'],
-    'uses' => 'Admin\ResetPasswordController@update',
-]);
+        'as' => 'editPassword',
+        'middleware' => ['admin'],
+        'uses' => 'Admin\ResetPasswordController@update',
+    ]);
 
 });

@@ -35,13 +35,13 @@
                         <tr>
                             <td>
                                 <!-- Material unchecked -->
-                            
+                                @if($customer->fcm_token)
                                 <div class="custom-control custom-checkbox mb-3">
                                     <input type="checkbox" class="custom-control-input customer"
                                         id="customerCheck_{{$key}}" name="customer_checks[]" value="{{$customer->id}}">
                                     <label class="custom-control-label" for="customerCheck_{{$key}}"></label>
                                 </div>
-                            
+                                @endif
                             </td>
                             <td>{{$key+1}}</td>
                             <td>{{$customer->name??'NA'}}</td>
@@ -49,13 +49,13 @@
 
                             <td>{{$customer->mobile}}</td>
                             <td>
-                            <div class="btn-group">
+                                <div class="btn-group">
 
-                            <a href="{{route('admin.customer.view',Crypt::encrypt($customer->id))}}"
-                            class="btn btn-sm btn-info"><i class="fa fa-eye"></i></a>
+                                    <a href="{{route('admin.customer.view',Crypt::encrypt($customer->id))}}"
+                                        class="btn btn-sm btn-info"><i class="fa fa-eye"></i></a>
 
-                    </div>
-                    </td>
+                                </div>
+                            </td>
 
 
                         </tr>
