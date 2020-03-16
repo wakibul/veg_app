@@ -9,7 +9,7 @@
         <div class="col-12">
             <div class="page-header">
                 <h1 class="page-title">
-                   Reset Password
+                   Change Password
                 </h1>
             </div>
             <div class="card-body">
@@ -26,13 +26,13 @@
                              <div class="col-md-4">New Password:</div>
                                 <div class="col-md-6">
                                     <input type="password" name="pass" class="form-control"
-                                            value="" >
+                                            value="" required>
                                 </div>
                             </div>
                         </div>
 
                         <div class="col-md-2 offset-3">
-                            <button type="submit" class="btn btn-primary">Submit</button>
+                            <button type="submit" class="btn btn-primary">Update</button>
                         </div>
 
 

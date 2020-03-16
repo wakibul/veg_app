@@ -29,7 +29,7 @@ class reportController extends Controller
         $orders->when(request("order_confirm_id"), function ($query) {
             $query->where('order_confirm_id', request('order_confirm_id'));
         });
-
+      
         $orders->when(request("status"), function ($query) {
             $query->where('status', request('status'));
         });

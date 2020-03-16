@@ -24,36 +24,42 @@
                             <th>Sl.</th>
                             <th>Name</th>
                             <th>Pin</th>
-                            <th width="20%">Address</th>
-                            <th>Phone No</th>
+                            <th>Action</th>
                         </tr>
                     </thead>
                     <tbody>
                         {{-- {{ dd($orders) }} --}}
 
                         @foreach($customers as $key=>$customer)
-                        @forelse($customer->orders as $order)
 
                         <tr>
                             <td>
                                 <!-- Material unchecked -->
+                                @if($customer->fcm_token)
                                 <div class="custom-control custom-checkbox mb-3">
                                     <input type="checkbox" class="custom-control-input customer"
                                         id="customerCheck_{{$key}}" name="customer_checks[]" value="{{$customer->id}}">
                                     <label class="custom-control-label" for="customerCheck_{{$key}}"></label>
                                 </div>
+                                @endif
                             </td>
                             <td>{{$key+1}}</td>
                             <td>{{$customer->name??'NA'}}</td>
 
-                            <td>{{$order->pincode}}</td>
-                            <td width="20%">{{$order->address??'NA'}}</td>
-                            <td>{{$customer->mobile}}</td>
 
+                            <td>{{$customer->mobile}}</td>
+                            <td>
+                            <div class="btn-group">
+
+                            <a href="{{route('admin.customer.view',Crypt::encrypt($customer->id))}}"
+                            class="btn btn-sm btn-info"><i class="fa fa-eye"></i></a>
+
+                    </div>
+                    </td>
 
 
                         </tr>
-                        @endforeach
+
                         @endforeach
 
                     </tbody>

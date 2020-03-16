@@ -8,11 +8,13 @@ use App\Models\Notification;
 use App\Models\NotificationDetail;
 use App\Models\Order;
 use Illuminate\Http\Request;
+use Crypt,Session;
 use LaravelFCM\Facades\FCM;
 use LaravelFCM\Message\OptionsBuilder;
 use LaravelFCM\Message\PayloadDataBuilder;
 use LaravelFCM\Message\PayloadNotificationBuilder;
 use Str;
+
 
 class CustomerController extends Controller
 {
@@ -136,6 +138,15 @@ class CustomerController extends Controller
 
         return redirect()->back()->with('success', 'Notification Send Successfully.');
 
+    }
+    public function view($customer_id)
+    {
+        $id = Crypt::decrypt($customer_id);
+        $customer = Customer::find($id);
+        $orders=$customer->orders->unique("address");
+      
+
+      return view('admin.customer.view',compact('customer','orders'));
     }
     public function destroy($id)
     {

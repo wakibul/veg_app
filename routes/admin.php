@@ -328,6 +328,11 @@ Route::group(['prefix' => 'customer'], function () {
         'middleware' => ['admin'],
         'uses' => 'Admin\CustomerController@notification',
     ]);
+    Route::get('/customer/view/{customer_id}',[
+        'as'=>'customer.view',
+        'middleware' => ['admin'],
+        'uses' => 'Admin\CustomerController@view',
+    ]);
 
 });
 Route::group(['prefix' => 'changePasword'], function () {
