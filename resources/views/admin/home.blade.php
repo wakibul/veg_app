@@ -44,7 +44,6 @@
     tbody tr {
         border-bottom: 2px solid #9DB2A2;
     }
-
 </style>
 @endsection
 @section('js')
@@ -92,14 +91,20 @@
                             var master =  element.product.product_package.filter(function(obj) {
                                if (obj.id == element.product_package_id) return obj;
                             });
-            table_items +="<td>"+(master[0].package_master.name)+"</td>";
+            table_items +="<td>"+(element.product_package.package_master.name)+"</td>";
 
-            table_items +="<td>"+element.price.toFixed(2)+"</td>";
+            table_items +="<td class='text-right'>"+element.price.toFixed(2)+"</td>";
             table_items +="</tr>";
             total+=element.price ;
 
         });
-        var coupon_amount = (coupon.coupon_in = 1 ? ((total.toFixed(2) /100) *coupon.coupon_value.toFixed(2)) : coupon.coupon_value.toFixed(2)).toFixed(2);
+        if (coupon == null){
+            var coupon_amount=0.00;
+
+        }else{
+            var coupon_amount = (coupon.coupon_in = 1 ? ((total.toFixed(2) /100) *coupon.coupon_value.toFixed(2)) : coupon.coupon_value.toFixed(2)).toFixed(2);
+        }
+        
         $modal.find("#order_no").html(order.order_confirm_id ? order.order_confirm_id : "Pending#"+order.id);
         $modal.find("#order_time").html(order.created_at);
         $modal .find("#total_price").html(total.toFixed(2));
