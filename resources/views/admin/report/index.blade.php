@@ -124,7 +124,7 @@
                                @foreach($order->orderTransactions as $orderKey => $orderTransaction)
 
                                 <span class="label label-{{$lbl_class}}">{{$orderTransaction->product->name}}
-                                ({{$orderTransaction->quantity}} ({{$orderTransaction->productPackage->PackageMaster->name}}))</span>
+                                ({{$orderTransaction->quantity}} ({{$orderTransaction->productPackage->PackageMaster->name}}))</span><br>
 
                                 @endforeach
                             </td>

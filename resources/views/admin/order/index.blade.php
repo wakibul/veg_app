@@ -150,7 +150,7 @@
                         <thead>
                             <th>#</th>
                             <th>Item Name</th>
-                            <th>Quantity</th>
+                            <th>Qty</th>
                             <th>Type</th>
                             <th>Price</th>
                         </thead>
