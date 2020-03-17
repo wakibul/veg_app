@@ -77,12 +77,28 @@ class OrderController extends Controller
             return response()->json(['success'=>false,'error'=>'Sorry, unable to delivery in this pincode']);
         }
 
+        if($request->coupon_id != null){
+            $coupon = Coupon::where('id',$request->coupon_id)->first();
+            if($coupon->coupon_in == 1){
+                $discount_amt = (floatval($totalPrice)/100)*floatval($coupon->coupon_value);
+            }
+            elseif($coupon->coupon_in == 2){
+                $discount_amt = floatval($coupon->coupon_value);
+            }
+            $data['discount_amt'] = $discount_amt;
+            $data['discounted_price'] = floatval($totalPrice)-floatval($discount_amt);
+        }
+
         if($totalPrice < $delivery_charges->maximum_amount){
             $charge_amount = $delivery_charges->charge_amount;
             $totalPrice = floatval($totalPrice)+floatval($delivery_charges->charge_amount);
         }
         else{
             $charge_amount = '0.00';
+        }
+
+        if($request->coupon_id != null){
+            $totalPrice = floatval($totalPrice)-floatval($discount_amt);
         }
 
         if($totalPrice < $delivery_charges->minimum_amount)
