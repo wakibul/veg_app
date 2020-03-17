@@ -123,9 +123,9 @@ class CustomerController extends Controller
                 $customer = Customer::find($customer_check);
                 $customer_no = $customer->mobile;
             
-                $order = Order::where('user_id', $customer->id)->whereNotNull('fcm_token')->first();
+                
                 try {
-                $token = $order->fcm_token;
+                $token = $customer->fcm_token;
             } catch (\Exception $e) {
                 continue;
          return back()->withError($e->getMessage())->withInput();

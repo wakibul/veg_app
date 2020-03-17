@@ -323,8 +323,8 @@ Route::group(['prefix' => 'customer'], function () {
         'middleware' => ['admin'],
         'uses' => 'Admin\CustomerController@index',
     ]);
-    Route::get('/index/verified', [
-        'as' => 'customer.verified',
+    Route::get('/index/notification', [
+        'as' => 'customer.notification',
         'middleware' => ['admin'],
         'uses' => 'Admin\CustomerController@verified',
     ]);

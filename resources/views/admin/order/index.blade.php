@@ -77,11 +77,12 @@
 
                         <td width="35%">{{$order->address??'NA'}}</td>
                         <td>{{$order->recipient_no ??'NA'}}</td>
-                        <td width="30%">{{date("d-m-Y h:i a", strtotime($order->created_at))}}<br><hr>
-                        <h6>Delivery Date:<br>{{$order->delivery_date}}</h6><br>
+                        <td width="30%">{{date("d-m-Y h:i a", strtotime($order->created_at))}}<br>
+                            <hr>
+                            <h6>Delivery Date:<br>{{$order->delivery_date}}</h6><br>
                             <a href="{{route("admin.home", ["slot_id" => $order->time_slot_id])}}">
                                 <span class="label label-info">
-                                    {{$order->timeSlot->slot}}
+                                    {{$order->timeSlot->slot??''}}
                                 </span>
                             </a>
                         <td width="30%">
@@ -104,7 +105,29 @@
                                 data-order="{{$order->toJson()}}" <i class="fa fa-eye"></i> Item
                             </button>
                         </td>
-                        <td>{{$order->total_price_with_tax}}.00
+                        <td>
+                            @php
+                            $total=0;
+                            foreach($order->orderTransactions as $orderTransaction){
+                            $total+=$orderTransaction->price;
+                            }
+                            @endphp
+                            @if(!$order->coupon)
+
+                            {{number_format($total, 2, '.', '')}}
+                            @else
+                            @php
+
+                            if($order->coupon->coupon_in==1){
+                            $coupon_amount= ($total)*($order->coupon->coupon_value)/100;
+                            }else{
+                            $coupon_amount=$order->coupon->coupon_value;
+                            }
+                            @endphp
+
+                            {{number_format($total, 2, '.', '')}}<br>
+                            <hr>Coupon Price:{{number_format($coupon_amount, 2, '.', '')}}
+                            @endif
                         </td>
                         <td>
                             <div class="btn-group">
@@ -112,7 +135,8 @@
                                 <a href="{{route('admin.dashboard.order.accept',Crypt::encrypt($order->id))}}">
                                     <i class="btn btn-sm btn-success">Confirm</i>
                                 </a>
-                                <a data-close-url="{{route('admin.dashboard.order.reject',Crypt::encrypt($order->id))}}" onclick="closeOrder(this)">
+                                <a data-close-url="{{route('admin.dashboard.order.reject',Crypt::encrypt($order->id))}}"
+                                    onclick="closeOrder(this)">
                                     <i class="btn btn-sm btn-danger">Cancel</i>
                                 </a>
 
@@ -164,12 +188,12 @@
                 </div>
                 <hr>
                 <div class="container text-right">
-                        <h4>Price: <strong id="total_price"></strong></h4>
+                    <h4>Price: <strong id="total_price"></strong></h4>
 
-                        <h4>Coupon Price: <strong id="coupon_price"></strong></h4>
+                    <h4>Coupon Price: <strong id="coupon_price"></strong></h4>
 
-                        </h4>Total amount with delivery charges: <strong id="total_price_with_coupon"></strong></h4>
-                       </div>
+                    </h4>Total amount with delivery charges: <strong id="total_price_with_coupon"></strong></h4>
+                </div>
 
                 <!-- Modal footer -->
                 <div class="modal-footer">
@@ -247,8 +271,10 @@
                             <label for="buffer_time">Cancellation Reason</label>
                             <input type="text" class="form-control" name="reason" id="reason" required>
                             <div class="form-check">
-                                <input type="checkbox" class="form-check-input" id="send_notification" name="send_notification" value="1" checked>
-                                <label class="form-check-label" for="send_notification">Cancellation Notification Send to Customer</label>
+                                <input type="checkbox" class="form-check-input" id="send_notification"
+                                    name="send_notification" value="1" checked>
+                                <label class="form-check-label" for="send_notification">Cancellation Notification Send
+                                    to Customer</label>
                             </div>
                         </div>
                     </div>
