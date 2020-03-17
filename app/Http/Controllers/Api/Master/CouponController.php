@@ -84,7 +84,7 @@ class CouponController extends Controller
 
 
         }
-            return response()->json(['success'=>true,'original_price'=>$price,'reduced_amount'=>round($reduced_amount),'discount_price'=>$discount_price,'message'=>'Coupon applied successfull']);
+            return response()->json(['success'=>true,'original_price'=>$price,'reduced_amount'=>round($reduced_amount),'discount_price'=>round($discount_price),'message'=>'Coupon applied successfull']);
         }
         return response()->json(['success'=>false,'error'=>'Coupon not found']);
     }
