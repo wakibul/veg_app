@@ -8,7 +8,7 @@
     @include('admin.layout.alert')
     <div class="page-header">
         <h1 class="page-title">
-            All Customers
+            Customer
             <small>details</small>
         </h1>
     </div>
@@ -20,10 +20,10 @@
 
                     <thead>
                         <tr>
-                            <th>#</th>
+                            
                             <th>Sl.</th>
                             <th>Name</th>
-                            <th>Pin</th>
+                            <th>Phone</th>
                             <th>Action</th>
                         </tr>
                     </thead>
@@ -33,16 +33,7 @@
                         @foreach($customers as $key=>$customer)
 
                         <tr>
-                            <td>
-                                <!-- Material unchecked -->
                             
-                                <div class="custom-control custom-checkbox mb-3">
-                                    <input type="checkbox" class="custom-control-input customer"
-                                        id="customerCheck_{{$key}}" name="customer_checks[]" value="{{$customer->id}}">
-                                    <label class="custom-control-label" for="customerCheck_{{$key}}"></label>
-                                </div>
-                            
-                            </td>
                             <td>{{$key+1}}</td>
                             <td>{{$customer->name??'NA'}}</td>
 
@@ -66,49 +57,6 @@
                 </table>
 
                 {{$customers->links()}}
-            </div>
-        </div>
-
-        <div class="container">
-            <div class="row">
-                <div class="col-sm-10"></div>
-                <div class="col-sm-2">
-
-                    <button style="align:right" data-toggle="collapse" href="#employee" aria-expanded="false"
-                        aria-controls="collapseExample" type="button" class="btn btn-outline-success"
-                        onclick="return check()">Send
-                        Notification</button>
-
-                </div>
-            </div>
-        </div>
-
-        <div class="container collapse" id="employee">
-
-            <div class="col-12">
-                <div class="card">
-                    <div class="card-header">
-                        <h3 class="card-title">Notification</h3>
-                    </div>
-                    <br>
-                    <div class="form-group">
-                        <div class="row">
-                            <div class="col-md-2 offset-md-3"><b>Notification:</b></div>
-                            <div class="col-md-4">
-                                <textarea class="form-control" name="msg" id="msg" rows="3"
-                                    placeholder="write your notification message here.. " required></textarea>
-
-                            </div>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <div class="row">
-                            <div class="col-md-8 offset-md-10">
-                                <button type="submit" class="btn btn-outline-primary">Send</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
             </div>
         </div>
 
