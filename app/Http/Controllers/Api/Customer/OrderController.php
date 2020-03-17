@@ -80,13 +80,15 @@ class OrderController extends Controller
         if($request->coupon_id != null){
             $coupon = Coupon::where('id',$request->coupon_id)->first();
             if($coupon->coupon_in == 1){
-                $discount_amt = (floatval($totalPrice)/100)*floatval($coupon->coupon_value);
+                $discount_amt = round((floatval($totalPrice)/100)*floatval($coupon->coupon_value));
+
             }
             elseif($coupon->coupon_in == 2){
-                $discount_amt = floatval($coupon->coupon_value);
+                $discount_amt = round(floatval($coupon->coupon_value));
             }
 
         }
+        //dd($discount_amt);
 
         $totalPrice1 = $totalPrice;
 
