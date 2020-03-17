@@ -85,8 +85,7 @@ class OrderController extends Controller
             elseif($coupon->coupon_in == 2){
                 $discount_amt = floatval($coupon->coupon_value);
             }
-            $data['discount_amt'] = $discount_amt;
-            $data['discounted_price'] = floatval($totalPrice)-floatval($discount_amt);
+
         }
 
         if($totalPrice < $delivery_charges->maximum_amount){
@@ -128,7 +127,10 @@ class OrderController extends Controller
             $data['delivery_date'] = $request->delivery_date;
             $data['delivery_charge'] = $charge_amount;
             $data['fcm_token'] = $request->fcm_token;
-
+            if($request->coupon_id != null){
+            $data['discount_amt'] = $discount_amt;
+            $data['discounted_price'] = floatval($totalPrice)-floatval($discount_amt);
+            }
             if($order = Order::create($data)){
                 event(new OrderPusherEvent($order));
                 foreach($carts as $key=>$cart){
