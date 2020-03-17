@@ -90,17 +90,17 @@ class OrderController extends Controller
 
         if($totalPrice < $delivery_charges->maximum_amount){
             $charge_amount = $delivery_charges->charge_amount;
-            $totalPrice = floatval($totalPrice)+floatval($delivery_charges->charge_amount);
+            $totalPrice1 = floatval($totalPrice)+floatval($delivery_charges->charge_amount);
         }
         else{
             $charge_amount = '0.00';
         }
 
         if($request->coupon_id != null){
-            $totalPrice = floatval($totalPrice)-floatval($discount_amt);
+            $totalPrice1 = floatval($totalPrice)-floatval($discount_amt);
         }
 
-        if($totalPrice < $delivery_charges->minimum_amount)
+        if($totalPrice1 < $delivery_charges->minimum_amount)
         {
             return response()->json(['success'=>false,'error'=>'The minimum  amount should be '.$delivery_charges->minimum_amount]);
         }
@@ -115,8 +115,8 @@ class OrderController extends Controller
         try{
             $data['user_id'] = auth('api')->user()->id;
             $data['order_time'] = date('H:i:s');
-            $data['total_price'] = $totalPrice;
-            $data['total_price_with_tax'] = $totalPrice;
+            $data['total_price'] = round($totalPrice);
+            $data['total_price_with_tax'] = round($totalPrice1);
             $data['recipient_no'] = $request->recipient_no;
             $data['latitude'] = $request->latitude;
             $data['longitude'] = $request->longitude;
@@ -129,7 +129,6 @@ class OrderController extends Controller
             $data['fcm_token'] = $request->fcm_token;
             if($request->coupon_id != null){
             $data['discount_amt'] = $discount_amt;
-            $data['discounted_price'] = floatval($totalPrice)-floatval($discount_amt);
             }
             if($order = Order::create($data)){
                 event(new OrderPusherEvent($order));
