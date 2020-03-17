@@ -88,16 +88,18 @@ class OrderController extends Controller
 
         }
 
+        $totalPrice1 = $totalPrice;
+
         if($totalPrice < $delivery_charges->maximum_amount){
             $charge_amount = $delivery_charges->charge_amount;
-            $totalPrice1 = floatval($totalPrice)+floatval($delivery_charges->charge_amount);
+            $totalPrice1 = floatval($totalPrice1)+floatval($delivery_charges->charge_amount);
         }
         else{
             $charge_amount = '0.00';
         }
 
         if($request->coupon_id != null){
-            $totalPrice1 = floatval($totalPrice)-floatval($discount_amt);
+            $totalPrice1 = floatval($totalPrice1)-floatval($discount_amt);
         }
 
         if($totalPrice1 < $delivery_charges->minimum_amount)
