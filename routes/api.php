@@ -79,3 +79,4 @@ Route::middleware('auth:employee')->group(function(){
     });
 });
 
+Route::get('/version', 'Api\VersionController@index');
