@@ -67,14 +67,15 @@ class ForgotPasswordController extends Controller
         //
         $validator = Validator::make($request->all(), [
             'mobile' => 'required|numeric',
-            'password'=> 'required|min:6|confirmed'
+            'password'=> 'required|min:6|confirmed',
+            'fcm_token'=> 'required'
         ]);
         if ($validator->fails()) {
             return response()->json(['success'=>false,'error'=>$validator->errors()]);
         }
         $customer = Customer::where([['mobile',$request->mobile],['status',1]])->first();
         if($customer){
-            Customer::where('mobile',$request->mobile)->update(['password'=>bcrypt($request->password)]);
+            Customer::where('mobile',$request->mobile)->update(['password'=>bcrypt($request->password),'fcm_token'=>$request->fcm_token]);
             $credentials = $request->only('mobile', 'password');
             $credentials['status'] = 1;
              try {
