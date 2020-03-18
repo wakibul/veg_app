@@ -104,12 +104,19 @@
         }else{
             var coupon_amount = (coupon.coupon_in = 1 ? ((total.toFixed(2) /100) *coupon.coupon_value.toFixed(2)) : coupon.coupon_value.toFixed(2)).toFixed(2);
         }
+        if(order.total_price_with_tax==null){
+            var total_price=order.total_price_with_tax.toFixed(2) - coupon_amount;
+
+        }else{
+            var total_price=order.total_price_with_tax;
+        }
+        console.log(order.total_price_with_tax);
         
         $modal.find("#order_no").html(order.order_confirm_id ? order.order_confirm_id : "Pending#"+order.id);
         $modal.find("#order_time").html(order.created_at);
         $modal .find("#total_price").html(total.toFixed(2));
          $modal .find("#coupon_price").html(coupon_amount);
-        $modal . find("#total_price_with_coupon") . html(Math.ceil((order.total_price_with_tax.toFixed(2) - coupon_amount)).toFixed(2) );
+        $modal . find("#total_price_with_coupon") . html(total_price.toFixed(2) );
         $modal.find("#order_address").html(order.address);
         $modal.find("table tbody").html(table_items);
         $modal.modal();
