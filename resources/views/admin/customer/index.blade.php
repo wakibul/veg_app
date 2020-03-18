@@ -9,7 +9,7 @@
     <div class="page-header">
         <h1 class="page-title">
             Customer
-            <small>details</small>
+            <small>Details</small>
         </h1>
     </div>
     <form name="customer" action="{{route('admin.customer.notification.store')}}" method="POST">
