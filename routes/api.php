@@ -25,6 +25,7 @@ Route::post('/customer/resend-otp', 'Api\Customer\RegisterController@resendOtp')
 Route::post('/customer/forgot-password', 'Api\Customer\ForgotPasswordController@index');
 Route::post('/customer/validate-otp', 'Api\Customer\ForgotPasswordController@validateOtp');
 Route::post('/customer/change-password', 'Api\Customer\ForgotPasswordController@changePassword');
+Route::post('/customer/forgot-resend-otp', 'Api\Customer\ForgotPasswordController@resendOtp');
 Route::middleware('auth:api')->group(function(){
     Route::group(['prefix' => 'master'], function () {
         Route::get('/state', 'Api\Master\StateController@index');

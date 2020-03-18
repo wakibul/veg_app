@@ -101,6 +101,34 @@ class ForgotPasswordController extends Controller
 
 }
 
+public function resendOtp(Request $request)
+    {
+
+        $validator = Validator::make($request->all(), [
+            'mobile'=> 'required|numeric'
+        ]);
+        if ($validator->fails()) {
+            return response()->json(['success'=>false,'error'=>$validator->errors()]);
+        }
+        if (Customer::where([['mobile', '=', $request->mobile],['status',1]])->exists()) {
+                $otp = mt_rand(100000, 999999);
+                try{
+                    $update = Customer::where('mobile',$request->mobile)->update(['otp'=>$otp]);
+                    sendNewSMS($request->mobile,"Your otp verification code is ".$otp);
+                    return response()->json(['success'=>true,'msg'=>'Otp sent successfully']);
+                }
+                catch(\Exception $e){
+                    return response()->json(['success'=>false,'msg'=>$e->getMessage()]);
+                }
+
+
+            }
+            else{
+                return response()->json(['success'=>false,'error'=>'The phone no does not exist']);
+            }
+
+    }
+
     /**
      * Show the form for creating a new resource.
      *
