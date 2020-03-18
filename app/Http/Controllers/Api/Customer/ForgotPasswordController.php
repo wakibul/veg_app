@@ -43,7 +43,7 @@ class ForgotPasswordController extends Controller
             'otp' => 'required|numeric'
         ]);
         if ($validator->fails()) {
-            return response()->json(['success'=>false,'error'=>$validator->errors()]);
+            return response()->json(['success'=>false,'msg'=>$validator->errors()]);
         }
         $customer = Customer::where([['mobile',$request->mobile],['status',1]])->first();
         if($customer){
@@ -52,12 +52,12 @@ class ForgotPasswordController extends Controller
                 return response()->json(['success'=>true,'message'=>'Otp validated successfully']);
             }
             else{
-                return response()->json(['success'=>false,'error'=>'Wrong OTP']);
+                return response()->json(['success'=>false,'msg'=>'Wrong OTP']);
             }
 
         }
         else{
-            return response()->json(['success'=>false,'error'=>'Otp is not valid']);
+            return response()->json(['success'=>false,'msg'=>'Otp is not valid']);
         }
 
 }
