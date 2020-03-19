@@ -24,10 +24,10 @@ function getCurrentDate($format = "Y-m-d H:i:s")
 {
     return date($format);
 }
-function getOrderConfirmId()
+function getOrderConfirmId($order_id)
 {
-    $order_count = Order::count() + 1;
-    $order_no = 'SOR/ORD/' . $order_count;
+   
+    $order_no = 'SOR/ORD/' . $order_id;
     return $order_no;
 
 }
