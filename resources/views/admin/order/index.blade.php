@@ -116,7 +116,7 @@
                             @if(!$order->total_price_with_tax)
                             Total Amount:{{number_format($total, 2, '.', '')}}
                             @else
-                            Total Amount:{{number_format($order->total_price_with_tax, 2, '.', '')}}
+                            Total Amount:{{number_format($order->total_price_with_tax, 2, '.', '')??''}}
                             @endif
                             @else
                             @php
