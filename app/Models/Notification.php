@@ -8,7 +8,7 @@ class Notification extends Model
 {
 
     protected $guarded = ['id','token'];
-    protected $fillable = ['id','uuid','notification_msg','created_at','updated_at'];
+    protected $fillable = ['id','uuid','notification_title','notification_msg','created_at','updated_at'];
 
 
     public function notificationDetails(){

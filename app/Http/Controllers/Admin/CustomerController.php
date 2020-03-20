@@ -101,14 +101,17 @@ class CustomerController extends Controller
      */
     public function notification(Request $request)
     {
+        
         if ($request->customer_checks == null) {
             return redirect()->back()->with('error', 'Please select AtLeast One Customer  .');
 
         } else {
             $data = [
                 'uuid' => (String) Str::uuid(),
+                'notification_title'=>$request->notification_title,
                 'notification_msg' => $request->msg,
             ];
+            
             $notification_data = Notification::create($data);
 
             foreach ($request->customer_checks as $key => $customer_check) {
@@ -135,7 +138,7 @@ class CustomerController extends Controller
                 $optionBuilder = new OptionsBuilder();
                 $optionBuilder->setTimeToLive(60 * 20);
 
-                $notificationBuilder = new PayloadNotificationBuilder("Today's Report");
+                $notificationBuilder = new PayloadNotificationBuilder("$request->notification_title");
                 $notificationBuilder->setBody("$request->msg")->setSound('default');
 
                 $dataBuilder = new PayloadDataBuilder();

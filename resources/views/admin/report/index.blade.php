@@ -104,7 +104,7 @@
                             <td>{{date("d-m-Y h:i a", strtotime($order->created_at))}}<br>
                                 <a href="{{route("admin.home", ["slot_id" => $order->time_slot_id])}}">
                                     <span class="label label-info">
-                                        {{$order->timeSlot->slot}}
+                                        {{$order->timeSlot->slot??''}}
                                     </span>
                                 </a>
                             <td width="20%">{{date("d-m-Y h:i a", strtotime($order->confirmation_time??'NA'))}}</td>
@@ -123,8 +123,8 @@
                             <td>
                                @foreach($order->orderTransactions as $orderKey => $orderTransaction)
 
-                                <span class="label label-{{$lbl_class}}">{{$orderTransaction->product->name}}
-                                ({{$orderTransaction->quantity}} ({{$orderTransaction->productPackage->PackageMaster->name}}))</span><br>
+                                <span class="label label-{{$lbl_class}}">{{$orderTransaction->product->name??''}}
+                                ({{$orderTransaction->quantity??''}} ({{$orderTransaction->productPackage->PackageMaster->name??''}}))</span><br>
 
                                 @endforeach
                             </td>
