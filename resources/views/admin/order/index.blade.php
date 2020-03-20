@@ -113,8 +113,11 @@
                             }
                             @endphp
                             @if(!$order->coupon)
-
-                            {{number_format($total, 2, '.', '')}}
+                            @if(!$order->total_price_with_tax)
+                            Total Amount:{{number_format($total, 2, '.', '')}}
+                            @else
+                            Total Amount:{{number_format($order->total_price_with_tax, 2, '.', '')}}
+                            @endif
                             @else
                             @php
 
@@ -125,8 +128,12 @@
                             }
                             @endphp
 
-                            {{number_format($total, 2, '.', '')}}<br>
+                            Total Amount:{{number_format($order->total_price_with_tax, 2, '.', '')}}<br>
+                            @if(!$order->discount_amt)
                             <hr>Coupon Price:{{number_format($coupon_amount, 2, '.', '')}}
+                            @else
+                            <hr>Coupon Price:{{number_format($order->discount_amt, 2, '.', '')}}
+                            @endif
                             @endif
                         </td>
                         <td>
