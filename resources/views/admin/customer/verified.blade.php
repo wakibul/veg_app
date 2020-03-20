@@ -86,6 +86,17 @@
                     <br>
                     <div class="form-group">
                         <div class="row">
+                            <div class="col-md-2 offset-md-3"><b>Notification Title:</b></div>
+                            <div class="col-md-4">
+
+                                <input type="text" name="notification_title" class="form-control" value="" required>
+
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="row">
                             <div class="col-md-2 offset-md-3"><b>Notification:</b></div>
                             <div class="col-md-4">
                                 <textarea class="form-control" name="msg" id="msg" rows="3"
