@@ -100,7 +100,7 @@ class OrderController extends Controller
     {
         $orderId = decrypt($order_id);
         $order = Order::find($orderId);
-        $order_confirm_id = getOrderConfirmId($order_id);
+        $order_confirm_id = getOrderConfirmId($orderId);
         $order->update(['status' => 1, 'confirmation_time' => getCurrentDate(), 'order_confirm_id' => $order_confirm_id]);
         $order = $order->save();
         $order_details = Order::find($orderId);

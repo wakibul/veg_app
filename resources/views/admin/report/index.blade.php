@@ -63,8 +63,8 @@
                         @php
                         $tr_class = "";
                         if($order->status == 0){
-                        $tr_class = "";
-                        $lbl_class = "";
+                        $tr_class = "text-blue";
+                        $lbl_class = "info";
                         }
                         elseif($order->status == 1){
                         $tr_class = "text-yellow";

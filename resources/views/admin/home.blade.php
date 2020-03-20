@@ -102,7 +102,13 @@
             var coupon_amount=0.00;
 
         }else{
-            var coupon_amount = (coupon.coupon_in = 1 ? ((total.toFixed(2) /100) *coupon.coupon_value.toFixed(2)) : coupon.coupon_value.toFixed(2)).toFixed(2);
+            if(order.discount_amt==null){
+             var coupon_amount = (coupon.coupon_in = 1 ? ((total.toFixed(2) /100) *coupon.coupon_value.toFixed(2)) :
+            coupon.coupon_value.toFixed(2)).toFixed(2);   
+            }else{
+                var coupon_amount =order.discount_amt.toFixed(2);
+            }
+            
         }
         if(order.total_price_with_tax==null){
             var total_price=order.total_price_with_tax.toFixed(2) - coupon_amount;
