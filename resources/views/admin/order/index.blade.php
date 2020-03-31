@@ -197,8 +197,8 @@
                 <div class="container text-right">
                     <h4>Price: <strong id="total_price"></strong></h4>
 
-                    <h4>Coupon Price: <strong id="coupon_price"></strong></h4>
-
+                    <h4>Coupon Price:- <strong id="coupon_price"></strong></h4>
+                    <h4>Delivery Charges: + <strong id="delivery_charge"></strong></h4>
                     </h4>Total amount with delivery charges: <strong id="total_price_with_coupon"></strong></h4>
                 </div>
 

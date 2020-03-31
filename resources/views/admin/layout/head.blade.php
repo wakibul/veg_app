@@ -12,7 +12,7 @@
 <meta name="MobileOptimized" content="320">
 <link rel="icon" href="./favicon.ico" type="image/x-icon"/>
 <link rel="shortcut icon" type="image/x-icon" href="./favicon.ico" />
-<title>{{ config('app.name', 'Book Ur Doctor') }}</title>
+<title>{{ config('app.name', 'Local Farmer') }}</title>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,300i,400,400i,500,500i,600,600i,700,700i&amp;subset=latin-ext">
 <link href="{{ asset('public/assets/css/dashboard.css')}}" rel="stylesheet" />
