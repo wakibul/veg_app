@@ -32,7 +32,7 @@
                     <a class="dropdown-item" href="#">
                       <i class="dropdown-icon fe fe-help-circle"></i> Need help?
                     </a> -->
-                        <a class="dropdown-item" href="{{ url('/admin/logout') }}" onclick="event.preventDefault();
+                        <a class="dropdown-item" href="" onclick="event.preventDefault();
                                                  document.getElementById('logout-form').submit();">
                             <i class="dropdown-icon fe fe-log-out"></i> Sign out
                         </a>
