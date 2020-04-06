@@ -339,6 +339,16 @@ Route::group(['prefix' => 'customer'], function () {
         'middleware' => ['admin'],
         'uses' => 'Admin\CustomerController@view',
     ]);
+    Route::get('/customer/export', [
+        'as' => 'customer.export',
+        'middleware' => ['admin'],
+        'uses' => 'Admin\CustomerController@export',
+    ]);
+    Route::get('/customer/verified/export', [
+        'as' => 'verified.customer.export',
+        'middleware' => ['admin'],
+        'uses' => 'Admin\CustomerController@verifiedCustomer',
+    ]);
 
 });
 Route::group(['prefix' => 'changePasword'], function () {

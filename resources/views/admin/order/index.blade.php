@@ -50,6 +50,7 @@
                     //dd($order->orderTransactions);
                     @endphp
                     <tr class="{{$tr_class}}">
+                    
                         @if(($order->status==1) && !($order->employee_id))
                         <td>
                             <!-- Material unchecked -->

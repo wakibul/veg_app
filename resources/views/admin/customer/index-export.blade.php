@@ -5,23 +5,27 @@
         <thead>
             <tr>
                 <th>SL No.</th>
-                <th>Order No</th>
-                <th>Address</th>
+                <th>Customer Name</th>
+                <th>Email</th>
                 <th>Phone</th>
-                <th>Delivery Slot</th>
+                <th>House No</th>
+                <th>Landmark</th>
+                <th>Address</th>
                 
             </tr>
         </thead>
         <tbody>
             
-            @forelse($orders as $key => $order)
+            @forelse($customers as $key => $customer)
           
             <tr>
                 <td>{{$key+1}}</td>
-                <td>{{$order->order_confirm_id??'NA'}}</td>
-                <td>{{$order->address ?? ''}}</td>
-                <td>{{$order->recipient_no??'NA'}}</td>
-                <td> {{$order->timeSlot->slot??''}}</td>
+                <td>{{$customer->name??'NA'}}</td>
+                <td>{{$customer->email ?? ''}}</td>
+                <td>{{$customer->mobile??'NA'}}</td>
+                <td> {{$customer->house_no??''}}</td>
+                <td> {{$customer->landmark??''}}</td>
+                <td> {{$customer->address??''}}</td>
                
             </tr>
            
@@ -30,10 +34,7 @@
                 <td colspan="8">No Data</td>
             </tr>
             @endforelse
-            <tr>
-                <td colspan="4">Total Amount:</td>
-                <td>{{$total_amount}}</td>
-            </tr>
+            
         </tbody>
         <tfoot>
             

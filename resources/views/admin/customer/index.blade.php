@@ -12,55 +12,60 @@
             <small>Details</small>
         </h1>
     </div>
-    <form name="customer" action="{{route('admin.customer.notification.store')}}" method="POST">
-        @csrf
-        <div class="row">
-            <div class="col-md-12">
-                <table class="table table-bordered table-hover" id="orderTable">
-
-                    <thead>
-                        <tr>
-                            
-                            <th>Sl.</th>
-                            <th>Name</th>
-                            <th>Phone</th>
-                            <th>Action</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {{-- {{ dd($orders) }} --}}
-
-                        @foreach($customers as $key=>$customer)
-
-                        <tr>
-                            
-                            <td>{{$key+1}}</td>
-                            <td>{{$customer->name??'NA'}}</td>
 
 
-                            <td>{{$customer->mobile}}</td>
-                            <td>
+
+
+    <div class="row">
+        <div class="col-md-12">
+            <a class="btn btn-info btn-lg float-right" href="{{route('admin.customer.export')}}">
+                <i class="fa fa-file-excel-o" aria-hidden="true"></i> Export
+
+            </a>
+            <table class="table table-bordered table-hover" id="orderTable">
+
+                <thead>
+                    <tr>
+
+                        <th>Sl.</th>
+                        <th>Name</th>
+                        <th>Phone</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {{-- {{ dd($orders) }} --}}
+
+                    @foreach($customers as $key=>$customer)
+
+                    <tr>
+
+                        <td>{{$key+1}}</td>
+                        <td>{{$customer->name??'NA'}}</td>
+
+
+                        <td>{{$customer->mobile}}</td>
+                        <td>
                             <div class="btn-group">
 
-                            <a href="{{route('admin.customer.view',Crypt::encrypt($customer->id))}}"
-                            class="btn btn-sm btn-info"><i class="fa fa-eye"></i></a>
+                                <a href="{{route('admin.customer.view',Crypt::encrypt($customer->id))}}" class="btn btn-sm btn-info"><i class="fa fa-eye"></i></a>
 
-                    </div>
-                    </td>
+                            </div>
+                        </td>
 
 
-                        </tr>
+                    </tr>
 
-                        @endforeach
+                    @endforeach
 
-                    </tbody>
-                </table>
+                </tbody>
+            </table>
 
-                {{$customers->links()}}
-            </div>
+            {{$customers->links()}}
         </div>
+    </div>
 
-    </form>
+
 
 </div>
 @endsection
@@ -74,17 +79,7 @@
 @section('js')
 <script src="https://js.pusher.com/5.1/pusher.min.js"></script>
 
-<script>
-    check = function() {
-        var total_order_chack = $(".customer:checked").filter(function() {
-            return this.checked;
-        }).length;
-        if(total_order_chack<=0){
-            alert("Please select atleast one Customer");
-            return false;
-        }
-    }
-</script>
+
 
 
 @endsection

@@ -2,17 +2,20 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Exports\BushAllIndexExport;
+use App\Exports\CustomerAllExport;
 use App\Http\Controllers\Controller;
 use App\Models\Customer;
 use App\Models\Notification;
 use App\Models\NotificationDetail;
 use App\Models\Order;
 use Illuminate\Http\Request;
-use Crypt,Session;
+use Crypt, Session;
 use LaravelFCM\Facades\FCM;
 use LaravelFCM\Message\OptionsBuilder;
 use LaravelFCM\Message\PayloadDataBuilder;
 use LaravelFCM\Message\PayloadNotificationBuilder;
+use Excel;
 use Str;
 
 
@@ -28,14 +31,12 @@ class CustomerController extends Controller
         $customers = Customer::with(["orders"])->paginate(25);
 
         return view('admin.customer.index', compact('customers'));
-
     }
-     public function verified()
+    public function verified()
     {
-        $customers = Customer::with(["orders"])->where('fcm_token','!=',null)->paginate(25);
+        $customers = Customer::with(["orders"])->where('fcm_token', '!=', null)->paginate(25);
 
         return view('admin.customer.verified', compact('customers'));
-
     }
 
     /**
@@ -101,17 +102,16 @@ class CustomerController extends Controller
      */
     public function notification(Request $request)
     {
-        
+
         if ($request->customer_checks == null) {
             return redirect()->back()->with('error', 'Please select AtLeast One Customer  .');
-
         } else {
             $data = [
-                'uuid' => (String) Str::uuid(),
-                'notification_title'=>$request->notification_title,
+                'uuid' => (string) Str::uuid(),
+                'notification_title' => $request->notification_title,
                 'notification_msg' => $request->msg,
             ];
-            
+
             $notification_data = Notification::create($data);
 
             foreach ($request->customer_checks as $key => $customer_check) {
@@ -125,14 +125,14 @@ class CustomerController extends Controller
 
                 $customer = Customer::find($customer_check);
                 $customer_no = $customer->mobile;
-            
-                
+
+
                 try {
-                $token = $customer->fcm_token;
-            } catch (\Exception $e) {
-                continue;
-         return back()->withError($e->getMessage())->withInput();
-}
+                    $token = $customer->fcm_token;
+                } catch (\Exception $e) {
+                    continue;
+                    return back()->withError($e->getMessage())->withInput();
+                }
 
 
                 $optionBuilder = new OptionsBuilder();
@@ -149,23 +149,35 @@ class CustomerController extends Controller
                 $data = $dataBuilder->build();
 
                 $customerMessage = FCM::sendTo($token, $option, $notification, $data);
-
             }
-
         }
 
         return redirect()->back()->with('success', 'Notification Send Successfully.');
-
     }
     public function view($customer_id)
     {
         $id = Crypt::decrypt($customer_id);
         $customer = Customer::find($id);
-        $orders=$customer->orders->unique("address");
-      
+        $orders = $customer->orders->unique("address");
 
-      return view('admin.customer.view',compact('customer','orders'));
+
+        return view('admin.customer.view', compact('customer', 'orders'));
     }
+    public function export()
+    {
+        $customers = Customer::get();
+
+        return Excel::download(new CustomerAllExport($customers), 'All-Customer-report.xlsx');
+    }
+    public function verifiedCustomer()
+    {
+        $customers = Customer::with(["orders"])->where('fcm_token', '!=', null)->paginate(25);
+
+        return Excel::download(new CustomerAllExport($customers), 'All-Customer-report.xlsx');
+    }
+
+
+
     public function destroy($id)
     {
         //
