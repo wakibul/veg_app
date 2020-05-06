@@ -64,12 +64,12 @@ class CouponController extends Controller
                 return response()->json(['success'=>false,'error'=>'Minimum amount should be'.$minimun_amount]);
             }
             if($coupon->coupon_in == 1){
-                $reduced_amount = intval($price)*(intval($coupon->coupon_value)/100);
-                $discount_price = intval($price)-intval($reduced_amount);
+                $reduced_amount = floatval($price)*(floatval($coupon->coupon_value)/100);
+                $discount_price = floatval($price)-floatval($reduced_amount);
             }
             elseif($coupon->coupon_in == 2){
-                 $reduced_amount = intval($coupon->coupon_value);
-                 $discount_price = intval($price)-intval($reduced_amount);
+                 $reduced_amount = floatval($coupon->coupon_value);
+                 $discount_price = floatval($price)-floatval($reduced_amount);
             }
         $firstCoupon= Coupon::where([['id',$coupon_id],['is_active',1],['coupon_type','first_offer']])->first();
         if($firstCoupon)
@@ -84,7 +84,7 @@ class CouponController extends Controller
 
 
         }
-            return response()->json(['success'=>true,'original_price'=>$price,'reduced_amount'=>$reduced_amount,'discount_price'=>$discount_price,'message'=>'Coupon applied successfull']);
+            return response()->json(['success'=>true,'original_price'=>$price,'reduced_amount'=>round($reduced_amount),'discount_price'=>round($discount_price),'message'=>'Coupon applied successfull']);
         }
         return response()->json(['success'=>false,'error'=>'Coupon not found']);
     }

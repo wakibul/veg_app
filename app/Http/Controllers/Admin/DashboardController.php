@@ -9,6 +9,8 @@ use App\Models\Order;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Excel;
+use DB;
+use App\Models\Power;
 
 class DashboardController extends Controller
 {
@@ -23,15 +25,17 @@ class DashboardController extends Controller
         $users[] = Auth::guard()->user();
         $users[] = Auth::guard('admin')->user();
         $orders = Order::query();
- 
         $orders = $this->filter($orders);
-       
-       $hour=date('H');
-       
 
         $total_orders = Order::count();
-        $todays_order = Order::where('delivery_date', '=', date('Y-m-d'))->get();
-         
+        if((date('H:i:s')>='18:00:00' && date('H:i:s')<='23:59:59'))
+            $date = date('Y-m-d', strtotime(' +1 day'));
+        else
+            $date = date('Y-m-d');
+
+        $todays_order = Order::whereDate('delivery_date', '=', $date)->count();
+
+
 
         $orders = $orders->with(["orderTransactions.product", "coupon", "orderTransactions.productPackage.packageMaster"])->with('orderTransactions.product.productPackage.packageMaster')->where('status', '!=', 4)->orderBy('id', 'DESC');
         $employees = Employee::get();
@@ -72,7 +76,7 @@ class DashboardController extends Controller
     }
     public function filterExportReport($orders)
     {
-            
+
 
         return Excel::download(new BushAllIndexExport($orders), 'All-report.xlsx');
     }
@@ -141,5 +145,19 @@ class DashboardController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function power(Request $request)
+    {
+        //
+        DB::beginTransaction();
+        try{
+            Power::where('id',1)->update(['status'=>$request->status]);
+        }
+        catch(\Exception $e){
+            return response()->json(['suceess'=>false,'message'=>$e->getMessage()]);
+        }
+        DB::commit();
+        return response()->json(['suceess'=>true,'message'=>'Power Changed']);
     }
 }

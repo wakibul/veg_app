@@ -12,7 +12,7 @@ class Order extends Model
     //
     use SoftDeletes;
     protected $guarded = ['id', 'token'];
-    protected $fillable = ['fcm_token'];
+
     public function orderTransactions()
     {
         return $this->hasMany(OrderTransaction::class);

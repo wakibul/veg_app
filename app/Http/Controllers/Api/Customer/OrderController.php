@@ -25,7 +25,7 @@ class OrderController extends Controller
     {
         //
         $user_id = auth('api')->user()->id;
-        $orders = Order::select('id','order_confirm_id','otp','total_price_with_tax','time_slot_id','created_at','status')->with('timeSlot:id,slot','orderTransaction:id,order_id,quantity,product_id,product_package_id','orderTransaction.product:id,name','orderTransaction.productPackage:id,product_id,package_masters_id,market_price,offer_price,offer_percentage,is_offer','orderTransaction.productPackage.packageMaster:id,name')->where('user_id',$user_id)->orderBy('id','desc')->withTrashed()->paginate(30);
+        $orders = Order::select('id','order_confirm_id','otp','total_price_with_tax','total_price','discount_amt','delivery_charge','time_slot_id','created_at','status')->with('timeSlot:id,slot','orderTransaction:id,order_id,quantity,product_id,product_package_id','orderTransaction.product:id,name','orderTransaction.productPackage:id,product_id,package_masters_id,market_price,offer_price,offer_percentage,is_offer','orderTransaction.productPackage.packageMaster:id,name')->where('user_id',$user_id)->orderBy('id','desc')->withTrashed()->paginate(30);
         if(!$orders->isEmpty())
             return response()->json(['success'=>true,'orders'=>$orders]);
         else
@@ -52,6 +52,7 @@ class OrderController extends Controller
     public function store(Request $request)
     {
         //
+
         $validator = Validator::make($request->all(), [
             'recipient_no'=> 'required',
 			'latitude'=> 'required',
@@ -76,22 +77,41 @@ class OrderController extends Controller
             return response()->json(['success'=>false,'error'=>'Sorry, unable to delivery in this pincode']);
         }
 
+        if($request->coupon_id != null){
+            $coupon = Coupon::where('id',$request->coupon_id)->first();
+            if($coupon->coupon_in == 1){
+                $discount_amt = round((floatval($totalPrice)/100)*floatval($coupon->coupon_value));
+
+            }
+            elseif($coupon->coupon_in == 2){
+                $discount_amt = round(floatval($coupon->coupon_value));
+            }
+
+        }
+        //dd($discount_amt);
+
+        $totalPrice1 = $totalPrice;
+
         if($totalPrice < $delivery_charges->maximum_amount){
             $charge_amount = $delivery_charges->charge_amount;
-            $totalPrice = floatval($totalPrice)+floatval($delivery_charges->charge_amount);
+            $totalPrice1 = floatval($totalPrice1)+floatval($delivery_charges->charge_amount);
         }
         else{
             $charge_amount = '0.00';
         }
 
-        if($totalPrice < $delivery_charges->minimum_amount)
+        if($request->coupon_id != null){
+            $totalPrice1 = floatval($totalPrice1)-floatval($discount_amt);
+        }
+
+        if($totalPrice1 < $delivery_charges->minimum_amount)
         {
             return response()->json(['success'=>false,'error'=>'The minimum  amount should be '.$delivery_charges->minimum_amount]);
         }
 
         $ordersCount = Order::where([['time_slot_id',$request->time_slot_id],['delivery_date',$request->delivery_date]])->count();
         if($ordersCount >= $delivery_charges->maximum_orders){
-            return response()->json(['success'=>false,'error'=>'Maximum order limit is 50 items/day']);
+            return response()->json(['success'=>false,'error'=>'The booking for the slot is full']);
         }
 
         $data  =  array();
@@ -99,8 +119,8 @@ class OrderController extends Controller
         try{
             $data['user_id'] = auth('api')->user()->id;
             $data['order_time'] = date('H:i:s');
-            $data['total_price'] = $totalPrice;
-            $data['total_price_with_tax'] = $totalPrice;
+            $data['total_price'] = round($totalPrice);
+            $data['total_price_with_tax'] = round($totalPrice1);
             $data['recipient_no'] = $request->recipient_no;
             $data['latitude'] = $request->latitude;
             $data['longitude'] = $request->longitude;
@@ -111,7 +131,9 @@ class OrderController extends Controller
             $data['delivery_date'] = $request->delivery_date;
             $data['delivery_charge'] = $charge_amount;
             $data['fcm_token'] = $request->fcm_token;
-
+            if($request->coupon_id != null){
+            $data['discount_amt'] = $discount_amt;
+            }
             if($order = Order::create($data)){
                 event(new OrderPusherEvent($order));
                 foreach($carts as $key=>$cart){
@@ -159,9 +181,15 @@ class OrderController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function address()
     {
         //
+        $orders = Order::select('latitude','longitude','address','pincode')->where('user_id',auth('api')->user()->id)->groupBy('address')->take(5)->orderBy('id','desc')->get();
+        if(!$orders->isEmpty()){
+            return response()->json(['success'=>true,'address'=>$orders]);
+        }
+        else
+            return response()->json(['success'=>false]);
     }
 
     /**

@@ -42,12 +42,14 @@ class settlementController extends Controller
     public function store(Request $request)
     {
 
+dd($request->all());
         $amount=0;
         foreach ($request->employee_transactions as $key => $employee_transaction) {
             $employee_transaction = EmployeeTransaction::find($employee_transaction);
-            $paid=$amount+($employee_transaction->amount);
+            $amount=$amount+($employee_transaction->amount);
 
         }
+
 
         foreach ($request->employee_transactions as $key => $employee_transaction) {
             $employee_transaction = EmployeeTransaction::find($employee_transaction);
@@ -135,7 +137,7 @@ class settlementController extends Controller
     public function orderDetails($employee_id){
        $employee_id= Crypt::decrypt($employee_id);
        $employee=Employee::find($employee_id);
-       $orders = Order::with(["orderTransactions.product", "coupon", "orderTransactions.productPackage.packageMaster"])->with('orderTransactions.product.productPackage.packageMaster')->where('status', '!=', 4)->where('employee_id',$employee_id)->orderBy('id', 'DESC')->get();
+       $orders = Order::with(["orderTransactions.product", "coupon", "orderTransactions.productPackage.packageMaster"])->with('orderTransactions.product.productPackage.packageMaster')->where('employee_id',$employee_id)->orderBy('id', 'DESC')->paginate(15);
        return view('admin.settlement.order_details',compact('orders','employee'));
     }
 }

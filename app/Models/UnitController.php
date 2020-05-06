@@ -46,7 +46,7 @@ class UnitController extends Controller
      */
     public function store(Request $request)
     {
-
+        
         $validator = Validator::make($request->all(), [
             'name' => 'required',
             'status' => 'required',
@@ -111,7 +111,6 @@ class UnitController extends Controller
     {
         $id = Crypt::decrypt($id);
         $unit = packageMaster::find($id);
-
         $validator = Validator::make($request->all(), [
             'name' => 'required',
             'status' => 'required',
@@ -146,7 +145,6 @@ class UnitController extends Controller
      */
     public function destroy($id)
     {
-
         $id = Crypt::decrypt($id);
         packageMaster::findOrFail($id)->delete();
         return Redirect::route('admin.unit.index')->with('Error', 'Unit deleted successfully');

@@ -44,7 +44,8 @@
                                                     <th>#</th>
                                                     <th>Employee Name</th>
                                                     <th>Contact Number</th>
-                                                    <th>Amount Pending</th>
+                                                     <th>Amount Pending</th>
+                                                     <th>Order Details</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -63,11 +64,15 @@
                                                     @endphp
 
                                                     <td>{{$employee->updated_balance}}</td>
+                                                    <td> <a href="{{ route('admin.settlement.details', Crypt::encrypt($employee->id) ) }}">
+                                                        View all order
+
+                                                    </a></td>
 
                                                 </tr>
 
                                                 <tr class="hidden" tabindex="-1">
-                                                    <td colspan="4">
+                                                    <td colspan="5">
                                                         <h4>transaction details</h4>
                                                         <form name="employee"
                                                             action="{{route('admin.settlement.store')}}" method="POST">
@@ -114,6 +119,7 @@
 
                                                                     @endforeach
                                                                     @if(($employee->updated_balance)!=0)
+
                                                                     <tr>
                                                                         <td colspan="1"></td>
                                                                         <td>Total:</td>

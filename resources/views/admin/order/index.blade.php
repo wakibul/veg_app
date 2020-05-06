@@ -78,9 +78,13 @@
 
                         <td width="35%">{{$order->address??'NA'}}</td>
                         <td>{{$order->recipient_no ??'NA'}}</td>
+
+
+
                         <td width="30%">{{date("d-m-Y h:i a", strtotime($order->created_at))}}<br>
                             <hr>
-                            <h6>Delivery Date:<br>{{$order->delivery_date}}</h6><br>
+                            <h6>Delivery Date:<br>{{date("d-m-Y", strtotime($order->delivery_date??'NA'))}}</h6><br>
+
                             <a href="{{route("admin.home", ["slot_id" => $order->time_slot_id])}}">
                                 <span class="label label-info">
                                     {{$order->timeSlot->slot??''}}

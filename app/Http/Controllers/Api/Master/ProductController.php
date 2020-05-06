@@ -26,6 +26,8 @@ class ProductController extends Controller
 		if ($validator->fails()) {
 			return response()->json(['success'=>false,'error'=>$validator->errors()]);
 		}
+        $max_price = '';
+        $min = '';
         $products = Product::select('id','name','details','large_picture','small_picture','is_available','default_package')->with('productPackage:id,product_id,package_masters_id,market_price,offer_price,is_offer,offer_percentage','productPackage.packageMaster:id,name')->where([['status',1],['category_id',$request->category_id],['is_product',1]])->orderBy('name')->paginate(10);
         if(!$products->isEmpty()){
             $status = true;

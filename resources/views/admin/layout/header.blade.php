@@ -1,3 +1,6 @@
+@php
+$power = App\Models\Power::select('status')->first();
+@endphp
 <div class="header py-4">
     <div class="container">
         <div class="d-flex">
@@ -5,7 +8,15 @@
                 <img src="{{asset('public/vendor/images/logo.png')}}" class="header-brand-img" alt="tabler logo">
             </a>
             <div class="d-flex order-lg-2 ml-auto">
-
+            <b>Power</b>
+            <div class="onoffswitch">
+            
+                    <input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" id="myonoffswitch" @if($power->status == 1) checked @endif>
+                    <label class="onoffswitch-label" for="myonoffswitch">
+                        <span class="onoffswitch-inner"></span>
+                        <span class="onoffswitch-switch"></span>
+                    </label>
+                </div>
 
                 <div class="dropdown">
                     <a href="#" class="nav-link pr-0 leading-none" data-toggle="dropdown">
@@ -32,7 +43,7 @@
                     <a class="dropdown-item" href="#">
                       <i class="dropdown-icon fe fe-help-circle"></i> Need help?
                     </a> -->
-                        <a class="dropdown-item" href="" onclick="event.preventDefault();
+                        <a class="dropdown-item" href="{{ url('/admin/logout') }}" onclick="event.preventDefault();
                                                  document.getElementById('logout-form').submit();">
                             <i class="dropdown-icon fe fe-log-out"></i> Sign out
                         </a>
@@ -96,6 +107,7 @@
                             
                         </div>
                     </li>
+                    
                     <!---<li class="nav-item dropdown">
                     <a href="javascript:void(0)" class="nav-link" data-toggle="dropdown"><i class="fe fe-file"></i> Doctor</a>
                     <div class="dropdown-menu dropdown-menu-arrow">

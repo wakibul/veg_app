@@ -8,7 +8,7 @@
     <div class="page-header">
         <h1 class="page-title">
             Dashboard
-            <button type="button" class="btn btn-primary">Todays Order: <span class="badge">{{$todays_order}}</span></button>
+            <button type="button" class="btn btn-primary">Todays Order: <span class="badge badge-success" style="font-size: 16px">{{$todays_order}}</span></button>
             <button type="button" class="btn btn-success"> Total Orders: <span class="badge">{{$total_orders}}</span></button>
         </h1>
     </div>

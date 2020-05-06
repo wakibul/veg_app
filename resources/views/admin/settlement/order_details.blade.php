@@ -8,26 +8,25 @@
             <div class="page-header">
                 <h1 class="page-title">
                     Delivery Transaction <br>
-                    Emplyee Name:{{$employee->name}}   Mobile no:{{$employee->mobile_no}}
-                    Address:{{$employee->address}} {{$employee->pin}}
+                    <span style="color:rgb(62, 0, 37)"><h4> <u>Emplyee Name:</u>   </span>{{$employee->name}}&nbsp;&nbsp;
+                    <span style="color:rgb(62, 0, 37)"> <u>Mobile no:</u>   </span>    {{$employee->mobile}}&nbsp;&nbsp;
+                    <span style="color:rgb(62, 0, 37)"><u> Address:</u>    </span>{{$employee->address}} {{$employee->pin}}</h4>
+
 
                 </h1>
             </div>
             <div class="row">
                 <div class="col-md-12">
                     <table class="table table-bordered table-hover" id="orderTable">
-                        <caption>Product List</caption>
+
                         <thead>
-                            <tr>
-                                <th>Sl.</th>
-                        <th>OTP</th>
+                        <tr>
+
+                        <th>#No.</th>
                         <th>Order No</th>
                         <th width="30%">Address</th>
-                        <th>Phone No</th>
-                        <th width="30%">Order Time</th>
-                        <th>Confirm Time</th>
+
                         <th>Status</th>
-                        <th>Item</th>
                         <th>Total Amount</th>
                             </tr>
                         </thead>
@@ -62,21 +61,10 @@
                             @endphp
                             <tr class="{{$tr_class}}">
 
-                                @if(($order->status==1) && !($order->employee_id))
-                                <td>
-                                    <!-- Material unchecked -->
-                                    <div class="custom-control custom-checkbox mb-3">
-                                        <input type="checkbox" class="custom-control-input order" id="orderCheck_{{$key}}"
-                                            name="order_checks[]" value="{{$order->id}}">
-                                        <label class="custom-control-label" for="orderCheck_{{$key}}"></label>
-                                    </div>
-                                </td>
-                                @else
-                                <td></td>
-                                @endif
+
 
                                 <td>{{ $key+ 1 + ($orders->perPage() * ($orders->currentPage() - 1)) }}</td>
-                                <td>{{$order->otp??'NA'}}</td>
+
                                 <td valign="top">
                                     <strong>
                                         @if(!$order->order_confirm_id) pending#{{ $order->id }}
@@ -88,18 +76,9 @@
 
 
                                 <td width="35%">{{$order->address??'NA'}}</td>
-                                <td>{{$order->recipient_no ??'NA'}}</td>
-                                <td width="30%">{{date("d-m-Y h:i a", strtotime($order->created_at))}}<br>
-                                    <hr>
-                                    <h6>Delivery Date:<br>{{$order->delivery_date}}</h6><br>
-                                    <a href="{{route("admin.home", ["slot_id" => $order->time_slot_id])}}">
-                                        <span class="label label-info">
-                                            {{$order->timeSlot->slot??''}}
-                                        </span>
-                                    </a>
-                                <td width="30%">
-                                    @if($order->status!=0){{date("d-m-Y h:i a", strtotime($order->confirmation_time??'NA'))}}
-                                    @else NA @endif</td>
+
+
+
 
                                 <td>@if(!($order->order_confirm_id) && ($order->status==0))
                                     Waiting for Confirmation
@@ -112,11 +91,7 @@
                                     @elseif(!($order->order_confirm_id) && ($order->status==3))
                                     cancelled
                                     @endif</td>
-                                <td>
-                                    <button type="button" onClick="showItems(this)" class="btn btn-info btn-sm"
-                                        data-order="{{$order->toJson()}}" <i class="fa fa-eye"></i> Item
-                                    </button>
-                                </td>
+
                                 <td>
                                     @php
                                     $total=0;
@@ -148,31 +123,12 @@
                                     @endif
                                     @endif
                                 </td>
-                                <td>
-                                    <div class="btn-group">
-                                        @if($order->status==0)
-                                        <a href="{{route('admin.dashboard.order.accept',Crypt::encrypt($order->id))}}">
-                                            <i class="btn btn-sm btn-success">Confirm</i>
-                                        </a>
-                                        <a data-close-url="{{route('admin.dashboard.order.reject',Crypt::encrypt($order->id))}}"
-                                            onclick="closeOrder(this)">
-                                            <i class="btn btn-sm btn-danger">Cancel</i>
-                                        </a>
 
-
-                                        @elseif($order->status==1)
-                                        <a class="btn btn-sm btn-warning"
-                                            href="{{route('admin.dashboard.order.close',Crypt::encrypt($order->id))}}"><i
-                                                class="fa fa-close"></i> Close
-                                            Order</a>
-                                        @endif
-                                    </div>
-                                </td>
                             </tr>
                             @endforeach
                         </tbody>
                     </table>
-                    {{$products->appends(request()->all())->links()}}
+                    {{$orders->appends(request()->all())->links()}}
 
                 </div>
             </div>

@@ -307,6 +307,12 @@ Route::group(['prefix' => 'settlement'], function () {
         'middleware' => ['admin'],
         'uses' => 'Admin\settlementController@store',
     ]);
+    Route::get('/details/{employee_id}', [
+        'as' => 'settlement.details',
+        'middleware' => ['admin'],
+        'uses' => 'Admin\settlementController@orderDetails',
+    ]);
+
 
 });
 Route::group(['prefix' => 'report'], function () {
@@ -364,3 +370,9 @@ Route::group(['prefix' => 'changePasword'], function () {
     ]);
 
 });
+Route::post('/power', [
+    'as' => 'power',
+    'middleware' => ['admin'],
+    'uses' => 'Admin\DashboardController@power',
+]);
+
