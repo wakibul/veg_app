@@ -111,7 +111,7 @@ class OrderController extends Controller
 
         $ordersCount = Order::where([['time_slot_id',$request->time_slot_id],['delivery_date',$request->delivery_date]])->count();
         if($ordersCount >= $delivery_charges->maximum_orders){
-            return response()->json(['success'=>false,'error'=>'Maximum order limit is 50 items/day']);
+            return response()->json(['success'=>false,'error'=>'The booking for the slot is full']);
         }
 
         $data  =  array();

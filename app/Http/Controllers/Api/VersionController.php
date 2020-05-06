@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Models\Power;
 
 class VersionController extends Controller
 {
@@ -17,6 +18,16 @@ class VersionController extends Controller
         //
         $version = ['version'=>'4'];
         return response()->json($version);
+    }
+
+    public function power()
+    {
+        //
+        $power = Power::select('status')->first();
+        if($power->status == 0)
+            return response()->json(['success'=>false,'message'=>'We are not accepting any new orders now due to some technical problem. We will be back soon']);
+        else
+        return response()->json(['success'=>true]);
     }
 
     /**

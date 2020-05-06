@@ -51,6 +51,12 @@ class LoginController extends Controller
         return view('admin.auth.login');
     }
 
+    public function logout()
+    {
+        Auth::guard('admin')->logout();
+        return redirect()->route('login');
+    }
+
     /**
      * Get the guard to be used during authentication.
      *

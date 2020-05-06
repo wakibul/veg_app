@@ -119,3 +119,31 @@ colors: {
 <script>
 $('.datepicker').Zebra_DatePicker();
 </script>
+
+<script>
+$(document).ready(function(){
+  $.ajaxSetup({
+      headers: {
+          'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+      }
+  });
+  $('#myonoffswitch').click(function(e){
+	if($(this).is(':checked'))
+ 		var dataVal = 1;
+	else
+		var dataVal = 0;
+    $.ajax({
+        url: "{{route('admin.power')}}",
+        type: "post",
+        dataType:'json',
+        data: { status : dataVal },
+        success: function(data){
+            console.log(data);
+        },
+		error: function(data){
+			console.log(data);
+		}
+    });
+  })
+})
+</script>

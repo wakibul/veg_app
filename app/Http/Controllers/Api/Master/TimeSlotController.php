@@ -22,6 +22,7 @@ class TimeSlotController extends Controller
 	    $date = date('Y-m-d');
         $categories = json_decode($request->category_array);
         $category = Category::where([['status',1],['name','Fish']])->first();
+        if($category != null){
 	    foreach ($categories as $key => $val) {
 	    	foreach ($val as $key => $newval) {
 		       	if($newval->category_id == $category->id){
@@ -35,7 +36,8 @@ class TimeSlotController extends Controller
 		       		
 		       	}
 			}
-	    }   	
+	    }
+        }   	
 	    $timeslot = TimeSlot::select('id','from','to','slot')->where('status',1)->whereTime('from','>', $cur_time)->get();
 	        if(!$timeslot->isEmpty()){
 	            return response()->json(['success'=>true,'timeslot'=>$timeslot,'date'=>$date]);
