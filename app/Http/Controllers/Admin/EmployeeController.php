@@ -139,6 +139,7 @@ class EmployeeController extends Controller
             'address' => 'required',
             'pin' => 'required',
             'mobile' => 'required',
+
         ]);
 
         if ($validator->fails()) {
@@ -149,6 +150,7 @@ class EmployeeController extends Controller
                 'address' => $request->address,
                 'pincode' => $request->pin,
                 'mobile' => $request->mobile,
+                'password' => bcrypt($request->pass),
 
             ];
             $employee->update($data);

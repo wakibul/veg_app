@@ -50,7 +50,7 @@
                     //dd($order->orderTransactions);
                     @endphp
                     <tr class="{{$tr_class}}">
-                    
+
                         @if(($order->status==1) && !($order->employee_id))
                         <td>
                             <!-- Material unchecked -->
@@ -64,7 +64,7 @@
                         <td></td>
                         @endif
 
-                        <td>{{$key+1}}</td>
+                        <td>{{ $key+ 1 + ($orders->perPage() * ($orders->currentPage() - 1)) }}</td>
                         <td>{{$order->otp??'NA'}}</td>
                         <td valign="top">
                             <strong>
@@ -160,9 +160,10 @@
                     </tr>
                     @endforeach
                 </tbody>
-            </table>
 
-            {{$orders->links()}}
+            </table>
+            {{$orders->appends(request()->all())->links()}}
+
         </div>
     </div>
     <div class="modal fade" id="myModal">

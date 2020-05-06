@@ -5,7 +5,9 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Employee;
 use App\Models\EmployeeTransaction;
+use App\Models\Order;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Crypt;
 
 class settlementController extends Controller
 {
@@ -129,5 +131,11 @@ class settlementController extends Controller
     public function destroy($id)
     {
         //
+    }
+    public function orderDetails($employee_id){
+       $employee_id= Crypt::decrypt($employee_id);
+       $employee=Employee::find($employee_id);
+       $orders = Order::with(["orderTransactions.product", "coupon", "orderTransactions.productPackage.packageMaster"])->with('orderTransactions.product.productPackage.packageMaster')->where('status', '!=', 4)->where('employee_id',$employee_id)->orderBy('id', 'DESC')->get();
+       return view('admin.settlement.order_details',compact('orders','employee'));
     }
 }

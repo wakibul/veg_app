@@ -26,11 +26,12 @@ class DashboardController extends Controller
  
         $orders = $this->filter($orders);
        
-
+       $hour=date('H');
+       
 
         $total_orders = Order::count();
-        $todays_order = Order::whereDate('created_at', '=', date('Y-m-d'))->count();
-
+        $todays_order = Order::where('delivery_date', '=', date('Y-m-d'))->get();
+         
 
         $orders = $orders->with(["orderTransactions.product", "coupon", "orderTransactions.productPackage.packageMaster"])->with('orderTransactions.product.productPackage.packageMaster')->where('status', '!=', 4)->orderBy('id', 'DESC');
         $employees = Employee::get();
