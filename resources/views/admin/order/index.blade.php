@@ -14,6 +14,7 @@
                         <th>Phone No</th>
                         <th width="30%">Order Time</th>
                         <th>Confirm Time</th>
+                        <th>Delivery Boy</th>
                         <th>Status</th>
                         <th>Item</th>
                         <th>Total Amount</th>
@@ -77,6 +78,7 @@
 
 
                         <td width="35%">{{$order->address??'NA'}}</td>
+
                         <td>{{$order->recipient_no ??'NA'}}</td>
 
 
@@ -90,10 +92,12 @@
                                     {{$order->timeSlot->slot??''}}
                                 </span>
                             </a>
+                        </td>
+
                         <td width="30%">
                             @if($order->status!=0){{date("d-m-Y h:i a", strtotime($order->confirmation_time??'NA'))}}
                             @else NA @endif</td>
-
+                            <td>{{$order->employee->name??'NA'}}</td>
                         <td>@if(!($order->order_confirm_id) && ($order->status==0))
                             Waiting for Confirmation
                             @elseif($order->status==1)
@@ -110,6 +114,7 @@
                                 data-order="{{$order->toJson()}}" <i class="fa fa-eye"></i> Item
                             </button>
                         </td>
+
                         <td>
                             @php
                             $total=0;

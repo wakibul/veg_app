@@ -42,11 +42,11 @@ class settlementController extends Controller
     public function store(Request $request)
     {
 
-dd($request->all());
-        $amount=0;
+//dd($request->all());
+        $paid=0;
         foreach ($request->employee_transactions as $key => $employee_transaction) {
             $employee_transaction = EmployeeTransaction::find($employee_transaction);
-            $amount=$amount+($employee_transaction->amount);
+            $paid=$paid+($employee_transaction->amount);
 
         }
 
