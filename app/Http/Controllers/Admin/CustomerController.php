@@ -15,6 +15,7 @@ use LaravelFCM\Facades\FCM;
 use LaravelFCM\Message\OptionsBuilder;
 use LaravelFCM\Message\PayloadDataBuilder;
 use LaravelFCM\Message\PayloadNotificationBuilder;
+use DataTables;
 use Excel;
 use Str;
 
@@ -28,13 +29,15 @@ class CustomerController extends Controller
      */
     public function index()
     {
-        $customers = Customer::with(["orders"])->paginate(25);
+        $customers = Customer::paginate(25);
+
 
         return view('admin.customer.index', compact('customers'));
     }
     public function verified()
     {
-        $customers = Customer::with(["orders"])->where('fcm_token', '!=', null)->paginate(25);
+        $customers = Customer::where('fcm_token', '!=', null)->paginate(25);
+        ;
 
         return view('admin.customer.verified', compact('customers'));
     }
@@ -158,10 +161,19 @@ class CustomerController extends Controller
     {
         $id = Crypt::decrypt($customer_id);
         $customer = Customer::find($id);
-        $orders = $customer->orders->unique("address");
+
+        $orders=$customer->orders()->where('status',2)->get();
 
 
         return view('admin.customer.view', compact('customer', 'orders'));
+    }
+    public function exportUser($customer_id)
+    {
+        $id = Crypt::decrypt($customer_id);
+
+        $customers=Customer::where('id',$id)->get();
+
+        return Excel::download(new CustomerAllExport($customers), 'All-Customer-report.xlsx');
     }
     public function export()
     {
@@ -172,6 +184,7 @@ class CustomerController extends Controller
     public function verifiedCustomer()
     {
         $customers = Customer::with(["orders"])->where('fcm_token', '!=', null)->paginate(25);
+
 
         return Excel::download(new CustomerAllExport($customers), 'All-Customer-report.xlsx');
     }

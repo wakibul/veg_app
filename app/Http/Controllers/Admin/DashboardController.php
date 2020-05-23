@@ -27,7 +27,7 @@ class DashboardController extends Controller
         $orders = Order::query();
         $orders = $this->filter($orders);
 
-        $total_orders = Order::count();
+        $total_orders = Order::where('status','!=','3')->count();
         if((date('H:i:s')>='18:00:00' && date('H:i:s')<='23:59:59'))
             $date = date('Y-m-d', strtotime(' +1 day'));
         else
@@ -44,7 +44,7 @@ class DashboardController extends Controller
         }
         $orders = $orders->paginate(10);
         $employees = Employee::get();
-//dd($users);
+           //dd($users);
 
         return view('admin.home', compact('orders', 'employees', 'total_orders','todays_order'));
 

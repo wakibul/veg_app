@@ -7,56 +7,51 @@
 <div class="container">
     @include('admin.layout.alert')
     <div class="page-header">
-        <h4 class="page-title">
-            <u> Customer Name:</u> {{$customer->name??'NA'}}<br>
-             <u>Customer Phone No:</u> {{$customer->mobile??'NA'}}
-        </h4>
+
     </div>
-    <form name="customer" action="{{route('admin.customer.notification.store')}}" method="POST">
-        @csrf
+    <div class="card">
+        <div class="card-header">
+            <h3 class="card-title"><b>Customer Name:</b>  {{$customer->name??'NA'}} &nbsp; <b>Customer Phone No:</b>{{$customer->mobile??'NA'}}</h3>
+          </div>
         <div class="row">
             <div class="col-md-12">
-                <table class="table table-bordered table-hover" id="orderTable">
+                <table class="table table-vcenter table-mobile-md card-table" id="orderTable">
 
                     <thead>
                         <tr>
                             <th>Sl.</th>
-                            <th>Pin</th>
-                            <th>Address</th>
+                            <th>Product</th>
+                            <th>Quantity</th>
+                            <th>Type</th>
+                            <th>Price</th>
                         </tr>
                     </thead>
                     <tbody>
                         {{-- {{ dd($orders) }} --}}
 
 
-                        @forelse($orders as $key=>$order)
+                        @foreach($orders as $key=>$order)
+                           @foreach($order->orderTransactions as $key=>$transaction)
+                             <tr>
+                                <td>{{$key+1}}</td>
+                            <th>{{$transaction->product->name??'NA'}}</th>
+                            <th>{{$transaction->quantity??'NA' }}</th>
+                            <th>{{$transaction->productPackage->packageMaster->name??'NA'}}</th>
+                            <th>{{$transaction->price??'NA'}}</th>
+                             </tr>
+                            @endforeach
 
-                        <tr>
-                            <td>{{$key+1}}</td>
-
-                            <td>{{$order->pincode}}</td>
-                            <td>{{$order->address??'NA'}}</td>
 
 
 
-
-                        </tr>
-                        @empty
-                        <tr>
-                            <td colspan="3">No data</td>
-                         </tr>
-                        @endforelse
+                        @endforeach
 
 
                     </tbody>
                 </table>
-
             </div>
         </div>
-
-
-    </form>
-
+    </div>
 </div>
 @endsection
 @section("css")

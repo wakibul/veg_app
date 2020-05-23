@@ -8,9 +8,37 @@
     <div class="page-header">
         <h1 class="page-title">
             Dashboard
-            <button type="button" class="btn btn-primary">Todays Order: <span class="badge badge-success" style="font-size: 16px">{{$todays_order}}</span></button>
-            <button type="button" class="btn btn-success"> Total Orders: <span class="badge">{{$total_orders}}</span></button>
         </h1>
+    </div>
+    <div class="row row-deck row-cards">
+        <div class="col-sm-6 col-lg-3">
+          <div class="card">
+            <div class="card-body">
+              <div class="d-flex align-items-center">
+                <div class="subheader">Todays Order</div>
+                <div class="ml-auto lh-1">
+                </div>
+              </div>
+            <div class="h1 mb-3">{{$todays_order}}</div>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-6 col-lg-3">
+          <div class="card">
+            <div class="card-body">
+              <div class="d-flex align-items-center">
+                <div class="subheader">Total Orders</div>
+                <div class="ml-auto lh-1">
+                </div>
+              </div>
+              <div class="d-flex align-items-baseline">
+                <div class="h1 mb-0 mr-2">{{$total_orders}}</div>
+
+              </div>
+            </div>
+            <div id="chart-revenue-bg" class="chart-sm"></div>
+          </div>
+        </div>
     </div>
 
     <a class="btn btn-primary" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
@@ -32,6 +60,17 @@
 </style>
 @endsection
 @section('js')
+<script src="path/to/zebra_datepicker.min.js"></script>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        flatpickr(document.getElementById('from-date'), {
+        });
+    });
+    document.addEventListener("DOMContentLoaded", function () {
+        flatpickr(document.getElementById('to-date'), {
+        });
+    });
+  </script>
 <script src="https://js.pusher.com/5.1/pusher.min.js"></script>
 
 <script>

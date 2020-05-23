@@ -1,8 +1,9 @@
 <form name="employee" action="{{route('admin.assign_employee.store')}}" method="POST">
     @csrf
+    <div class="card">
     <div class="row">
         <div class="col-md-12">
-            <table class="table table-bordered table-hover" id="orderTable">
+            <table class="table table-responsive" id="orderTable">
                 <caption>Recent Orders</caption>
                 <thead>
                     <tr>
@@ -163,6 +164,11 @@
                                     href="{{route('admin.dashboard.order.close',Crypt::encrypt($order->id))}}"><i
                                         class="fa fa-close"></i> Close
                                     Order</a>
+                                <a data-close-url="{{route('admin.dashboard.order.reject',Crypt::encrypt($order->id))}}"
+                                    onclick="closeOrder(this)">
+                                    <i class="btn btn-sm btn-danger">Cancel</i>
+                                </a>
+
                                 @endif
                             </div>
                         </td>
@@ -174,6 +180,7 @@
             {{$orders->appends(request()->all())->links()}}
 
         </div>
+    </div>
     </div>
     <div class="modal fade" id="myModal">
         <div class="modal-dialog">

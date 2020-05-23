@@ -110,7 +110,25 @@ Route::group(['prefix' => 'employee'], function () {
     ]);
 
 });
+Route::group(['prefix' => 'user'], function () {
+    Route::get('/index', [
+        'as' => 'user.index',
+        'middleware' => ['admin'],
+        'uses' => 'Admin\UserController@index',
+    ]);
 
+    Route::post('/store', [
+        'as' => 'user.store',
+        'middleware' => ['admin'],
+        'uses' => 'Admin\UserController@store',
+    ]);
+    Route::post('/status/{id}', [
+        'as' => 'user.status',
+        'middleware' => ['admin'],
+        'uses' => 'Admin\UserController@status',
+    ]);
+
+});
 Route::group(['prefix' => 'order'], function () {
     Route::get('/order/{order_id}', [
         'as' => 'dashboard.order.accept',
@@ -344,6 +362,11 @@ Route::group(['prefix' => 'customer'], function () {
         'as' => 'customer.view',
         'middleware' => ['admin'],
         'uses' => 'Admin\CustomerController@view',
+    ]);
+    Route::get('/customer/export/{customer_id}', [
+        'as' => 'customer.export',
+        'middleware' => ['admin'],
+        'uses' => 'Admin\CustomerController@exportUser',
     ]);
     Route::get('/customer/export', [
         'as' => 'customer.export',

@@ -1,6 +1,6 @@
 <script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
 
- <script src="{{asset('public/assets/js/vendors/bootstrap.bundle.min.js')}}"></script> 
+ <script src="{{asset('public/assets/js/vendors/bootstrap.bundle.min.js')}}"></script>
 <script src="{{asset('public/assets/js/vendors/jquery.sparkline.min.js')}}"></script>
 <script src="{{asset('public/assets/js/vendors/selectize.min.js')}}"></script>
 <script src="{{asset('public/assets/js/vendors/jquery.tablesorter.min.js')}}"></script>
@@ -10,8 +10,10 @@
 <script src="{{asset('public/assets/js/vendors/circle-progress.min.js')}}"></script>
 <script src="{{asset('public/assets/plugins/charts-c3/js/c3.min.js')}}"></script>
 <script src="{{asset('public/assets/plugins/charts-c3/js/d3.v3.min.js')}}"></script>
-
+<script src="{{asset('public/assets/plugins/flatpickr/dist/flatpickr.min.js')}}"></script>
+<script src="{{asset('public/assets/plugins/flatpickr/dist/plugins/rangePlugin.js')}}"></script>
 <script type="text/javascript" src="{{asset('public/assets/js/zebra_datepicker.min.js')}}"></script>
+<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.js"></script>
 <script type="text/javascript">
 	window.tabler = {
 colors: {

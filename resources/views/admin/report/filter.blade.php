@@ -1,5 +1,4 @@
-<div  id="collapseExample">
-    <br>
+<div class="collapse" id="collapseExample">
     <div class="card no-prints">
         <div class="card-body">
             <div class="body">
@@ -29,17 +28,30 @@
                                 </select>
                             </div>
                         </div>
-                        <div class="col-md-6">
-                            <div class="input-daterange input-group" id="bs_datepicker_range_container">
-                                <div class="form-line">
-                                    <input type="text" class="form-control datepicker" id="from_date" name="from_date" placeholder="From Date" autocomplete="off" value="{{request('from_date')}}">
-                                </div>
-                                <span class="input-group-addon">&nbsp;to&nbsp;</span>
-                                <div class="form-line">
-                                    <input type="text" class="form-control datepicker" id="to_date" name="to_date" placeholder="To Date" autocomplete="off" value="{{request('to_date')}}">
+                        <div class="col-md-3">
+                            <div class="form-group form-float">
+                                <div class="form-group">
+                                    <div class="row">
+                                        <div class="col-md-10">
+                                            <input type="text" class="form-control" name="from_date" id="from-date" placeholder="From Date" autocomplete="off" value="{{request('from_date')}}">
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
+                        <div class="col-md-3">
+                            <div class="form-group form-float">
+                                <div class="form-group">
+                                    <div class="row">
+                                        <div class="col-md-10">
+                                            <input type="text" class="form-control" name="to_date" id="to-date" placeholder="To Date" autocomplete="off" value="{{request('to_date')}}">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row clearfix">
                         <div class="col-md-3">
                             <div class="form-group form-float">
                                 <div class="form-group">

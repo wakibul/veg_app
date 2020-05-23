@@ -19,6 +19,8 @@
 <link href="{{ asset('public/assets/plugins/charts-c3/plugin.css')}}" rel="stylesheet" />
 <link href="{{ asset('public/assets/plugins/maps-google/plugin.css')}}" rel="stylesheet" />
 <link rel="stylesheet" type="text/css" href="{{asset('public/assets/css/zebra_datepicker.css')}}">
+<link href="{{ asset('public/assets/plugins/flatpickr/dist/flatpickr.min.css')}}" rel="stylesheet" />
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.21/css/jquery.dataTables.css">
 <style>
 .onoffswitch {
     position: relative; width: 90px;
@@ -65,7 +67,7 @@
     border: 2px solid #999999; border-radius: 20px;
     position: absolute; top: 0; bottom: 0; right: 56px;
     -moz-transition: all 0.3s ease-in 0s; -webkit-transition: all 0.3s ease-in 0s;
-    -o-transition: all 0.3s ease-in 0s; transition: all 0.3s ease-in 0s; 
+    -o-transition: all 0.3s ease-in 0s; transition: all 0.3s ease-in 0s;
 }
 
 .onoffswitch-checkbox:checked + .onoffswitch-label .onoffswitch-inner {
@@ -73,7 +75,7 @@
 }
 
 .onoffswitch-checkbox:checked + .onoffswitch-label .onoffswitch-switch {
-    right: 0px; 
+    right: 0px;
 }
 
 

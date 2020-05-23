@@ -10,7 +10,7 @@ use Maatwebsite\Excel\Events\AfterSheet;
 
 class CustomerAllExport implements FromView, ShouldAutoSize, WithEvents
 {
-    
+
     public function __construct($customers)
     {
         $this->customers    = $customers;
@@ -19,9 +19,6 @@ class CustomerAllExport implements FromView, ShouldAutoSize, WithEvents
     public function view(): View
     {
         $customers  = $this->customers;
-       
-       //dd( $customers);
-
         return view('admin.customer.index-export', compact('customers'));
     }
 

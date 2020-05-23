@@ -10,7 +10,7 @@ $power = App\Models\Power::select('status')->first();
             <div class="d-flex order-lg-2 ml-auto">
             <b>Power</b>
             <div class="onoffswitch">
-            
+
                     <input type="checkbox" name="onoffswitch" class="onoffswitch-checkbox" id="myonoffswitch" @if($power->status == 1) checked @endif>
                     <label class="onoffswitch-label" for="myonoffswitch">
                         <span class="onoffswitch-inner"></span>
@@ -48,7 +48,7 @@ $power = App\Models\Power::select('status')->first();
                             <i class="dropdown-icon fe fe-log-out"></i> Sign out
                         </a>
                           <a href="{{route('admin.changePassword')}}" class="dropdown-item "><i class="fa fa-key" aria-hidden="true"></i>Change Password</a>
-                        
+
                         <form id="logout-form" action="{{ url('/admin/logout') }}" method="POST" style="display: none;">
                             {{ csrf_field() }}
                         </form>
@@ -62,6 +62,7 @@ $power = App\Models\Power::select('status')->first();
         </div>
     </div>
 </div>
+@if(auth()->user()->type==1)
 <div class="header collapse d-lg-flex p-0" id="headerMenuCollapse">
     <div class="container">
         <div class="row align-items-center">
@@ -75,7 +76,7 @@ $power = App\Models\Power::select('status')->first();
                         <a href="javascript:void(0)" class="nav-link" data-toggle="dropdown"><i class="fa fa-tty"></i>
                             Masters </a>
                         <div class="dropdown-menu dropdown-menu-arrow">
-                            <a href="{{route('admin.category.index')}}" class="dropdown-item ">Ctegory (Add /
+                            <a href="{{route('admin.category.index')}}" class="dropdown-item ">Category (Add /
                                 Manage)</a>
 
                             <a href="{{route('admin.product.index')}}" class="dropdown-item ">Product (Add /
@@ -84,6 +85,7 @@ $power = App\Models\Power::select('status')->first();
                             <a href="{{route('admin.unit.index')}}" class="dropdown-item ">Unit(Add/Manage)</a>
                             <a href="{{route('admin.employee.index')}}" class="dropdown-item ">Delivery
                                 Boy(Add/Manage)</a>
+                            <a href="{{route('admin.user.index')}}" class="dropdown-item ">User(Add/Manage)</a>
                             <a href="{{route('admin.banner.index')}}" class="dropdown-item ">Banner(Add/Manage)</a>
                             <a href="{{route('admin.footer-banner.index')}}" class="dropdown-item ">Footer Banner(Add/Manage)</a>
                         </div>
@@ -102,12 +104,12 @@ $power = App\Models\Power::select('status')->first();
                             Customers </a>
                         <div class="dropdown-menu dropdown-menu-arrow">
                             <a href="{{route('admin.customer.index')}}" class="dropdown-item ">All Customer Details</a>
-                    
+
                             <a href="{{route('admin.customer.notification')}}" class="dropdown-item ">Notification Management</a>
-                            
+
                         </div>
                     </li>
-                    
+
                     <!---<li class="nav-item dropdown">
                     <a href="javascript:void(0)" class="nav-link" data-toggle="dropdown"><i class="fe fe-file"></i> Doctor</a>
                     <div class="dropdown-menu dropdown-menu-arrow">
@@ -136,3 +138,23 @@ $power = App\Models\Power::select('status')->first();
         </div>
     </div>
 </div>
+@endif
+@if(auth()->user()->type==2)
+<div class="header collapse d-lg-flex p-0" id="headerMenuCollapse">
+    <div class="container">
+        <div class="row align-items-center">
+
+            <div class="col-lg order-lg-first">
+                <ul class="nav nav-tabs border-0 flex-column flex-lg-row">
+                    <li class="nav-item">
+                        <a href="{{route('admin.home')}}" class="nav-link active"><i class="fe fe-home"></i> Home</a>
+                    </li>
+
+
+
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+@endif

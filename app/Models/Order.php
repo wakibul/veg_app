@@ -15,7 +15,7 @@ class Order extends Model
 
     public function orderTransactions()
     {
-        return $this->hasMany(OrderTransaction::class);
+        return $this->hasMany(OrderTransaction::class,'order_id','id');
     }
     public function timeSlot()
     {
@@ -25,10 +25,6 @@ class Order extends Model
     {
         return $this->belongsTo(User::class);
     }
-    public function orderTransaction()
-    {
-        return $this->hasMany(OrderTransaction::class);
-    }
     public function coupon()
     {
         return $this->belongsTo(Coupon::class);
@@ -36,6 +32,10 @@ class Order extends Model
     public function employee()
     {
         return $this->belongsTo(Employee::class);
+    }
+    public function customer()
+    {
+        return $this->belongsTo(Customer::class,'user_id','id');
     }
 
 }

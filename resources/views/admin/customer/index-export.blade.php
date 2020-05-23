@@ -11,13 +11,14 @@
                 <th>House No</th>
                 <th>Landmark</th>
                 <th>Address</th>
-                
+                <th>Orders</th>
+
             </tr>
         </thead>
         <tbody>
-            
+
             @forelse($customers as $key => $customer)
-          
+
             <tr>
                 <td>{{$key+1}}</td>
                 <td>{{$customer->name??'NA'}}</td>
@@ -26,18 +27,29 @@
                 <td> {{$customer->house_no??''}}</td>
                 <td> {{$customer->landmark??''}}</td>
                 <td> {{$customer->address??''}}</td>
-               
+                <td>
+                    @foreach($customer->orders as $order_details)
+                    @foreach($order_details->orderTransactions as $transaction)
+                    <li>{{$transaction->product->name??'NA'}}</li>
+                            <li>{{$transaction->quantity??'NA' }}</li>
+                            <li>{{$transaction->productPackage->packageMaster->name??'NA'}}</li>
+                            <li>{{$transaction->price??'NA'}}</li>
+
+                    @endforeach
+                    @endforeach
+                </td>
+
             </tr>
-           
+
             @empty
             <tr>
                 <td colspan="8">No Data</td>
             </tr>
             @endforelse
-            
+
         </tbody>
         <tfoot>
-            
+
         </tfoot>
     </table>
 </body>

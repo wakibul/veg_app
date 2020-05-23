@@ -118,7 +118,7 @@ class OrderController extends Controller
         $option = $optionBuilder->build();
         $notification = $notificationBuilder->build();
         $data = $dataBuilder->build();
-
+        $sendMsg=sendNewSMS($order->customer->mobile,"Thank you,Your order Has been Received with Order No: {$order_details->order_confirm_id}");
         $customerMessage = FCM::sendTo($token, $option, $notification, $data);
 
 
@@ -205,7 +205,7 @@ class OrderController extends Controller
         // $employee = $employee->name;
         $title = "New Order";
         $customer_message = "New Order has arrived";
-
+        $sendMsg=sendNewSMS($employee->mobile,$customer_message);
         $notification = sendMobilePushNotification($customer_message, $title, [$employee->fcm_token], ["employee_id" => $employee->id, "notification_code" => 101], 101, true);
         Log::debug($notification);
 

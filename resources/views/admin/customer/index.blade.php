@@ -22,7 +22,11 @@
                 <i class="fa fa-file-excel-o" aria-hidden="true"></i> Export
 
             </a>
-            <table class="table table-bordered table-hover" id="orderTable">
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title"><b>Customer Details</h3>
+                  </div>
+            <table id="customer">
 
                 <thead>
                     <tr>
@@ -51,6 +55,11 @@
                                 <a href="{{route('admin.customer.view',Crypt::encrypt($customer->id))}}" class="btn btn-sm btn-info"><i class="fa fa-eye"></i></a>
 
                             </div>
+                            <div class="btn-group">
+
+                                <a href="{{route('admin.customer.export',Crypt::encrypt($customer->id))}}" class="btn btn-sm btn-info"><i class="fa fa-file-excel-o"></i></a>
+
+                            </div>
                         </td>
 
 
@@ -59,9 +68,11 @@
                     @endforeach
 
                 </tbody>
-            </table>
 
-            {{$customers->links()}}
+            </table>
+            </div>
+            {{$customers->appends(request()->all())->links()}}
+
         </div>
     </div>
 
@@ -77,6 +88,11 @@
 </style>
 @endsection
 @section('js')
+<script>
+$(document).ready( function () {
+    $('#customer').DataTable();
+} );
+</script>
 <script src="https://js.pusher.com/5.1/pusher.min.js"></script>
 
 

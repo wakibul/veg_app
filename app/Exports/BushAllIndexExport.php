@@ -25,6 +25,7 @@ class BushAllIndexExport implements FromView, ShouldAutoSize, WithEvents
             $total_amount = $total_amount + $price;
         }
 
+
         return view('admin.report.index-export', compact('orders','total_amount'));
     }
 
