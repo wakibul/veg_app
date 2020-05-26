@@ -19,6 +19,7 @@ class CustomerAllExport implements FromView, ShouldAutoSize, WithEvents
     public function view(): View
     {
         $customers  = $this->customers;
+
         return view('admin.customer.index-export', compact('customers'));
     }
 
@@ -26,7 +27,7 @@ class CustomerAllExport implements FromView, ShouldAutoSize, WithEvents
     {
         return [
             AfterSheet::class => function (AfterSheet $event) {
-                $cellRange = 'A1:Z1'; // All headers
+                $cellRange = 'A1:J1'; // All headers
                 $event->sheet->getDelegate()->getStyle($cellRange)->applyFromArray([
                     'font' => [
                         'bold' => true,

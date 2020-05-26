@@ -364,7 +364,7 @@ Route::group(['prefix' => 'customer'], function () {
         'uses' => 'Admin\CustomerController@view',
     ]);
     Route::get('/customer/export/{customer_id}', [
-        'as' => 'customer.export',
+        'as' => 'customer.exporttransaction',
         'middleware' => ['admin'],
         'uses' => 'Admin\CustomerController@exportUser',
     ]);

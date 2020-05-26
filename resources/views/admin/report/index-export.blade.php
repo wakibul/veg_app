@@ -7,6 +7,7 @@
                 <th rowspan="2">SL No.</th>
                 <th rowspan="2">Order No</th>
                 <th colspan="4">Order Item</th>
+                <th rowspan="2">Total Price</th>
                 <th rowspan="2">Phone</th>
                 <th rowspan="2">Delivery Slot</th>
 
@@ -37,6 +38,7 @@
                   <td> {{$transaction->productPackage->packageMaster->name??'NA'}}</td>
                   <td> {{$transaction->price??'NA'}}</td>
                   @if (!$index)
+                  <td @if($row_count) rowspan="{{$row_count}}"  @endif>{{$order->total_price_with_tax??'NA'}}</td>
                     <td @if($row_count) rowspan="{{$row_count}}"  @endif>{{$order->recipient_no??'NA'}}</td>
                     <td @if($row_count) rowspan="{{$row_count}}"  @endif> {{$order->timeSlot->slot??''}}</td>
                 @endif

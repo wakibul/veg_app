@@ -9,10 +9,20 @@
     <div class="page-header">
 
     </div>
+
     <div class="card">
         <div class="card-header">
-            <h3 class="card-title"><b>Customer Name:</b>  {{$customer->name??'NA'}} &nbsp; <b>Customer Phone No:</b>{{$customer->mobile??'NA'}}</h3>
+        <h3 class="card-title"><b>Customer Name:</b>  {{$customer->name??'NA'}} &nbsp; <b>Customer Phone No:</b>{{$customer->mobile??'NA'}}</h3>
           </div>
+    </div>
+
+    @if(!empty($orders))
+    @foreach($orders as $key=>$order)
+    <div class="card">
+        <div class="card-header">
+        <h3 class="card-title"> <b>Order No:</b>{{$order->order_confirm_id??'NA'}} &nbsp;&nbsp; <b>Order at:</b> {{date("d-m-Y h:i a", strtotime($order->created_at??'NA'))}}</h3>
+          </div>
+
         <div class="row">
             <div class="col-md-12">
                 <table class="table table-vcenter table-mobile-md card-table" id="orderTable">
@@ -30,7 +40,7 @@
                         {{-- {{ dd($orders) }} --}}
 
 
-                        @foreach($orders as $key=>$order)
+
                            @foreach($order->orderTransactions as $key=>$transaction)
                              <tr>
                                 <td>{{$key+1}}</td>
@@ -44,14 +54,20 @@
 
 
 
-                        @endforeach
 
 
                     </tbody>
                 </table>
             </div>
         </div>
+
     </div>
+    @endforeach
+    @else
+    data is empty
+    @endif
+
+
 </div>
 @endsection
 @section("css")

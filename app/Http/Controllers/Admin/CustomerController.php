@@ -164,7 +164,7 @@ class CustomerController extends Controller
 
         $orders=$customer->orders()->where('status',2)->get();
 
-
+        //dd($orders);
         return view('admin.customer.view', compact('customer', 'orders'));
     }
     public function exportUser($customer_id)
@@ -172,6 +172,7 @@ class CustomerController extends Controller
         $id = Crypt::decrypt($customer_id);
 
         $customers=Customer::where('id',$id)->get();
+        //dd($customers);
 
         return Excel::download(new CustomerAllExport($customers), 'All-Customer-report.xlsx');
     }

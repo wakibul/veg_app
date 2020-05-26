@@ -55,11 +55,6 @@
                                 <a href="{{route('admin.customer.view',Crypt::encrypt($customer->id))}}" class="btn btn-sm btn-info"><i class="fa fa-eye"></i></a>
 
                             </div>
-                            <div class="btn-group">
-
-                                <a href="{{route('admin.customer.export',Crypt::encrypt($customer->id))}}" class="btn btn-sm btn-info"><i class="fa fa-file-excel-o"></i></a>
-
-                            </div>
                         </td>
 
 
