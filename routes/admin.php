@@ -378,6 +378,11 @@ Route::group(['prefix' => 'customer'], function () {
         'middleware' => ['admin'],
         'uses' => 'Admin\CustomerController@verifiedCustomer',
     ]);
+    Route::get('/customer/{order_id}', [
+        'as' => 'order.invoice',
+        'middleware' => ['admin'],
+        'uses' => 'Admin\CustomerController@customerInvoice',
+    ]);
 
 });
 Route::group(['prefix' => 'changePasword'], function () {

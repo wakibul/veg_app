@@ -13,15 +13,20 @@
     <div class="card">
         <div class="card-header">
         <h3 class="card-title"><b>Customer Name:</b>  {{$customer->name??'NA'}} &nbsp; <b>Customer Phone No:</b>{{$customer->mobile??'NA'}}</h3>
-          </div>
+        <a href="{{route('admin.customer.index')}}" class="btn btn-info ml-auto"><i class="fa fa-list" aria-hidden="true"></i> Customer</a>
+    </div>
     </div>
 
     @if(!empty($orders))
     @foreach($orders as $key=>$order)
     <div class="card">
         <div class="card-header">
-        <h3 class="card-title"> <b>Order No:</b>{{$order->order_confirm_id??'NA'}} &nbsp;&nbsp; <b>Order at:</b> {{date("d-m-Y h:i a", strtotime($order->created_at??'NA'))}}</h3>
-          </div>
+        <h3 class="card-title"> <b>Order No:</b>{{$order->order_confirm_id??'NA'}} &nbsp;&nbsp; <b>Order at:</b> {{date("d-m-Y h:i a", strtotime($order->created_at??'NA'))}} </h3>
+
+
+        <a href="{{route('admin.order.invoice',Crypt::encrypt($order->id))}}" class="btn btn-primary ml-auto"><i class="fa fa-file-pdf-o" aria-hidden="true"></i></a>
+
+    </div>
 
         <div class="row">
             <div class="col-md-12">
@@ -50,13 +55,7 @@
                             <th>{{$transaction->price??'NA'}}</th>
                              </tr>
                             @endforeach
-
-
-
-
-
-
-                    </tbody>
+                      </tbody>
                 </table>
             </div>
         </div>

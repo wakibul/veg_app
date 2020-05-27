@@ -2,23 +2,22 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Exports\BushAllIndexExport;
 use App\Exports\CustomerAllExport;
 use App\Http\Controllers\Controller;
 use App\Models\Customer;
 use App\Models\Notification;
 use App\Models\NotificationDetail;
 use App\Models\Order;
+use Crypt;
+use Dompdf\Adapter\PDFLib;
+use Excel;
 use Illuminate\Http\Request;
-use Crypt, Session;
 use LaravelFCM\Facades\FCM;
 use LaravelFCM\Message\OptionsBuilder;
 use LaravelFCM\Message\PayloadDataBuilder;
 use LaravelFCM\Message\PayloadNotificationBuilder;
-use DataTables;
-use Excel;
+use PDF;
 use Str;
-
 
 class CustomerController extends Controller
 {
@@ -31,13 +30,11 @@ class CustomerController extends Controller
     {
         $customers = Customer::paginate(25);
 
-
         return view('admin.customer.index', compact('customers'));
     }
     public function verified()
     {
         $customers = Customer::where('fcm_token', '!=', null)->paginate(25);
-        ;
 
         return view('admin.customer.verified', compact('customers'));
     }
@@ -110,9 +107,9 @@ class CustomerController extends Controller
             return redirect()->back()->with('error', 'Please select AtLeast One Customer  .');
         } else {
             $data = [
-                'uuid' => (string) Str::uuid(),
+                'uuid'               => (string) Str::uuid(),
                 'notification_title' => $request->notification_title,
-                'notification_msg' => $request->msg,
+                'notification_msg'   => $request->msg,
             ];
 
             $notification_data = Notification::create($data);
@@ -121,14 +118,13 @@ class CustomerController extends Controller
                 $notification_details = [
 
                     'notification_id' => $notification_data->id,
-                    'customer_id' => $customer_check,
+                    'customer_id'     => $customer_check,
                 ];
 
                 $notification_details = NotificationDetail::create($notification_details);
 
-                $customer = Customer::find($customer_check);
+                $customer    = Customer::find($customer_check);
                 $customer_no = $customer->mobile;
-
 
                 try {
                     $token = $customer->fcm_token;
@@ -136,7 +132,6 @@ class CustomerController extends Controller
                     continue;
                     return back()->withError($e->getMessage())->withInput();
                 }
-
 
                 $optionBuilder = new OptionsBuilder();
                 $optionBuilder->setTimeToLive(60 * 20);
@@ -147,9 +142,9 @@ class CustomerController extends Controller
                 $dataBuilder = new PayloadDataBuilder();
                 $dataBuilder->addData(['a_data' => 'my_data']);
 
-                $option = $optionBuilder->build();
+                $option       = $optionBuilder->build();
                 $notification = $notificationBuilder->build();
-                $data = $dataBuilder->build();
+                $data         = $dataBuilder->build();
 
                 $customerMessage = FCM::sendTo($token, $option, $notification, $data);
             }
@@ -159,10 +154,10 @@ class CustomerController extends Controller
     }
     public function view($customer_id)
     {
-        $id = Crypt::decrypt($customer_id);
+        $id       = Crypt::decrypt($customer_id);
         $customer = Customer::find($id);
 
-        $orders=$customer->orders()->where('status',2)->get();
+        $orders = $customer->orders()->where('status', 2)->orderBy('created_at', 'desc')->get();
 
         //dd($orders);
         return view('admin.customer.view', compact('customer', 'orders'));
@@ -171,7 +166,7 @@ class CustomerController extends Controller
     {
         $id = Crypt::decrypt($customer_id);
 
-        $customers=Customer::where('id',$id)->get();
+        $customers = Customer::where('id', $id)->get();
         //dd($customers);
 
         return Excel::download(new CustomerAllExport($customers), 'All-Customer-report.xlsx');
@@ -186,11 +181,16 @@ class CustomerController extends Controller
     {
         $customers = Customer::with(["orders"])->where('fcm_token', '!=', null)->paginate(25);
 
-
         return Excel::download(new CustomerAllExport($customers), 'All-Customer-report.xlsx');
     }
+    public function customerInvoice($order_id)
+    {
+        $order = Order::find(Crypt::decrypt($order_id));
+        $pdf   = PDF::loadView('admin.customer.invoice',['order' => $order]);
+        return $pdf->download('invoice.pdf');
 
 
+    }
 
     public function destroy($id)
     {
