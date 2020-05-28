@@ -17,6 +17,10 @@ class Order extends Model
     {
         return $this->hasMany(OrderTransaction::class,'order_id','id');
     }
+    public function orderTransaction()
+    {
+        return $this->hasMany(OrderTransaction::class,'order_id','id');
+    }
     public function timeSlot()
     {
         return $this->belongsTo('App\Models\TimeSlot', 'time_slot_id', 'id');
