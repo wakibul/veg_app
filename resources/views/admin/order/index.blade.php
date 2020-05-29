@@ -1,9 +1,9 @@
 <form name="employee" action="{{route('admin.assign_employee.store')}}" method="POST">
     @csrf
-    <div class="card">
+
     <div class="row">
         <div class="col-md-12">
-            <table class="table table-responsive" id="orderTable">
+            <table class="table table-bordered table-hover" id="orderTable">
                 <caption>Recent Orders</caption>
                 <thead>
                     <tr>
@@ -181,7 +181,7 @@
 
         </div>
     </div>
-    </div>
+
     <div class="modal fade" id="myModal">
         <div class="modal-dialog">
             <div class="modal-content">

@@ -118,7 +118,12 @@ class OrderController extends Controller
         $option = $optionBuilder->build();
         $notification = $notificationBuilder->build();
         $data = $dataBuilder->build();
-        $sendMsg=sendNewSMS($order->customer->mobile,"Thank you,Your order Has been Received with Order No: {$order_details->order_confirm_id}");
+        $order = Order::find($orderId);
+
+        $user_id=$order->user_id;
+        $customer=Customer::find( $user_id);
+
+        $sendMsg=sendNewSMS($customer->mobile,"Thank you,Your order Has been Received with Order No: {$order_details->order_confirm_id}");
         $customerMessage = FCM::sendTo($token, $option, $notification, $data);
 
 

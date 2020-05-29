@@ -66,7 +66,7 @@
 
             </table>
             </div>
-            {{$customers->appends(request()->all())->links()}}
+
 
         </div>
     </div>
