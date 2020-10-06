@@ -13,5 +13,7 @@ class ProductPackage extends Model
     	return $this->belongsTo('App\Models\PackageMaster','package_masters_id','id')->where('status',1);
     }
 
-
+    public function cart(){
+    	return $this->belongsTo('App\Models\cart','id','product_package_id');
+    }
 }
