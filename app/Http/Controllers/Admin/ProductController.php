@@ -278,6 +278,11 @@ class ProductController extends Controller
         ];
 
         $product->update($data);
+        foreach($product->productPackage as $propac){
+
+            $cart=Cart::where('product_package_id',$propac->id)->delete();
+
+        }
         $product->productPackage()->delete();
 
         $default_key = 0;

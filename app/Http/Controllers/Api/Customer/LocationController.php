@@ -18,8 +18,7 @@ class LocationController extends Controller
     public function index()
     {
         //
-        $customer = Customer::select('latitude','longitude','house_no','landmark','address')->findOrFail(auth('api')->user()->id);
-        return response()->json(['success'=>true,'location'=>$customer]);
+        
 
     }
 
@@ -97,7 +96,7 @@ class LocationController extends Controller
         $data['address'] = $request->address;
         DB::beginTransaction();
         try{
-            CustomerAddress::where('customer_id',auth('api')->user()->id)->updateOrCreate($data);
+            CustomerAddress::updateOrCreate($data);
         }
         catch(\Exception $e){
             return response()->json(['success'=>false,'error'=>'Address can not be updated','er'=>$e->getMessage()]);
@@ -152,7 +151,7 @@ class LocationController extends Controller
             return response()->json(['success'=>false,'error'=>'Address can not be updated','er'=>$e->getMessage()]);
         }
         DB::commit();
-        $customer = CustomerAddress::where('customer_id',auth('api')->user()->id)->where('status',1)->get();
+        $customer = CustomerAddress::where('status',1)->get();
         return response()->json(['success'=>true,'data'=>$customer]);
 
     }
@@ -181,7 +180,7 @@ class LocationController extends Controller
             return response()->json(['success'=>false,'error'=>'something went wrong','er'=>$e->getMessage()]);
         }
         DB::commit();
-        $customer = CustomerAddress::where('customer_id',auth('api')->user()->id)->where('status',1)->get();
+        $customer = CustomerAddress::where('status',1)->get();
         return response()->json(['success'=>true,'data'=>$customer]);
 
     }

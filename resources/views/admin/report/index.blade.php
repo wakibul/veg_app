@@ -323,14 +323,17 @@
         $("#order_close_modal").modal();
     }
 </script>
+<script src="path/to/zebra_datepicker.min.js"></script>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        flatpickr(document.getElementById('from-date'), {
+        });
+    });
+    document.addEventListener("DOMContentLoaded", function () {
+        flatpickr(document.getElementById('to-date'), {
+        });
+    });
+  </script>
 
 
-<script type="text/javascript">
-    $('.from_date').Zebra_DatePicker({
-        format: 'Y-m-d'
-    });
-    $('#to_date').Zebra_DatePicker({
-        format: 'Y-m-d'
-    });
-</script>
 @endsection

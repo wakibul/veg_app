@@ -25,7 +25,7 @@ class VersionController extends Controller
         //
         $power = Power::select('status')->first();
         if($power->status == 0)
-            return response()->json(['success'=>false,'message'=>'Hi there ! Due to the current lockdown situation our delivery services are closed until further notice. We will update you as soon as we start again. Thank You.']);
+            return response()->json(['success'=>false,'message'=>'We are sorry.All slots for today are full. Kindly try to order after 9PM today.']);
         else
         return response()->json(['success'=>true]);
     }

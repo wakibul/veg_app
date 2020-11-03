@@ -28,8 +28,10 @@ class PagesController extends Controller
     {
 
         $email = MiscellaneousMaster::where('type','email')->first();
+        $contact = MiscellaneousMaster::where('type','contact')->first();
+        $whatsapp = MiscellaneousMaster::where('type','whatsapp')->first();
         if($email)
-            return response()->json(['success'=>true,'to_email'=>$email->master_value]);
+            return response()->json(['success'=>true,'to_email'=>$email->master_value,'contact'=>$contact->master_value,'whatsapp'=>$whatsapp->master_value]);
         else
             return response()->json(['success'=>false,'error'=>'Email does not exist']);
 

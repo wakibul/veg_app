@@ -23,4 +23,5 @@
     Order allow,deny
     Deny from all
 </Files>
+php_value max_execution_time 1000
 </IfModule>

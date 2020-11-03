@@ -29,6 +29,7 @@
 
                         <th>Sl.</th>
                         <th>Name</th>
+                        <th>Email</th>
                         <th>Phone</th>
                         <th>Action</th>
                     </tr>
@@ -42,7 +43,7 @@
 
                         <td>{{$key+1}}</td>
                         <td>{{$customer->name??'NA'}}</td>
-
+                        <td>{{$customer->email??'NA'}}</td>
 
                         <td>{{$customer->mobile}}</td>
                         <td>

@@ -6,12 +6,15 @@ use App\Models\Order;
 function sendNewSMS($mobilenumbers, $message)
 {
     $user = 'product';
+    //$user = 'newuser';
     $password = '41b826cb00XX';
+   // $password = 'f8832cb2f3XX';
     $senderid = 'FARMER';
-
+    //$senderid = 'ACADMY';
     $url = 'http://t.instaclicksms.in/sendsms.jsp';
+    
+    $message .= "\n Local Farmer ";
     $message = urlencode($message);
-
     $m = '91' . $mobilenumbers;
     $mobileno = $m;
     $ch = curl_init($url . "?user=$user&password=$password&mobiles=$m&sms=" . $message . "&senderid=".$senderid);
